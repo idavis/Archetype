@@ -4,7 +4,7 @@ prototype.ps
 Prototype.ps provides domain specific language enhancements to PowerShell creating prototypal objects.
 
 An example:
-
+```
 function New-SapiVoice {
   $prototype = new-prototype (new-object psobject)
   $prototype | new-function say {
@@ -26,6 +26,6 @@ function New-SapiVoice {
 
 $voice = New-SapiVoice
 $voice.say($voice.Message1)
-
+```
 
 See the examples folder for more usages and tips.
