@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 
 Creates a new prototypal object to be used as a base object.

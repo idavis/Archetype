@@ -1,4 +1,4 @@
-function New-SapiVoice {
+﻿function New-SapiVoice {
   $prototype = new-prototype (new-object psobject)
   $prototype | new-function say {
     param([string]$message)
@@ -18,19 +18,19 @@ function New-SapiVoice {
 }
 
 $voice = New-SapiVoice
-$voice.say($voice.Message1)
+#$voice.say($voice.Message1)
 # says 'This is Message 1'
 
-$voice.say($voice.Message2)
+#$voice.say($voice.Message2)
 # says 'This is Message 2'
 
-$voice.say($voice.Message3)
+#$voice.say($voice.Message3)
 # says 'This is Message 1'
 
 $voice.Message3 = "Rewriting Message 1 (via message 3)"
 
-$voice.say($voice.Message1)
+#$voice.say($voice.Message1)
 # says 'Rewriting Message 1 (via message 3)'
 
-$voice.say($voice.Message3)
+#$voice.say($voice.Message3)
 # 'says 'Rewriting Message 1 (via message 3)'

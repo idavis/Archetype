@@ -1,4 +1,4 @@
-prototype.ps
+﻿prototype.ps
 ============
 
 Prototype.ps provides domain specific language enhancements to PowerShell creating prototypal objects.
