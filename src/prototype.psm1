@@ -25,10 +25,10 @@ Remove-Module [p]rototype -ErrorAction SilentlyContinue
 
 Push-Location $PSScriptRoot
 try {
-  . ./new-function.ps1
-  . ./new-property.ps1
-  . ./new-autoproperty.ps1
-  . ./new-prototype.ps1
+  . ./functions/new-function.ps1
+  . ./functions/new-property.ps1
+  . ./functions/new-autoproperty.ps1
+  . ./functions/new-prototype.ps1
 } finally {
   Pop-Location
 }
