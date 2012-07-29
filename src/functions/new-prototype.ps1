@@ -48,6 +48,9 @@ function New-HashBasedObject {
 
 function New-Prototype {
   param($baseObject = $null)
-  $prototype = new-object psobject $baseObject
+  $prototype = [PSObject]::AsPSObject((new-object object))
+  if($baseObject) {
+    $prototype = [PSObject]::AsPSObject($baseObject)
+  }
   $prototype
 }
