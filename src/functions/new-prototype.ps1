@@ -7,12 +7,12 @@ Creates a new prototypal object to be used as a base object.
 
 .PARAMETER baseObject 
 
-The object which will be used as the underlying prototype. This is an optional parameter; if it is not included, the base object will be set to an empty hash table.
+The object which will be used as the underlying prototype. This is an optional parameter; if it is not included, the base object will be set to an default PSObject.
 
 .EXAMPLE
 
 function new-sapivoice {
-  $prototype = new-prototype (new-object psobject)
+  $prototype = new-prototype
   $prototype | new-function say {
     param([string]$message)
     $speaker = new-object -com SAPI.SpVoice
@@ -47,7 +47,7 @@ function New-HashBasedObject {
 #>
 
 function New-Prototype {
-  param($baseObject = @{})
+  param($baseObject = $null)
   $prototype = new-object psobject $baseObject
   $prototype
 }
