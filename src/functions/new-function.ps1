@@ -37,5 +37,6 @@ filter New-Function {
     [scriptblock]$value
   )
   $method = new-object System.Management.Automation.PSScriptMethod "$name", $value
-  $_.psobject.members.add($method)
+  $_.psobject.methods.remove($name)
+  $_.psobject.methods.add($method)
 }
