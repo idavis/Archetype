@@ -1,9 +1,5 @@
 ﻿function new-cylinder {
-  [CmdletBinding()]
-  param(
-    [Parameter(Position=0,Mandatory=0)][double]$radius = 3,
-    [Parameter(Position=1,Mandatory=0)][double]$height = 4
-  )
+  param($radius = 3, $height = 4)
   $prototype = new-circle($radius)
   $prototype | new-autoproperty Height $height
   $prototype | new-property LateralArea {$this.Radius * $this.Radius * $this.Pi}
