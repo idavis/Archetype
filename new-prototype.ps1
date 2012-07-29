@@ -47,9 +47,7 @@ function New-HashBasedObject {
 #>
 
 function New-Prototype {
-  param($baseObject = $null)
-  $base = $baseObject
-  if($baseObject -eq $null){ $base = @{} }
-  $prototype = new-object psobject $base
+  param($baseObject = @{})
+  $prototype = new-object psobject $baseObject
   $prototype
 }
