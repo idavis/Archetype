@@ -49,5 +49,6 @@ filter New-AutoProperty {
   )
   $variable = new-object System.Management.Automation.PSVariable $name, $value
   $property = new-object System.Management.Automation.PSVariableProperty $variable
+  $_.psobject.properties.remove($name)
   $_.psobject.properties.add($property)
 }

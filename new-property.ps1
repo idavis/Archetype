@@ -82,5 +82,6 @@ filter New-Property {
     [scriptblock]$setter = $null
   )
   $property = new-object System.Management.Automation.PSScriptProperty "$name", $getter, $setter
+  $_.psobject.properties.remove($name)
   $_.psobject.properties.add($property)
 }
