@@ -52,6 +52,12 @@ function new-cylinder {
 }
 
 $cylinder = new-cylinder -radius 5.0 -height 4.0
+$cylinder.Radius
+$cylinder.Diameter
+$cylinder.Height
+$cylinder.Circumference
+$cylinder.LateralArea
+$cylinder.Area
 ```
 
 See the examples folder for more usages and tips.
