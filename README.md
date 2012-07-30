@@ -32,7 +32,7 @@ Inheritance:
 ```
 function new-circle {
   param($radius = 3)
-  $prototype = New-Prototype (new-object psobject)
+  $prototype = New-Prototype
   $prototype | New-Property Pi { 3.14159 }
   $prototype | New-AutoProperty Radius $radius
   $prototype | New-Property Diameter {$this.Radius * 2}
