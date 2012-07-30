@@ -15,11 +15,11 @@
   $prototype.Message1 = "This is Message 1"
   
   # Add a new property to this prototype
-  $prototype | new-autoproperty Message2 "This is Message 2"
-  $prototype | new-property Message3 {"This is Message 3"}
+  $prototype | New-Property Message2 "This is Message 2"
+  $prototype | New-ScriptProperty Message3 {"This is Message 3"}
   
   # Add a proxy property to this prototype
-  $prototype | new-property Message4 {$this.Message1} {param([String]$value); $this.Message1 = $value}
+  $prototype | New-ScriptProperty Message4 {$this.Message1} {param([String]$value); $this.Message1 = $value}
   
   # always return the base prototype
   $prototype

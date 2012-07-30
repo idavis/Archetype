@@ -1,11 +1,11 @@
 ﻿function new-circle {
   param($radius = 3)
   $prototype = new-prototype (new-object psobject)
-  $prototype | new-property Pi { 3.14159 }
-  $prototype | new-autoproperty Radius $radius
-  $prototype | new-property Diameter {$this.Radius * 2}
-  $prototype | new-property Circumference {$this.Diameter * $this.Pi}
-  $prototype | new-property Area {$this.Radius * $this.Radius * $this.Pi}
+  $prototype | New-ScriptProperty Pi { 3.14159 }
+  $prototype | New-Property Radius $radius
+  $prototype | New-ScriptProperty Diameter {$this.Radius * 2}
+  $prototype | New-ScriptProperty Circumference {$this.Diameter * $this.Pi}
+  $prototype | New-ScriptProperty Area {$this.Radius * $this.Radius * $this.Pi}
   $prototype
 }
 

@@ -1,87 +1,54 @@
 ﻿<#
 .SYNOPSIS
 
-Adds a new property to an item supplied by the pipe.
+Adds a new property to an item supplied by the pipe without needing a getter/setter.
 
 .DESCRIPTION
 
-Creates a new property based on the name, getter, and setter blocks supplied.
+Adds a property with a hidden backing field given a property name and value
 
-.PARAMETER name
+.PARAMETER name 
 
 The name of the new property to be added.
 
-.PARAMETER getter
+.PARAMETER value 
 
-The required getter ScriptBlock.
-
-If you are accessing variables/properties/functions on the object being modified,
-use the $this variable to access them.
-
-.PARAMETER setter
-
-The required setter ScriptBlock.
-
-If you are accessing variables/properties/functions on the object being modified,
-use the $this variable to access them.
+The initial value of the property. This can be left out and the property will be null.
 
 .EXAMPLE
 
-Adding a new property with only a getter:
+Create a simple property with an integer value:
 
 >$prototype = new-object psobject
 
->$prototype | new-property Pi { 3.14159 }
+>$prototype | New-Property BuildNumber 42
 
->$prototype.Pi
-3.14159
-
-.EXAMPLE
-
-Adding a new property that wraps access to an environment variable
-
->$prototype = new-object psobject
-
->$prototype | new-property BuildNumber {[environment]::GetEnvironmentVariable("BuildNumber","User")} {param([String]$value); [Environment]::SetEnvironmentVariable("BuildNumber", $value, "User")}
-
->$prototype.BuildNumber = "1.0.42"
 >$prototype.BuildNumber
-1.0.42
+42
 
 .EXAMPLE
 
-Adding a new property that wraps access to another variable (proxy/composite property). Here we can model a circle:
+Create a simple property with no initial value:
 
 >$prototype = new-object psobject
->$prototype | new-property Pi { 3.14159 }
->$prototype | new-property Radius {3}
->$prototype | new-property Diameter {$this.Radius * 2}
->$prototype | new-property Circumference {$this.Diameter * $this.Pi}
->$prototype | new-property Area {$this.Radius * $this.Radius * $this.Pi}
 
-> $prototype.Radius
-3
+>$prototype | New-Property BuildNumber
 
-> $prototype.Diameter
-6
-
-> $prototype.Circumference
-18.84954
-
-> $prototype.area
-28.27431
+>$prototype.BuildNumber
+>$prototype.BuildNumber = 42
+>$prototype.BuildNumber
+42
 
 .NOTES
 
 #>
-
 filter New-Property {
   param(
     [string]$name, 
-    [scriptblock]$getter,
-    [scriptblock]$setter = $null
+    [object]$value = $null
   )
-  $property = new-object System.Management.Automation.PSScriptProperty "$name", $getter, $setter
+  $variable = new-object System.Management.Automation.PSVariable $name, $value
+  $property = new-object System.Management.Automation.PSVariableProperty $variable
   $_.psobject.properties.remove($name)
   $_.psobject.properties.add($property)
 }
