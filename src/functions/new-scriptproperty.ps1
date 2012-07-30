@@ -9,18 +9,18 @@ Creates a new property based on the name, getter, and setter blocks supplied.
 
 .PARAMETER name
 
-The name of the new property to be added.
+The name of the new script property to be added.
 
 .PARAMETER getter
 
-The required getter ScriptBlock.
+A ScriptBlock object that contains the script that is used to get the property value.
 
 If you are accessing variables/properties/functions on the object being modified,
 use the $this variable to access them.
 
 .PARAMETER setter
 
-The required setter ScriptBlock.
+A ScriptBlock object that contains the script that is used to set the property value.
 
 If you are accessing variables/properties/functions on the object being modified,
 use the $this variable to access them.

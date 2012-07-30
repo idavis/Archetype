@@ -34,4 +34,4 @@ try {
 }
 
 Export-ModuleMember -Function @("New-Prototype")
-Export-ModuleMember -Function @("New-Property", "New-AutoProperty", "New-Function")
+Export-ModuleMember -Function @("New-Property", "New-Property", "New-ScriptProperty", "New-Function")

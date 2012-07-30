@@ -15,6 +15,14 @@ The name of the new property to be added.
 
 The initial value of the property. This can be left out and the property will be null.
 
+.PARAMETER options
+
+A ScopedItemOptions constant that identifies how the property can be used.
+
+.PARAMETER attributes
+
+The attributes of the property.
+
 .EXAMPLE
 
 Create a simple property with an integer value:
