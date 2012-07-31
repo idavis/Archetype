@@ -25,13 +25,14 @@ Remove-Module [p]rototype -ErrorAction SilentlyContinue
 
 Push-Location $PSScriptRoot
 try {
-  . ./functions/new-function.ps1
-  . ./functions/new-property.ps1
-  . ./functions/new-autoproperty.ps1
+  . ./functions/add-function.ps1
+  . ./functions/add-property.ps1
+  . ./functions/add-scriptproperty.ps1
   . ./functions/new-prototype.ps1
+  . ./functions/update-typename.ps1
 } finally {
   Pop-Location
 }
 
 Export-ModuleMember -Function @("New-Prototype")
-Export-ModuleMember -Function @("New-Property", "New-Property", "New-ScriptProperty", "New-Function")
+Export-ModuleMember -Function @("Update-TypeName", "Add-Property", "Add-ScriptProperty", "Add-Function")
