@@ -3,9 +3,9 @@
   $prototype = new-circle($radius)
   $prototype | Update-TypeName
   $prototype | Add-Property Height $height
-  $prototype | New-ScriptProperty LateralArea {$this.Radius * $this.Radius * $this.Pi}
+  $prototype | Add-ScriptProperty LateralArea {$this.Radius * $this.Radius * $this.Pi}
   # override/replace Area
-  $prototype | New-ScriptProperty Area {2 * $this.LateralArea + 2 * $this.Pi * $this.Radius * $this.Height}
+  $prototype | Add-ScriptProperty Area {2 * $this.LateralArea + 2 * $this.Pi * $this.Radius * $this.Height}
   $prototype
 }
 

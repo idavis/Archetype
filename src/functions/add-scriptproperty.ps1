@@ -31,7 +31,7 @@ Adding a new property with only a getter:
 
 >$prototype = new-object psobject
 
->$prototype | New-ScriptProperty Pi { 3.14159 }
+>$prototype | Add-ScriptProperty Pi { 3.14159 }
 
 >$prototype.Pi
 3.14159
@@ -42,7 +42,7 @@ Adding a new property that wraps access to an environment variable
 
 >$prototype = new-object psobject
 
->$prototype | New-ScriptProperty BuildNumber {[environment]::GetEnvironmentVariable("BuildNumber","User")} {param([String]$value); [Environment]::SetEnvironmentVariable("BuildNumber", $value, "User")}
+>$prototype | Add-ScriptProperty BuildNumber {[environment]::GetEnvironmentVariable("BuildNumber","User")} {param([String]$value); [Environment]::SetEnvironmentVariable("BuildNumber", $value, "User")}
 
 >$prototype.BuildNumber = "1.0.42"
 >$prototype.BuildNumber
@@ -53,11 +53,11 @@ Adding a new property that wraps access to an environment variable
 Adding a new property that wraps access to another variable (proxy/composite property). Here we can model a circle:
 
 >$prototype = new-object psobject
->$prototype | New-ScriptProperty Pi { 3.14159 }
->$prototype | New-ScriptProperty Radius {3}
->$prototype | New-ScriptProperty Diameter {$this.Radius * 2}
->$prototype | New-ScriptProperty Circumference {$this.Diameter * $this.Pi}
->$prototype | New-ScriptProperty Area {$this.Radius * $this.Radius * $this.Pi}
+>$prototype | Add-ScriptProperty Pi { 3.14159 }
+>$prototype | Add-ScriptProperty Radius {3}
+>$prototype | Add-ScriptProperty Diameter {$this.Radius * 2}
+>$prototype | Add-ScriptProperty Circumference {$this.Diameter * $this.Pi}
+>$prototype | Add-ScriptProperty Area {$this.Radius * $this.Radius * $this.Pi}
 
 > $prototype.Radius
 3
@@ -75,7 +75,7 @@ Adding a new property that wraps access to another variable (proxy/composite pro
 
 #>
 
-filter New-ScriptProperty {
+filter Add-ScriptProperty {
   param(
     [string]$name, 
     [scriptblock]$getter,

@@ -16,9 +16,9 @@ Add-Type -TypeDefinition $source
 function new-dummy {
   param($age = 3)
   $prototype = new-object psobject (new-object TestPerson $age)
-  $prototype | New-ScriptProperty AgeProxy { $this.Age } {param([String]$value); $this.Age = $value}
-  $prototype | New-ScriptProperty Radius {3}
-  $prototype | New-ScriptProperty Diameter {$this.Radius * 2}
+  $prototype | Add-ScriptProperty AgeProxy { $this.Age } {param([String]$value); $this.Age = $value}
+  $prototype | Add-ScriptProperty Radius {3}
+  $prototype | Add-ScriptProperty Diameter {$this.Radius * 2}
   $prototype
 }
 
