@@ -14,11 +14,12 @@ type data files, format data files, or see detailed information about what proto
 
 #>
 filter Update-TypeName {
-  $caller = (Get-PSCallStack)[1].Command -replace "new-", [string]::Empty
-  $derivedTypeName = $_.PSObject.TypeNames[0] -replace "System.Object", [string]::Empty
-  $format = "$caller"
+  $caller = (Get-PSCallStack)[1].Command
+  $caller = $caller -replace "new-", [string]::Empty
+  $caller = $caller -replace "mixin-", [string]::Empty
+  $derivedTypeName = $_.PSObject.TypeNames[0]
   if($derivedTypeName) {
-    $format = "$derivedTypeName#{0}" -f $format
+    $derivedTypeName = "$derivedTypeName#{0}" -f $caller
   }
-  $_.PSObject.TypeNames.Insert(0,"$format")
+  $_.PSObject.TypeNames.Insert(0,"$derivedTypeName")
 }
