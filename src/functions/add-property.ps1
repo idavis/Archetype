@@ -29,7 +29,7 @@ Create a simple property with an integer value:
 
 >$prototype = new-object psobject
 
->$prototype | New-Property BuildNumber 42
+>$prototype | Add-Property BuildNumber 42
 
 >$prototype.BuildNumber
 42
@@ -40,7 +40,7 @@ Create a simple property with no initial value:
 
 >$prototype = new-object psobject
 
->$prototype | New-Property BuildNumber
+>$prototype | Add-Property BuildNumber
 
 >$prototype.BuildNumber
 >$prototype.BuildNumber = 42
@@ -50,7 +50,7 @@ Create a simple property with no initial value:
 .NOTES
 
 #>
-filter New-Property {
+filter Add-Property {
   param(
     [string]$name, 
     [object]$value = $null,

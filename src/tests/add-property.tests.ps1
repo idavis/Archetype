@@ -5,8 +5,8 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".tests.", ".")
 function new-person {
   param($radius = 3)
   $prototype = (new-object psobject)
-  $prototype | New-Property Name "John Doe"
-  $prototype | New-Property Age
+  $prototype | Add-Property Name "John Doe"
+  $prototype | Add-Property Age
   $prototype
 }
 

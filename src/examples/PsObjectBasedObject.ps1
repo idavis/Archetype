@@ -7,7 +7,7 @@
   }
 
   # Add a new property to this prototype
-  $prototype | New-Property Message1 "This is Message 1"
+  $prototype | Add-Property Message1 "This is Message 1"
   $prototype | New-ScriptProperty Message2 {"This is Message 2"}
   
   # Add a proxy property to this prototype

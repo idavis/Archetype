@@ -40,7 +40,7 @@ function New-HashBasedObject {
   # and you set Message2, Message1 will remain unchanged, and you will have a new
   # hash key Message2 with the value you set. This will also override access to Message2
   # by prefering the key to the property.
-  $prototype | new-property Message2 {$this.Message1} {param([String]$value); $this.Message1 = $value}
+  $prototype | Add-Property Message2 {$this.Message1} {param([String]$value); $this.Message1 = $value}
   $prototype
 }
 
