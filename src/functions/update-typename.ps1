@@ -15,7 +15,7 @@ type data files, format data files, or see detailed information about what proto
 #>
 filter Update-TypeName {
   $caller = (Get-PSCallStack)[1].Command -replace "new-", [string]::Empty
-  $derivedTypeName = $_.PSObject.TypeNames[0]
+  $derivedTypeName = $_.PSObject.TypeNames[0] -replace "System.Object", [string]::Empty
   $format = "$caller"
   if($derivedTypeName) {
     $format = "$derivedTypeName#{0}" -f $format
