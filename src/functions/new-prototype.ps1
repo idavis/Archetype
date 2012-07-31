@@ -32,7 +32,7 @@ function New-HashBasedObject {
     ($speaker.Speak($message, 1)) | out-null
   }
   
-  $prototype | New-Property Message1 "This is Message 1"
+  $prototype | new-autoproperty Message1 "This is Message 1"
   
   # We can reference and rewrite Message1 using Message2 as a proxy
   # unless the base is a hash in which setting the value of an existing property
@@ -40,7 +40,7 @@ function New-HashBasedObject {
   # and you set Message2, Message1 will remain unchanged, and you will have a new
   # hash key Message2 with the value you set. This will also override access to Message2
   # by prefering the key to the property.
-  $prototype | New-ScriptProperty Message2 {$this.Message1} {param([String]$value); $this.Message1 = $value}
+  $prototype | new-property Message2 {$this.Message1} {param([String]$value); $this.Message1 = $value}
   $prototype
 }
 
@@ -48,8 +48,8 @@ function New-HashBasedObject {
 
 function New-Prototype {
   param($baseObject = (new-object object))
-  if($baseObject) {
-    $prototype = [PSObject]::AsPSObject($baseObject)
-  }
+  $prototype = [PSObject]::AsPSObject($baseObject)
+  $prototype | Update-TypeName
+  $prototype.PSObject.TypeNames.Insert(0,'Prototype')
   $prototype
 }

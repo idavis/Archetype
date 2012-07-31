@@ -1,6 +1,7 @@
 ﻿function new-cylinder {
   param($radius = 3, $height = 4)
   $prototype = new-circle($radius)
+  $prototype | Update-TypeName
   $prototype | New-Property Height $height
   $prototype | New-ScriptProperty LateralArea {$this.Radius * $this.Radius * $this.Pi}
   # override/replace Area
