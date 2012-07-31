@@ -13,7 +13,7 @@ The object which will be used as the underlying prototype. This is an optional p
 
 function new-sapivoice {
   $prototype = new-prototype
-  $prototype | new-function say {
+  $prototype | Add-Function say {
     param([string]$message)
     $speaker = new-object -com SAPI.SpVoice
     ($speaker.Speak($message, 1)) | out-null
@@ -26,7 +26,7 @@ Changing your base object may cause very different behavior. For example:
 
 function New-HashBasedObject {
   $prototype = new-prototype @{Message0 = "This is Message 0"}
-  $prototype | new-function say {
+  $prototype | Add-Function say {
     param([string]$message)
     $speaker = new-object -com SAPI.SpVoice
     ($speaker.Speak($message, 1)) | out-null

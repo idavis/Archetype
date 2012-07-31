@@ -5,7 +5,7 @@
   #$prototype = new-prototype $null
   #$prototype = new-prototype
   
-  $prototype | new-function say {
+  $prototype | Add-Function say {
     param([string]$message)
     $speaker = new-object -com SAPI.SpVoice
     ($speaker.Speak($message, 1)) | out-null
