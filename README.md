@@ -7,6 +7,7 @@ An simple example:
 ```
 function New-SapiVoice {
   $prototype = New-Prototype
+  $prototype | Update-TypeName
   $prototype | New-Function say {
     param([string]$message)
     $speaker = new-object -com SAPI.SpVoice
@@ -33,6 +34,7 @@ Inheritance:
 function new-circle {
   param($radius = 3)
   $prototype = New-Prototype
+  $prototype | Update-TypeName
   $prototype | New-Property Pi 3.14159 Readonly
   $prototype | New-Property Radius $radius
   $prototype | New-ScriptProperty Diameter {$this.Radius * 2}
@@ -44,6 +46,7 @@ function new-circle {
 function new-cylinder {
   param($radius = 3, $height = 4)
   $prototype = new-circle($radius)
+  $prototype | Update-TypeName
   $prototype | New-Property Height $height
   $prototype | New-ScriptProperty LateralArea {$this.Radius * $this.Radius * $this.Pi}
   # override/replace Area
