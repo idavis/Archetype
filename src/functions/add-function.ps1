@@ -19,7 +19,7 @@ The body of the function.
 
 Add a function named "say" to an object which can speak text using SAPI
 
-$prototype = new-object psobject
+$prototype = New-Prototype
 $prototype | Add-Function say {
   param([string]$message)
   $speaker = new-object -com SAPI.SpVoice

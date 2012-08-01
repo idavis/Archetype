@@ -1,6 +1,6 @@
 ﻿function New-SapiVoice {
   $prototype = new-prototype @{Message0 = "This is Message 0"}
-  
+  $prototype | Update-TypeName
   #The following would also work and a new, emtpy hash would be the base object
   #$prototype = new-prototype $null
   #$prototype = new-prototype

@@ -1,6 +1,6 @@
 ﻿function New-SapiVoice {
-  $prototype = new-prototype @{Message0 = "This is Message 0"}
-  
+  $prototype = New-Prototype @{Message0 = "This is Message 0"}
+  $prototype | Update-TypeName
   $prototype | Add-Function say {
     param([string]$message)
     $speaker = new-object -com SAPI.SpVoice

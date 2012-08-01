@@ -29,8 +29,7 @@ use the $this variable to access them.
 
 Adding a new property with only a getter:
 
->$prototype = new-object psobject
-
+>$prototype = New-Prototype
 >$prototype | Add-ScriptProperty Pi { 3.14159 }
 
 >$prototype.Pi
@@ -40,8 +39,7 @@ Adding a new property with only a getter:
 
 Adding a new property that wraps access to an environment variable
 
->$prototype = new-object psobject
-
+>$prototype = New-Prototype
 >$prototype | Add-ScriptProperty BuildNumber {[environment]::GetEnvironmentVariable("BuildNumber","User")} {param([String]$value); [Environment]::SetEnvironmentVariable("BuildNumber", $value, "User")}
 
 >$prototype.BuildNumber = "1.0.42"
@@ -52,7 +50,7 @@ Adding a new property that wraps access to an environment variable
 
 Adding a new property that wraps access to another variable (proxy/composite property). Here we can model a circle:
 
->$prototype = new-object psobject
+>$prototype = New-Prototype
 >$prototype | Add-ScriptProperty Pi { 3.14159 }
 >$prototype | Add-ScriptProperty Radius {3}
 >$prototype | Add-ScriptProperty Diameter {$this.Radius * 2}

@@ -27,8 +27,7 @@ The attributes of the property.
 
 Create a simple property with an integer value:
 
->$prototype = new-object psobject
-
+>$prototype = New-Prototype
 >$prototype | Add-Property BuildNumber 42
 
 >$prototype.BuildNumber
@@ -38,8 +37,7 @@ Create a simple property with an integer value:
 
 Create a simple property with no initial value:
 
->$prototype = new-object psobject
-
+>$prototype = New-Prototype
 >$prototype | Add-Property BuildNumber
 
 >$prototype.BuildNumber
