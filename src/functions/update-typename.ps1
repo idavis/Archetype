@@ -13,13 +13,15 @@ type data files, format data files, or see detailed information about what proto
 .NOTES
 
 #>
-filter Update-TypeName {
-  $caller = (Get-PSCallStack)[1].Command
-  $caller = $caller -replace "new-", [string]::Empty
-  $caller = $caller -replace "mixin-", [string]::Empty
-  $derivedTypeName = $_.PSObject.TypeNames[0]
-  if($derivedTypeName) {
-    $derivedTypeName = "$derivedTypeName#{0}" -f $caller
+function Update-TypeName {
+  process {
+    $caller = (Get-PSCallStack)[1].Command
+    $caller = $caller -replace "new-", [string]::Empty
+    $caller = $caller -replace "mixin-", [string]::Empty
+    $derivedTypeName = $_.PSObject.TypeNames[0]
+    if($derivedTypeName) {
+      $derivedTypeName = "$derivedTypeName#{0}" -f $caller
+    }
+    $_.PSObject.TypeNames.Insert(0,"$derivedTypeName")
   }
-  $_.PSObject.TypeNames.Insert(0,"$derivedTypeName")
 }

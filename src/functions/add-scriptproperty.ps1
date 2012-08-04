@@ -73,13 +73,15 @@ Adding a new property that wraps access to another variable (proxy/composite pro
 
 #>
 
-filter Add-ScriptProperty {
+function Add-ScriptProperty {
   param(
     [string]$name, 
     [scriptblock]$getter,
     [scriptblock]$setter = $null
   )
-  $property = new-object System.Management.Automation.PSScriptProperty "$name", $getter, $setter
-  $_.psobject.properties.remove($name)
-  $_.psobject.properties.add($property)
+  process {
+    $property = new-object System.Management.Automation.PSScriptProperty "$name", $getter, $setter
+    $_.psobject.properties.remove($name)
+    $_.psobject.properties.add($property)
+  }
 }

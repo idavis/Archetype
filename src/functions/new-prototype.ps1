@@ -47,8 +47,12 @@ function New-HashBasedObject {
 #>
 
 function New-Prototype {
-  param($baseObject = (new-object object))
-  $prototype = [PSObject]::AsPSObject($baseObject)
-  $prototype.PSObject.TypeNames.Insert(0,"Prototype")
-  $prototype
+  param(
+    $baseObject = (new-object object)
+  )
+  process {
+    $prototype = [PSObject]::AsPSObject($baseObject)
+    $prototype.PSObject.TypeNames.Insert(0,"Prototype")
+    $prototype
+  }
 }

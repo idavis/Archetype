@@ -48,15 +48,17 @@ Create a simple property with no initial value:
 .NOTES
 
 #>
-filter Add-Property {
+function Add-Property {
   param(
     [string]$name, 
     [object]$value = $null,
     [System.Management.Automation.ScopedItemOptions]$options = [System.Management.Automation.ScopedItemOptions]::None,
     [Attribute[]]$attributes = $null
   )
-  $variable = new-object System.Management.Automation.PSVariable $name, $value, $options, $attributes
-  $property = new-object System.Management.Automation.PSVariableProperty $variable
-  $_.psobject.properties.remove($name)
-  $_.psobject.properties.add($property)
+  process {
+    $variable = new-object System.Management.Automation.PSVariable $name, $value, $options, $attributes
+    $property = new-object System.Management.Automation.PSVariableProperty $variable
+    $_.psobject.properties.remove($name)
+    $_.psobject.properties.add($property)
+  }
 }

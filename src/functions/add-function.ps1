@@ -31,12 +31,14 @@ $prototype.say("Hello, World!")
 .NOTES
 
 #>
-filter Add-Function {
+function Add-Function {
   param(
     [string]$name,
     [scriptblock]$value
   )
-  $method = new-object System.Management.Automation.PSScriptMethod "$name", $value
-  $_.psobject.methods.remove($name)
-  $_.psobject.methods.add($method)
+  process {
+    $method = new-object System.Management.Automation.PSScriptMethod "$name", $value
+    $_.psobject.methods.remove($name)
+    $_.psobject.methods.add($method)
+  }
 }
