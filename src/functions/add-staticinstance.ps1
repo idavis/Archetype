@@ -13,11 +13,11 @@
 
 #>
 
-function Create-StaticInstance {
+function Add-StaticInstance {
   process {
     # Create the static instance registry to mimic the CTS's single class instance per type
     if($Global:__CTS__ -eq $null) {
-      $dictionary = (New-Object 'System.Collections.Generic.Dictionary[string,object]')
+      $dictionary = (New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]' -ArgumentList @([StringComparer]::OrdinalIgnoreCase) )
       $value = [PSObject]::AsPSObject($dictionary)
       $Global:__CTS__ = $value
     }

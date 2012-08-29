@@ -23,6 +23,6 @@ function Update-TypeName {
       $derivedTypeName = "$derivedTypeName#{0}" -f $caller
     }
     $_.PSObject.TypeNames.Insert(0,"$derivedTypeName")
-    $_ | Create-StaticInstance
+    $_ | Add-StaticInstance
   }
 }

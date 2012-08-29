@@ -1,7 +1,7 @@
-﻿$pwd = Split-Path -Parent $MyInvocation.MyCommand.Path
+﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".tests.", ".")
-. "$pwd\..\functions\$sut"
-. "$pwd\..\functions\update-typename.ps1"
+. "$here\_Common.ps1"
+. "$here\..\functions\$sut"
 
 Describe "Ensure-PrototypesHaveTheProperBaseObject" {
   It "should use null if nothing is supplied" {

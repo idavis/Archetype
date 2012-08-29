@@ -1,6 +1,7 @@
-﻿$pwd = Split-Path -Parent $MyInvocation.MyCommand.Path
+﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".tests.", ".")
-. "$pwd\..\functions\$sut"
+. "$here\_Common.ps1"
+. "$here\..\functions\$sut"
 
 $source = @"
 public class TestPerson {

@@ -53,7 +53,7 @@ function New-Prototype {
   process {
     $prototype = [PSObject]::AsPSObject($baseObject)
     $prototype.PSObject.TypeNames.Insert(0,"Prototype")
-    $prototype | Create-StaticInstance
+    $prototype | Add-StaticInstance
     $prototype
   }
 }

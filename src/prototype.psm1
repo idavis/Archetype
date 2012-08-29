@@ -30,9 +30,11 @@ try {
   . ./functions/add-scriptproperty.ps1
   . ./functions/new-prototype.ps1
   . ./functions/update-typename.ps1
+  . ./functions/add-staticinstance.ps1
+  . ./functions/add-staticproperty.ps1
 } finally {
   Pop-Location
 }
 
 Export-ModuleMember -Function @("New-Prototype")
-Export-ModuleMember -Function @("Update-TypeName", "Create-StaticInstance", "Add-Property", "Add-ScriptProperty", "Add-Function", "Add-StaticProperty")
+Export-ModuleMember -Function @("Update-TypeName", "Add-StaticInstance", "Add-Property", "Add-ScriptProperty", "Add-Function", "Add-StaticProperty")

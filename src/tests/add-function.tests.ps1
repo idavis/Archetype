@@ -1,9 +1,9 @@
-﻿$pwd = Split-Path -Parent $MyInvocation.MyCommand.Path
+﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".tests.", ".")
-. "$pwd\..\functions\$sut"
+. "$here\_Common.ps1"
+. "$here\..\functions\$sut"
 
 function new-dummy {
-  param($radius = 3)
   $prototype = (new-object psobject)
   $prototype | Add-Function HasRetVal { 5 }
   $prototype | Add-Function CanPassParameters {param($foo) $foo }
