@@ -35,4 +35,4 @@ try {
 }
 
 Export-ModuleMember -Function @("New-Prototype")
-Export-ModuleMember -Function @("Update-TypeName", "Add-Property", "Add-ScriptProperty", "Add-Function")
+Export-ModuleMember -Function @("Update-TypeName", "Create-StaticInstance", "Add-Property", "Add-ScriptProperty", "Add-Function", "Add-StaticProperty")
