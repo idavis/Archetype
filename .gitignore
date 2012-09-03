@@ -1,3 +1,14 @@
 [B|b]in
 *.nupkg
 lib/
+_ReSharper.*
+bin
+obj
+debug
+release
+*.suo
+*resharper*
+*.user
+*.cache
+MSBuildOutput.txt
+Packages/
