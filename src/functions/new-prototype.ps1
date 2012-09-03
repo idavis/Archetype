@@ -45,15 +45,49 @@ function New-HashBasedObject {
 }
 
 #>
-
+$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 function New-Prototype {
   param(
     $baseObject = (new-object object)
   )
   process {
-    $prototype = [PSObject]::AsPSObject($baseObject)
-    $prototype.PSObject.TypeNames.Insert(0,"Prototype")
+    $prototype = $null
+    if($PSVersionTable.CLRVersion.Major -lt 4) {
+      $prototype = [PSObject]::AsPSObject($baseObject)
+      $prototype.PSObject.TypeNames.Insert(0,"Prototype")
+    } else {
+      if(@(try{[Prototype.Ps.Prototype]}catch{}).Length -eq 0) {
+        Add-Type -Path "$here\Prototype.cs" -ReferencedAssemblies @("System.Core", "Microsoft.CSharp")
+      }
+      $TryInvokeMissingMemberCallback =  { 
+        param([InvokeMemberBinder]$binder, [object[]] $args, [ref] $result)
+        Write-Host "Method Missing: Attempted to call $($binder.Name) with $($args -join ', ' )"
+        $result=$null
+        $true
+      }
+      $TryInvokeMissingGetMemberCallback = {
+        param([GetMemberBinder]$binder, [ref] $result)
+        Write-Host $binder
+        Write-Host "Method Missing: Attempted to get property $($binder.Name)"
+        $result=$null
+        $true
+      }
+      $TryInvokeMissingSetMemberCallback = {
+        param([SetMemberBinder]$binder, $value)
+        Write-Host $binder
+        Write-Host "Method Missing: Attempted to set property $($binder.Name) to $($value|Out-String)"
+        $true
+      }
+      $dispatcher = (New-Object Prototype.Ps.Prototype)
+      $dispatcher.TryInvokeMissingMember = $TryInvokeMissingMemberCallback
+      $dispatcher.TryInvokeMissingGetMember = $TryInvokeMissingGetMemberCallback
+      $dispatcher.TryInvokeMissingSetMember = $TryInvokeMissingSetMemberCallback
+      $prototype = [PSObject]::AsPSObject($dispatcher)
+    }
+    
     $prototype | Add-StaticInstance
     $prototype
   }
 }
+
+

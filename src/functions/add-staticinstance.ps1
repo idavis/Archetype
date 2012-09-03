@@ -12,7 +12,7 @@
 }
 
 #>
-
+$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 function Add-StaticInstance {
   process {
     # Create the static instance registry to mimic the CTS's single class instance per type
@@ -25,10 +25,21 @@ function Add-StaticInstance {
     $key = $_.PSObject.TypeNames[0]
 
     # If this 'type' has not been added, create a new psobject and add it
-    if(!$registry.ContainsKey($key)) {
-      $instance = [PSObject]::AsPSObject((New-Object object))
-      $instance.PSObject.TypeNames.Insert(0,$key)
-      $registry[$key] = $instance
+    if($registry.ContainsKey($key)) {
+      return
     }
+    $backingObject = $null
+    if($PSVersionTable.CLRVersion.Major -lt 4) {
+      $backingObject = (New-Object object)
+
+    } else {
+      if(@(try{[Prototype.Ps.Prototype]}catch{}).Length -eq 0) {
+        Add-Type -Path "$here\Prototype.cs" -ReferencedAssemblies @("System.Core", "Microsoft.CSharp")
+      }
+      $backingObject = (New-Object Prototype.Ps.Prototype)
+    }
+    $instance = [PSObject]::AsPSObject($backingObject)
+    $instance.PSObject.TypeNames.Insert(0,$key)
+    $registry[$key] = $instance
   }
 }
