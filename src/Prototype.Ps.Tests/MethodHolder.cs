@@ -4,17 +4,27 @@ namespace Prototype.Ps.Tests
 {
     public class MethodHolder : PrototypalObject
     {
-        public MethodHolder():this(null){}
-        public MethodHolder(DynamicObject prototype)
-            : base(prototype)
+        public static bool StaticMethodWithNoReturnValueOrParametersWasCalled;
+        public bool MethodWithNoReturnValueOrParametersWasCalled;
+        public int MethodWithNoReturnValueSingleParameterValue;
+        public bool MethodWithNoReturnValueSingleParameterWasCalled;
+        public bool MethodWithReturnValueNoParametersWasCalled;
+        public bool MethodWithReturnValueSingleParameterWasCalled;
+
+        public MethodHolder() : this(null)
         {
         }
 
-        public bool MethodWithNoReturnValueOrParametersWasCalled;
-        public bool MethodWithNoReturnValueSingleParameterWasCalled;
-        public int MethodWithNoReturnValueSingleParameterValue;
-        public bool MethodWithReturnValueNoParametersWasCalled;
-        public bool MethodWithReturnValueSingleParameterWasCalled;
+        public MethodHolder(DynamicObject prototype)
+            : base(prototype)
+        {
+            StaticMethodWithNoReturnValueOrParametersWasCalled = false;
+        }
+
+        public static void StaticMethodWithNoReturnValueOrParameters()
+        {
+            StaticMethodWithNoReturnValueOrParametersWasCalled = true;
+        }
 
         public void MethodWithNoReturnValueOrParameters()
         {

@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Prototype.Ps
 {
@@ -27,6 +28,9 @@ namespace Prototype.Ps
 
     public class PrototypalObject : DynamicObject
     {
+        private const BindingFlags DefaultBindingFlags =
+            BindingFlags.FlattenHierarchy | BindingFlags.Static | BindingFlags.Public;
+
         public PrototypalObject()
             : this(null)
         {
@@ -45,7 +49,11 @@ namespace Prototype.Ps
 
         public override DynamicMetaObject GetMetaObject(Expression parameter)
         {
-            return new PrototypalMetaObject(parameter, this, () => base.GetMetaObject(parameter));
+            if (Prototype == null)
+            {
+                return base.GetMetaObject(parameter);
+            }
+            return new PrototypalMetaObject(parameter, this, Prototype);
         }
 
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
@@ -54,9 +62,9 @@ namespace Prototype.Ps
             {
                 return true;
             }
-            if (RespondsTo(binder.Name))
+            if (TryInvokeStaticMember(binder, args, out result))
             {
-                // TODO: static method
+                return true;
             }
             if (TryInvokeMemberMissing == null)
             {
@@ -79,15 +87,34 @@ namespace Prototype.Ps
             return TryInvokeMissing(binder, args, out result);
         }
 
+        protected virtual bool TryInvokeStaticMember(InvokeMemberBinder binder, object[] args, out object result)
+        {
+            MethodInfo method = GetType().GetMethod(binder.Name, DefaultBindingFlags);
+            if (method != null)
+            {
+                result = method.Invoke(null, args);
+                return true;
+            }
+            if (Prototype != null)
+            {
+                if (Prototype.TryInvokeMember(binder, args, out result))
+                {
+                    return true;
+                }
+            }
+            result = null;
+            return false;
+        }
+
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
             if (base.TryGetMember(binder, out result))
             {
                 return true;
             }
-            if (RespondsTo(binder.Name))
+            if (TryGetStaticMember(binder, out result))
             {
-                // TODO: static property
+                return true;
             }
             if (TryGetMemberMissing == null)
             {
@@ -102,15 +129,64 @@ namespace Prototype.Ps
             {
                 return true;
             }
-            if (RespondsTo(binder.Name))
+            if (TrySetStaticMember(binder, value))
             {
-                // TODO: static property
+                return true;
             }
             if (TrySetMemberMissing == null)
             {
                 return false;
             }
             return TrySetMemberMissing(binder, value);
+        }
+
+        protected virtual bool TryGetStaticMember(GetMemberBinder binder, out object result)
+        {
+            PropertyInfo property = GetType().GetProperty(binder.Name, DefaultBindingFlags);
+            if (property != null)
+            {
+                result = property.GetValue(null, null);
+                return true;
+            }
+            FieldInfo field = GetType().GetField(binder.Name, DefaultBindingFlags);
+            if (field != null)
+            {
+                result = field.GetValue(null);
+                return true;
+            }
+            if (Prototype != null)
+            {
+                if (Prototype.TryGetMember(binder, out result))
+                {
+                    return true;
+                }
+            }
+            result = null;
+            return false;
+        }
+
+        protected virtual bool TrySetStaticMember(SetMemberBinder binder, object value)
+        {
+            PropertyInfo property = GetType().GetProperty(binder.Name, DefaultBindingFlags);
+            if (property != null)
+            {
+                property.SetValue(null, value, null);
+                return true;
+            }
+            FieldInfo field = GetType().GetField(binder.Name, DefaultBindingFlags);
+            if (field != null)
+            {
+                field.SetValue(null, value);
+                return true;
+            }
+            if (Prototype != null)
+            {
+                if (Prototype.TrySetMember(binder, value))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public virtual bool RespondsTo(string name)

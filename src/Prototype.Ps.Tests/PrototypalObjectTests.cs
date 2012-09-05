@@ -6,11 +6,15 @@ namespace Prototype.Ps.Tests
     [TestFixture]
     public class PrototypalObjectTests
     {
+        #region Setup/Teardown
+
         [SetUp]
         public virtual void Setup()
         {
             Value = Create();
         }
+
+        #endregion
 
         protected virtual PrototypalObject Create()
         {
@@ -27,13 +31,7 @@ namespace Prototype.Ps.Tests
         [Test]
         public void Calling_a_function_when_there_is_no_function_defined_throws()
         {
-            Assert.Throws<RuntimeBinderException>(() => { DynamicValue.Foo(); });
-        }
-
-        [Test]
-        public void Setting_a_property_when_there_is_no_property_defined_throws()
-        {
-            Assert.Throws<RuntimeBinderException>(() => { DynamicValue.Foo = "Bar"; });
+            Assert.Throws<RuntimeBinderException>(() => DynamicValue.Foo());
         }
 
         [Test]
@@ -45,7 +43,13 @@ namespace Prototype.Ps.Tests
         [Test]
         public void Invoking_the_object_when_there_is_no_backing_defined_throws()
         {
-            Assert.Throws<RuntimeBinderException>(() => { DynamicValue(1, 2); });
+            Assert.Throws<RuntimeBinderException>(() => DynamicValue(1, 2));
+        }
+
+        [Test]
+        public void Setting_a_property_when_there_is_no_property_defined_throws()
+        {
+            Assert.Throws<RuntimeBinderException>(() => { DynamicValue.Foo = "Bar"; });
         }
     }
 }
