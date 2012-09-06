@@ -33,10 +33,10 @@ function Add-StaticInstance {
       $backingObject = (New-Object object)
 
     } else {
-      if(@(try{[Prototype.Ps.Prototype]}catch{}).Length -eq 0) {
+      if(@(try{[Prototype.Ps.PrototypalObject]}catch{}).Length -eq 0) {
         Add-Type -Path "$here\Prototype.cs" -ReferencedAssemblies @("System.Core", "Microsoft.CSharp")
       }
-      $backingObject = (New-Object Prototype.Ps.Prototype)
+      $backingObject = (New-Object Prototype.Ps.PrototypalObject)
     }
     $instance = [PSObject]::AsPSObject($backingObject)
     $instance.PSObject.TypeNames.Insert(0,$key)

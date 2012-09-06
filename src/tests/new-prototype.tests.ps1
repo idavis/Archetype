@@ -10,7 +10,12 @@ Describe "Ensure-PrototypesHaveTheProperBaseObject" {
   It "should use the supplied base object" {
     $baseobject = @{item="1"}
     $prototype = new-prototype($baseobject)
-    ($prototype.psobject.ImmediateBaseObject).should.be($baseobject)
+    ($prototype.psobject.ImmediateBaseObject.Prototype).should.be($baseobject)
+  }
+    It "should use the supplied prototype object" {
+    $baseobject = @{item="1"}
+    $prototype = new-prototype($baseobject)
+    ($prototype.psobject.ImmediateBaseObject).should.be($prototype)
   }
   
   It "should not add properties on the fly" {
@@ -23,6 +28,14 @@ Describe "Ensure-PrototypesHaveTheProperBaseObject" {
 Describe "Ensure-HashBasedPrototypesHaveHashBehavior" {
   It "should add properties on the fly" {
     $prototype = new-prototype @{}
+    $prototype.foo = 5
+    $prototype.foo.should.be(5)
+  }
+}
+
+Describe "Ensure-ExpandoObjectBasedPrototypesHaveHashBehavior" {
+  It "should add properties on the fly" {
+    $prototype = new-prototype (new-object Dynamic.ExpandoObject)
     $prototype.foo = 5
     $prototype.foo.should.be(5)
   }
