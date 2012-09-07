@@ -401,23 +401,44 @@ namespace Prototype.Ps
             protected virtual DynamicMetaObject AddTypeRestrictions( DynamicMetaObject result )
             {
                 BindingRestrictions typeRestrictions =
-                        BindingRestrictions.GetTypeRestriction( Expression, Value.GetType() ).Merge( result.Restrictions );
+                        GetTypeRestriction().Merge( result.Restrictions );
                 var metaObject = new DynamicMetaObject( result.Expression, typeRestrictions, _metaObject.Value );
                 return metaObject;
             }
 
             protected virtual DynamicMetaObject CreatePrototypeMetaObject()
             {
-                UnaryExpression castExpression = Expression.Convert( Expression, Value.GetType() );
+                Expression castExpression = GetLimitedSelf();
                 MemberExpression memberExpression = Expression.Property( castExpression, "Prototype" );
                 DynamicMetaObject prototypeMetaObject = _prototype.GetMetaObject( memberExpression );
                 return prototypeMetaObject;
+            }
+
+            internal BindingRestrictions GetTypeRestriction()
+            {
+                if ( Value == null && HasValue )
+                {
+                    return BindingRestrictions.GetInstanceRestriction( Expression, null );
+                }
+                return BindingRestrictions.GetTypeRestriction( Expression, LimitType );
             }
 
             protected virtual DynamicMetaObject CreateBaseMetaObject()
             {
                 DynamicMetaObject baseMetaObject = _prototypalObject.GetBaseMetaObject( Expression );
                 return baseMetaObject;
+            }
+
+            private Expression GetLimitedSelf()
+            {
+                return AreEquivalent( Expression.Type, LimitType )
+                               ? Expression
+                               : Expression.Convert( Expression, LimitType );
+            }
+
+            private bool AreEquivalent( Type t1, Type t2 )
+            {
+                return t1 == t2 || t1.IsEquivalentTo( t2 );
             }
 
             public override DynamicMetaObject BindBinaryOperation( BinaryOperationBinder binder, DynamicMetaObject arg )
@@ -490,8 +511,8 @@ namespace Prototype.Ps
 
             public override DynamicMetaObject BindSetMember( SetMemberBinder binder, DynamicMetaObject value )
             {
-                return binder.FallbackSetMember( _baseMetaObject,
-                                                 AddTypeRestrictions( _metaObject.BindSetMember( binder, value ) ) );
+                DynamicMetaObject prototypeMetaObject = AddTypeRestrictions( _metaObject.BindSetMember( binder, value ) );
+                return binder.FallbackSetMember( _baseMetaObject, value, prototypeMetaObject );
             }
 
             public override DynamicMetaObject BindUnaryOperation( UnaryOperationBinder binder )

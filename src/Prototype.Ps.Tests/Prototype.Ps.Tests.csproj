@@ -44,15 +44,19 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="PrototypalObjectTestsExpandoObjectPrototypes.cs" />
+    <Compile Include="PrototypalObjectTestsInheritanceOrder.cs" />
     <Compile Include="StaticTests\StaticMethodTests.cs" />
     <Compile Include="StaticTests\StaticMethodsOnDynamicObjectPrototypeTests.cs" />
     <Compile Include="StaticTests\StaticMethodsOnObjectPrototypeTests.cs" />
-    <Compile Include="TestObjects\MethodTestObjects.cs" />
+    <Compile Include="TestObjects\DynamicObjectWithMethods.cs" />
+    <Compile Include="TestObjects\Person.cs" />
+    <Compile Include="TestObjects\ProtoTypalObjectWithMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PrototypalObjectTests.cs" />
     <Compile Include="MethodTests\PrototypalObjectTestsDefinedMethods.cs" />
     <Compile Include="MethodTests\NestedPrototypeWithMethods.cs" />
     <Compile Include="PrototypalObjectTestsNotImplementedCalls.cs" />
+    <Compile Include="TestObjects\ObjectWithMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Prototype.Ps\Prototype.Ps.csproj">

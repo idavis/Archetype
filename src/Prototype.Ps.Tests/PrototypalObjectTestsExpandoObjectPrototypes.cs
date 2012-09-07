@@ -11,17 +11,25 @@ namespace Prototype.Ps.Tests
     [Timeout( Constants.TestTimeOutInMs )]
     public class PrototypalObjectTestsExpandoObjectPrototypes : PrototypalObjectTests
     {
+        private dynamic _expandoObject;
         protected override PrototypalObject Create()
         {
-            return new PrototypalObject( new ExpandoObject() );
+            _expandoObject = new ExpandoObject();
+            return new PrototypalObject(_expandoObject);
         }
 
         [Test]
         public void Indexing_should_create_the_member()
         {
-            // This currently creates an infinite loop.
             DynamicValue.foo = 5;
-            Assert.AreEqual( 5, DynamicValue.foo );
+            Assert.AreEqual( 5, _expandoObject.foo );
+        }
+
+        [Test]
+        public void Indexing_should_get_the_member()
+        {
+            _expandoObject.foo = 5;
+            Assert.AreEqual(5, DynamicValue.foo);
         }
     }
 }
