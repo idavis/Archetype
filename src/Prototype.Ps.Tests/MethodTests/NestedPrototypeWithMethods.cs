@@ -81,4 +81,34 @@ namespace Prototype.Ps.Tests.MethodTests
 
         #endregion
     }
+
+    [TestFixture]
+    [Timeout( Constants.TestTimeOutInMs )]
+    public class PrototypalObjectTestsNestedObjectWithMethods : PrototypalObjectTestsDefinedMethods
+    {
+        #region Setup/Teardown
+
+        [SetUp]
+        public override void Setup()
+        {
+            Value = new PrototypalObject( new ObjectWithMethods() );
+        }
+
+        #endregion
+    }
+
+    [TestFixture]
+    [Timeout( Constants.TestTimeOutInMs )]
+    public class PrototypalObjectTestsDoubleNestedObjectWithMethods : PrototypalObjectTestsDefinedMethods
+    {
+        #region Setup/Teardown
+
+        [SetUp]
+        public override void Setup()
+        {
+            Value = new PrototypalObject( new PrototypalObject( new ObjectWithMethods() ) );
+        }
+
+        #endregion
+    }
 }

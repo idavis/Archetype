@@ -56,24 +56,24 @@ namespace Prototype.Ps
         {
         }
 
-        public PrototypalObject( IDynamicMetaObjectProvider prototype )
+        public PrototypalObject( object prototype )
         {
             Prototype = prototype;
         }
 
-        public IDynamicMetaObjectProvider Prototype { get; protected set; }
-        public TryBinaryOperationMissing TryBinaryOperationMissing { get; set; }
-        public TryConvertMissing TryConvertMissing { get; set; }
-        public TryCreateInstanceMissing TryCreateInstanceMissing { get; set; }
-        public TryDeleteIndexMissing TryDeleteIndexMissing { get; set; }
-        public TryDeleteMemberMissing TryDeleteMemberMissing { get; set; }
-        public TryGetIndexMissing TryGetIndexMissing { get; set; }
-        public TryGetMemberMissing TryGetMemberMissing { get; set; }
-        public TryInvokeMemberMissing TryInvokeMemberMissing { get; set; }
-        public TryInvokeMissing TryInvokeMissing { get; set; }
-        public TrySetIndexMissing TrySetIndexMissing { get; set; }
-        public TrySetMemberMissing TrySetMemberMissing { get; set; }
-        public TryUnaryOperationMissing TryUnaryOperationMissing { get; set; }
+        public virtual object Prototype { get; set; }
+        public virtual TryBinaryOperationMissing TryBinaryOperationMissing { get; set; }
+        public virtual TryConvertMissing TryConvertMissing { get; set; }
+        public virtual TryCreateInstanceMissing TryCreateInstanceMissing { get; set; }
+        public virtual TryDeleteIndexMissing TryDeleteIndexMissing { get; set; }
+        public virtual TryDeleteMemberMissing TryDeleteMemberMissing { get; set; }
+        public virtual TryGetIndexMissing TryGetIndexMissing { get; set; }
+        public virtual TryGetMemberMissing TryGetMemberMissing { get; set; }
+        public virtual TryInvokeMemberMissing TryInvokeMemberMissing { get; set; }
+        public virtual TryInvokeMissing TryInvokeMissing { get; set; }
+        public virtual TrySetIndexMissing TrySetIndexMissing { get; set; }
+        public virtual TrySetMemberMissing TrySetMemberMissing { get; set; }
+        public virtual TryUnaryOperationMissing TryUnaryOperationMissing { get; set; }
 
         public override DynamicMetaObject GetMetaObject( Expression parameter )
         {
@@ -385,11 +385,11 @@ namespace Prototype.Ps
             private readonly DynamicMetaObject _baseMetaObject;
             private readonly DynamicMetaObject _metaObject;
             private readonly PrototypalObject _prototypalObject;
-            private readonly IDynamicMetaObjectProvider _prototype;
+            private readonly object _prototype;
 
             public PrototypalMetaObject( Expression expression,
                                          PrototypalObject value,
-                                         IDynamicMetaObjectProvider prototype )
+                                         object prototype )
                     : base( expression, BindingRestrictions.Empty, value )
             {
                 _prototypalObject = value;
@@ -410,7 +410,7 @@ namespace Prototype.Ps
             {
                 Expression castExpression = GetLimitedSelf();
                 MemberExpression memberExpression = Expression.Property( castExpression, "Prototype" );
-                DynamicMetaObject prototypeMetaObject = _prototype.GetMetaObject( memberExpression );
+                DynamicMetaObject prototypeMetaObject = Create( _prototype, memberExpression );
                 return prototypeMetaObject;
             }
 
