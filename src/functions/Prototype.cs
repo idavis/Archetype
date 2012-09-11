@@ -91,13 +91,9 @@ namespace Prototype.Ps
 
         public override bool TryBinaryOperation( BinaryOperationBinder binder, object arg, out object result )
         {
-            if ( base.TryBinaryOperation( binder, arg, out result ) )
+            if ( TryBinaryOperationMissing == null )
             {
-                return true;
-            }
-
-            if ( TrySetMemberMissing == null )
-            {
+                result = null;
                 return false;
             }
             return TryBinaryOperationMissing( binder, arg, out result );
@@ -105,13 +101,9 @@ namespace Prototype.Ps
 
         public override bool TryConvert( ConvertBinder binder, out object result )
         {
-            if ( base.TryConvert( binder, out result ) )
-            {
-                return true;
-            }
-
             if ( TryConvertMissing == null )
             {
+                result = null;
                 return false;
             }
             return TryConvertMissing( binder, out result );
@@ -119,13 +111,9 @@ namespace Prototype.Ps
 
         public override bool TryCreateInstance( CreateInstanceBinder binder, object[] args, out object result )
         {
-            if ( base.TryCreateInstance( binder, args, out result ) )
-            {
-                return true;
-            }
-
             if ( TryCreateInstanceMissing == null )
             {
+                result = null;
                 return false;
             }
             return TryCreateInstanceMissing( binder, args, out result );
@@ -133,11 +121,6 @@ namespace Prototype.Ps
 
         public override bool TryDeleteIndex( DeleteIndexBinder binder, object[] indexes )
         {
-            if ( base.TryDeleteIndex( binder, indexes ) )
-            {
-                return true;
-            }
-
             if ( TryDeleteIndexMissing == null )
             {
                 return true;
@@ -147,11 +130,6 @@ namespace Prototype.Ps
 
         public override bool TryDeleteMember( DeleteMemberBinder binder )
         {
-            if ( base.TryDeleteMember( binder ) )
-            {
-                return true;
-            }
-
             if ( TryDeleteMemberMissing == null )
             {
                 return true;
@@ -161,13 +139,9 @@ namespace Prototype.Ps
 
         public override bool TryGetIndex( GetIndexBinder binder, object[] indexes, out object result )
         {
-            if ( base.TryGetIndex( binder, indexes, out result ) )
-            {
-                return true;
-            }
-
             if ( TryGetIndexMissing == null )
             {
+                result = null;
                 return false;
             }
             return TryGetIndexMissing( binder, indexes, out result );
@@ -175,10 +149,6 @@ namespace Prototype.Ps
 
         public override bool TryGetMember( GetMemberBinder binder, out object result )
         {
-            if ( base.TryGetMember( binder, out result ) )
-            {
-                return true;
-            }
             if ( TryGetStaticMember( binder, out result ) )
             {
                 return true;
@@ -192,10 +162,6 @@ namespace Prototype.Ps
 
         public override bool TryInvokeMember( InvokeMemberBinder binder, object[] args, out object result )
         {
-            if ( base.TryInvokeMember( binder, args, out result ) )
-            {
-                return true;
-            }
             if ( TryInvokeStaticMember( binder, args, out result ) )
             {
                 return true;
@@ -209,13 +175,9 @@ namespace Prototype.Ps
 
         public override bool TryInvoke( InvokeBinder binder, object[] args, out object result )
         {
-            if ( base.TryInvoke( binder, args, out result ) )
-            {
-                return true;
-            }
-
             if ( TryInvokeMissing == null )
             {
+                result = null;
                 return false;
             }
             return TryInvokeMissing( binder, args, out result );
@@ -223,11 +185,6 @@ namespace Prototype.Ps
 
         public override bool TrySetIndex( SetIndexBinder binder, object[] indexes, object value )
         {
-            if ( base.TrySetIndex( binder, indexes, value ) )
-            {
-                return true;
-            }
-
             if ( TrySetIndexMissing == null )
             {
                 return false;
@@ -237,10 +194,6 @@ namespace Prototype.Ps
 
         public override bool TrySetMember( SetMemberBinder binder, object value )
         {
-            if ( base.TrySetMember( binder, value ) )
-            {
-                return true;
-            }
             if ( TrySetStaticMember( binder, value ) )
             {
                 return true;
@@ -254,12 +207,9 @@ namespace Prototype.Ps
 
         public override bool TryUnaryOperation( UnaryOperationBinder binder, out object result )
         {
-            if ( base.TryUnaryOperation( binder, out result ) )
-            {
-                return true;
-            }
             if ( TryUnaryOperationMissing == null )
             {
+                result = null;
                 return false;
             }
             return TryUnaryOperationMissing( binder, out result );
@@ -443,82 +393,77 @@ namespace Prototype.Ps
 
             public override DynamicMetaObject BindBinaryOperation( BinaryOperationBinder binder, DynamicMetaObject arg )
             {
-                return binder.FallbackBinaryOperation( _baseMetaObject,
-                                                       arg,
-                                                       AddTypeRestrictions( _metaObject.BindBinaryOperation( binder, arg ) ) );
+                DynamicMetaObject errorSuggestion = AddTypeRestrictions( _metaObject.BindBinaryOperation( binder, arg ) );
+                return binder.FallbackBinaryOperation( _baseMetaObject, arg, errorSuggestion );
             }
 
             public override DynamicMetaObject BindConvert( ConvertBinder binder )
             {
-                return binder.FallbackConvert( _baseMetaObject, AddTypeRestrictions( _metaObject.BindConvert( binder ) ) );
+                DynamicMetaObject errorSuggestion = AddTypeRestrictions( _metaObject.BindConvert( binder ) );
+                return binder.FallbackConvert( _baseMetaObject, errorSuggestion );
             }
 
             public override DynamicMetaObject BindCreateInstance( CreateInstanceBinder binder, DynamicMetaObject[] args )
             {
-                return binder.FallbackCreateInstance( _baseMetaObject,
-                                                      args,
-                                                      AddTypeRestrictions( _metaObject.BindCreateInstance( binder, args ) ) );
+                DynamicMetaObject errorSuggestion = AddTypeRestrictions( _metaObject.BindCreateInstance( binder, args ) );
+                return binder.FallbackCreateInstance( _baseMetaObject, args, errorSuggestion );
             }
 
             public override DynamicMetaObject BindDeleteIndex( DeleteIndexBinder binder, DynamicMetaObject[] indexes )
             {
-                return binder.FallbackDeleteIndex( _baseMetaObject,
-                                                   indexes,
-                                                   AddTypeRestrictions( _metaObject.BindDeleteIndex( binder, indexes ) ) );
+                DynamicMetaObject errorSuggestion = AddTypeRestrictions( _metaObject.BindDeleteIndex( binder, indexes ) );
+                return binder.FallbackDeleteIndex( _baseMetaObject, indexes, errorSuggestion );
             }
 
             public override DynamicMetaObject BindDeleteMember( DeleteMemberBinder binder )
             {
-                return binder.FallbackDeleteMember( _baseMetaObject,
-                                                    AddTypeRestrictions( _metaObject.BindDeleteMember( binder ) ) );
+                DynamicMetaObject errorSuggestion = AddTypeRestrictions( _metaObject.BindDeleteMember( binder ) );
+                return binder.FallbackDeleteMember( _baseMetaObject, errorSuggestion );
             }
 
             public override DynamicMetaObject BindGetMember( GetMemberBinder binder )
             {
-                return binder.FallbackGetMember( _baseMetaObject,
-                                                 AddTypeRestrictions( _metaObject.BindGetMember( binder ) ) );
+                DynamicMetaObject errorSuggestion = AddTypeRestrictions( _metaObject.BindGetMember( binder ) );
+                return binder.FallbackGetMember( _baseMetaObject, errorSuggestion );
             }
 
             public override DynamicMetaObject BindGetIndex( GetIndexBinder binder, DynamicMetaObject[] indexes )
             {
-                return binder.FallbackGetIndex( _baseMetaObject,
-                                                indexes,
-                                                AddTypeRestrictions( _metaObject.BindGetIndex( binder, indexes ) ) );
+                DynamicMetaObject errorSuggestion = AddTypeRestrictions( _metaObject.BindGetIndex( binder, indexes ) );
+                return binder.FallbackGetIndex( _baseMetaObject, indexes, errorSuggestion );
             }
 
             public override DynamicMetaObject BindInvokeMember( InvokeMemberBinder binder, DynamicMetaObject[] args )
             {
-                return binder.FallbackInvokeMember( _baseMetaObject,
-                                                    args,
-                                                    AddTypeRestrictions( _metaObject.BindInvokeMember( binder, args ) ) );
+                DynamicMetaObject errorSuggestion = AddTypeRestrictions( _metaObject.BindInvokeMember( binder, args ) );
+                return binder.FallbackInvokeMember( _baseMetaObject, args, errorSuggestion );
             }
 
             public override DynamicMetaObject BindInvoke( InvokeBinder binder, DynamicMetaObject[] args )
             {
-                return binder.FallbackInvoke( _baseMetaObject,
-                                              args,
-                                              AddTypeRestrictions( _metaObject.BindInvoke( binder, args ) ) );
+                DynamicMetaObject errorSuggestion = AddTypeRestrictions( _metaObject.BindInvoke( binder, args ) );
+                return binder.FallbackInvoke( _baseMetaObject, args, errorSuggestion );
             }
 
             public override DynamicMetaObject BindSetIndex( SetIndexBinder binder,
                                                             DynamicMetaObject[] indexes,
                                                             DynamicMetaObject value )
             {
-                return binder.FallbackSetIndex( _baseMetaObject,
-                                                indexes,
-                                                AddTypeRestrictions( _metaObject.BindSetIndex( binder, indexes, value ) ) );
+                DynamicMetaObject errorSuggestion =
+                        AddTypeRestrictions( _metaObject.BindSetIndex( binder, indexes, value ) );
+                return binder.FallbackSetIndex( _baseMetaObject, indexes, errorSuggestion );
             }
 
             public override DynamicMetaObject BindSetMember( SetMemberBinder binder, DynamicMetaObject value )
             {
-                DynamicMetaObject prototypeMetaObject = AddTypeRestrictions( _metaObject.BindSetMember( binder, value ) );
-                return binder.FallbackSetMember( _baseMetaObject, value, prototypeMetaObject );
+                DynamicMetaObject errorSuggestion = AddTypeRestrictions( _metaObject.BindSetMember( binder, value ) );
+                return binder.FallbackSetMember( _baseMetaObject, value, errorSuggestion );
             }
 
             public override DynamicMetaObject BindUnaryOperation( UnaryOperationBinder binder )
             {
-                return binder.FallbackUnaryOperation( _baseMetaObject,
-                                                      AddTypeRestrictions( _metaObject.BindUnaryOperation( binder ) ) );
+                DynamicMetaObject errorSuggestion = AddTypeRestrictions( _metaObject.BindUnaryOperation( binder ) );
+                return binder.FallbackUnaryOperation( _baseMetaObject, errorSuggestion );
             }
         }
 
