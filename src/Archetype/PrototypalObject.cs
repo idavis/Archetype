@@ -46,7 +46,7 @@ namespace Archetype
 
     public delegate bool TryUnaryOperationMissing( UnaryOperationBinder binder, out object result );
 
-    public class PrototypalObject : DynamicObject
+    public class PrototypalObject : DelegatingPrototype
     {
         private const BindingFlags DefaultBindingFlags =
                 BindingFlags.FlattenHierarchy | BindingFlags.Static | BindingFlags.Public;
@@ -57,11 +57,10 @@ namespace Archetype
         }
 
         public PrototypalObject( object prototype )
+                : base( prototype )
         {
-            Prototype = prototype;
         }
 
-        public virtual object Prototype { get; set; }
         public virtual TryBinaryOperationMissing TryBinaryOperationMissing { get; set; }
         public virtual TryConvertMissing TryConvertMissing { get; set; }
         public virtual TryCreateInstanceMissing TryCreateInstanceMissing { get; set; }
@@ -74,20 +73,6 @@ namespace Archetype
         public virtual TrySetIndexMissing TrySetIndexMissing { get; set; }
         public virtual TrySetMemberMissing TrySetMemberMissing { get; set; }
         public virtual TryUnaryOperationMissing TryUnaryOperationMissing { get; set; }
-
-        public override DynamicMetaObject GetMetaObject( Expression parameter )
-        {
-            if ( Prototype == null )
-            {
-                return GetBaseMetaObject( parameter );
-            }
-            return new PrototypalMetaObject( parameter, this, Prototype );
-        }
-
-        public virtual DynamicMetaObject GetBaseMetaObject( Expression parameter )
-        {
-            return base.GetMetaObject( parameter );
-        }
 
         public override bool TryBinaryOperation( BinaryOperationBinder binder, object arg, out object result )
         {

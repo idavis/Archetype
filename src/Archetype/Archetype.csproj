@@ -35,8 +35,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DelegatingPrototype.cs" />
     <Compile Include="PrototypalMetaObject.cs" />
-    <Compile Include="Prototype.cs" />
+    <Compile Include="PrototypalObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

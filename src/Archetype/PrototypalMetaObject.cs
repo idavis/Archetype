@@ -23,11 +23,11 @@ namespace Archetype
     {
         private readonly DynamicMetaObject _baseMetaObject;
         private readonly DynamicMetaObject _metaObject;
-        private readonly PrototypalObject _prototypalObject;
+        private readonly DelegatingPrototype _prototypalObject;
         private readonly object _prototype;
 
         public PrototypalMetaObject( Expression expression,
-                                     PrototypalObject value,
+                                     DelegatingPrototype value,
                                      object prototype )
                 : base( expression, BindingRestrictions.Empty, value )
         {
