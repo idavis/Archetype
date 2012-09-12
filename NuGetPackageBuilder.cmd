@@ -19,7 +19,7 @@ robocopy %DIR% %DESTDIR%\tools /E /B /NP /R:0 /W:0 /NJH /NJS /NS /NFL /NDL /XF "
 robocopy %DIR%nuget %DESTDIR% /E /B /NP /R:0 /W:0 /NJH /NJS /NS /NFL /NDL
 
 :build
-nuget pack %DESTDIR%\prototype.nuspec
+nuget pack %DESTDIR%\Archetype.nuspec
 if %ERRORLEVEL% NEQ 0 goto errors
 
 goto :eof

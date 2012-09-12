@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Archetype</id>
+    <version>1.0.0</version>
+    <authors>idavis</authors>
+    <owners>Ian Davis</owners>
+    <projectUrl>https://github.com/idavis/Archetype</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Adding support for non-classical inheritance to .NET </summary>
+    <description>Adding support for non-classical inheritance to .NET </description>
+    <language>en-US</language>
+    <tags>C# patterns</tags>
+  </metadata>
+</package>
