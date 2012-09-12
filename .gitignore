@@ -2,6 +2,7 @@
 *.nupkg
 lib/
 _ReSharper.*
+*.dotCover
 bin
 obj
 debug
