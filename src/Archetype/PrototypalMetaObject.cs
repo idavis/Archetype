@@ -23,7 +23,6 @@ namespace Archetype
     public class PrototypalMetaObject : DynamicMetaObject
     {
         private readonly DynamicMetaObject _baseMetaObject;
-        private readonly DynamicMetaObject _metaObject;
         private readonly IPrototypalMetaObjectProvider _prototypalObject;
         private readonly object _prototype;
         private readonly IList<object> _prototypes;
@@ -35,7 +34,6 @@ namespace Archetype
         {
             _prototypalObject = value;
             _prototype = prototype;
-            _metaObject = CreatePrototypeMetaObject();
             _baseMetaObject = CreateBaseMetaObject();
         }
 
@@ -46,15 +44,14 @@ namespace Archetype
         {
             _prototypalObject = value;
             _prototypes = prototypes;
-            _metaObject = CreatePrototypeMetaObject();
             _baseMetaObject = CreateBaseMetaObject();
         }
 
-        protected virtual DynamicMetaObject AddTypeRestrictions(DynamicMetaObject result)
+        protected virtual DynamicMetaObject AddTypeRestrictions(DynamicMetaObject result, object value)
         {
             BindingRestrictions typeRestrictions =
                 GetTypeRestriction().Merge(result.Restrictions);
-            var metaObject = new DynamicMetaObject(result.Expression, typeRestrictions, _metaObject.Value);
+            var metaObject = new DynamicMetaObject(result.Expression, typeRestrictions, value);
             return metaObject;
         }
 
@@ -180,7 +177,7 @@ namespace Archetype
                     DynamicMetaObject prototypeMetaObject = Create(prototype, Expression.Constant(prototype));
                     if (errorSuggestion == null)
                     {
-                        errorSuggestion = AddTypeRestrictions(bindTarget(prototypeMetaObject));
+                        errorSuggestion = AddTypeRestrictions(bindTarget(prototypeMetaObject),prototype);
                         if (errorSuggestion.Expression.NodeType == ExpressionType.Throw)
                         {
                             errorSuggestion = null;
@@ -188,7 +185,7 @@ namespace Archetype
                     }
                     else
                     {
-                        DynamicMetaObject newValue = AddTypeRestrictions(bindTarget(prototypeMetaObject));
+                        DynamicMetaObject newValue = AddTypeRestrictions(bindTarget(prototypeMetaObject),prototype);
                         if (newValue.Expression.NodeType == ExpressionType.Throw)
                             continue;
                         errorSuggestion = bindFallback(newValue, errorSuggestion);
@@ -197,7 +194,8 @@ namespace Archetype
             }
             else
             {
-                errorSuggestion = AddTypeRestrictions(bindTarget(_metaObject));
+                var meta = CreatePrototypeMetaObject();
+                errorSuggestion = AddTypeRestrictions(bindTarget(meta),meta.Value);
             }
             return bindFallback(_baseMetaObject, errorSuggestion);
         }
