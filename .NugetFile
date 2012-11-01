@@ -1,0 +1,2 @@
+install_to 'lib'
+chew nunit 2.6.1
