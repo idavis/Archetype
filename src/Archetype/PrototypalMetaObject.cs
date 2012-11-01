@@ -24,18 +24,7 @@ namespace Archetype
     {
         private readonly DynamicMetaObject _baseMetaObject;
         private readonly IPrototypalMetaObjectProvider _prototypalObject;
-        private readonly object _prototype;
         private readonly IList<object> _prototypes;
-
-        public PrototypalMetaObject( Expression expression,
-                                     IPrototypalMetaObjectProvider value,
-                                     object prototype )
-                : base( expression, BindingRestrictions.Empty, value )
-        {
-            _prototypalObject = value;
-            _prototype = prototype;
-            _baseMetaObject = CreateBaseMetaObject();
-        }
 
         public PrototypalMetaObject( Expression expression,
                                      IPrototypalMetaObjectProvider value,
@@ -169,16 +158,7 @@ namespace Archetype
                                                           Func<DynamicMetaObject, DynamicMetaObject, DynamicMetaObject>
                                                                   bindFallback )
         {
-            DynamicMetaObject errorSuggestion;
-            if ( _prototypes != null )
-            {
-                errorSuggestion = ResolveModuleChain( bindTarget, bindFallback );
-            }
-            else
-            {
-                DynamicMetaObject meta = CreatePrototypeMetaObject( _prototype );
-                errorSuggestion = AddTypeRestrictions( bindTarget( meta ), meta.Value );
-            }
+            DynamicMetaObject errorSuggestion = ResolveModuleChain( bindTarget, bindFallback );
             return bindFallback( _baseMetaObject, errorSuggestion );
         }
 

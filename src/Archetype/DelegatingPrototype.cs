@@ -47,7 +47,7 @@ namespace Archetype
             {
                 return GetBaseMetaObject(parameter);
             }
-            return _Prototypes.Count == 1 ? new PrototypalMetaObject(parameter, this, Prototype) : new PrototypalMetaObject(parameter, this, _Prototypes);
+            return new PrototypalMetaObject(parameter, this, _Prototypes);
         }
 
         public virtual DynamicMetaObject GetBaseMetaObject(Expression parameter)
