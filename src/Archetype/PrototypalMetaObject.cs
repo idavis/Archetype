@@ -97,7 +97,7 @@ namespace Archetype
 
         public override DynamicMetaObject BindConvert( ConvertBinder binder )
         {
-            return ApplyBinding( meta => meta.BindConvert( binder ), binder.FallbackConvert );
+            return ApplyBinding( meta => meta/*meta.BindConvert( binder )*/, binder.FallbackConvert );
         }
 
         public override DynamicMetaObject BindCreateInstance( CreateInstanceBinder binder, DynamicMetaObject[] args )
@@ -191,25 +191,13 @@ namespace Archetype
                 object prototype = _prototypes[i];
 
                 DynamicMetaObject prototypeMetaObject = CreatePrototypeMetaObject( prototype );
-                if ( errorSuggestion == null )
+                DynamicMetaObject newValue = AddTypeRestrictions( bindTarget( prototypeMetaObject ), prototype );
+                if (newValue == null || newValue.Expression.NodeType == ExpressionType.Throw)
                 {
-                    errorSuggestion = AddTypeRestrictions( bindTarget( prototypeMetaObject ), prototype );
-                    if ( errorSuggestion.Expression.NodeType ==
-                         ExpressionType.Throw )
-                    {
-                        errorSuggestion = null;
-                    }
+                    continue;
                 }
-                else
-                {
-                    DynamicMetaObject newValue = AddTypeRestrictions( bindTarget( prototypeMetaObject ), prototype );
-                    if ( newValue.Expression.NodeType ==
-                         ExpressionType.Throw )
-                    {
-                        continue;
-                    }
-                    errorSuggestion = bindFallback( newValue, errorSuggestion );
-                }
+
+                errorSuggestion = errorSuggestion == null ? newValue : bindFallback(newValue, errorSuggestion);
             }
             return errorSuggestion;
         }

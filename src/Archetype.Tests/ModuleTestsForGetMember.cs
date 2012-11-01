@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace Archetype.Tests
 {
@@ -68,5 +69,13 @@ namespace Archetype.Tests
             dynamic value = new CheshireCat(new Cat());
             Assert.AreEqual("Cat", value.Name);
         }
+
+        [Test]
+        public void TestingChainOfModules()
+        {
+            dynamic value = new DelegatingPrototype(5, "cat", 10, new Uri("http://www.foo.com"));
+            Assert.AreEqual(3, value.Length);
+        }
+
     }
 }
