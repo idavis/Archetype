@@ -23,14 +23,20 @@ namespace Archetype
     public class PrototypalMetaObject : DynamicMetaObject
     {
         private readonly DynamicMetaObject _baseMetaObject;
+        private readonly DynamicMetaObject _metaObject;
         private readonly IPrototypalMetaObjectProvider _prototypalObject;
+        private readonly object _prototype;
         private readonly IList<object> _prototypes;
 
         public PrototypalMetaObject(Expression expression,
                                     IPrototypalMetaObjectProvider value,
                                     object prototype)
-            : this(expression, value, new[] {prototype})
+            : base(expression, BindingRestrictions.Empty, value)
         {
+            _prototypalObject = value;
+            _prototype = prototype;
+            _metaObject = CreatePrototypeMetaObject();
+            _baseMetaObject = CreateBaseMetaObject();
         }
 
         public PrototypalMetaObject(Expression expression,
@@ -40,15 +46,24 @@ namespace Archetype
         {
             _prototypalObject = value;
             _prototypes = prototypes;
+            _metaObject = CreatePrototypeMetaObject();
             _baseMetaObject = CreateBaseMetaObject();
         }
 
-        protected virtual DynamicMetaObject AddTypeRestrictions(DynamicMetaObject result, DynamicMetaObject value)
+        protected virtual DynamicMetaObject AddTypeRestrictions(DynamicMetaObject result)
         {
             BindingRestrictions typeRestrictions =
                 GetTypeRestriction().Merge(result.Restrictions);
-            var metaObject = new DynamicMetaObject(result.Expression, typeRestrictions, value.Value);
+            var metaObject = new DynamicMetaObject(result.Expression, typeRestrictions, _metaObject.Value);
             return metaObject;
+        }
+
+        protected virtual DynamicMetaObject CreatePrototypeMetaObject()
+        {
+            Expression castExpression = GetLimitedSelf();
+            MemberExpression memberExpression = Expression.Property(castExpression, "Prototype");
+            DynamicMetaObject prototypeMetaObject = Create(_prototype, memberExpression);
+            return prototypeMetaObject;
         }
 
         protected virtual BindingRestrictions GetTypeRestriction()
@@ -156,29 +171,34 @@ namespace Archetype
                                                              bindFallback)
         {
             DynamicMetaObject errorSuggestion = null;
-            for (int i = _prototypes.Count - 1; i >= 0; i--)
+            if (_prototypes != null)
             {
-                object prototype = _prototypes[i];
-
-                DynamicMetaObject prototypeMetaObject = Create(prototype, Expression.Constant(prototype));
-                if (errorSuggestion == null)
+                for (int i = _prototypes.Count - 1; i >= 0; i--)
                 {
-                    errorSuggestion = AddTypeRestrictions(bindTarget(prototypeMetaObject), prototypeMetaObject);
-                    if (errorSuggestion.Expression.NodeType == ExpressionType.Throw)
+                    object prototype = _prototypes[i];
+
+                    DynamicMetaObject prototypeMetaObject = Create(prototype, Expression.Constant(prototype));
+                    if (errorSuggestion == null)
                     {
-                        errorSuggestion = null;
+                        errorSuggestion = AddTypeRestrictions(bindTarget(prototypeMetaObject));
+                        if (errorSuggestion.Expression.NodeType == ExpressionType.Throw)
+                        {
+                            errorSuggestion = null;
+                        }
+                    }
+                    else
+                    {
+                        DynamicMetaObject newValue = AddTypeRestrictions(bindTarget(prototypeMetaObject));
+                        if (newValue.Expression.NodeType == ExpressionType.Throw)
+                            continue;
+                        errorSuggestion = bindFallback(newValue, errorSuggestion);
                     }
                 }
-                else
-                {
-                    DynamicMetaObject newValue = AddTypeRestrictions(bindTarget(prototypeMetaObject),
-                                                                     prototypeMetaObject);
-                    if (newValue.Expression.NodeType == ExpressionType.Throw)
-                        continue;
-                    errorSuggestion = bindFallback(newValue, errorSuggestion);
-                }
             }
-
+            else
+            {
+                errorSuggestion = AddTypeRestrictions(bindTarget(_metaObject));
+            }
             return bindFallback(_baseMetaObject, errorSuggestion);
         }
     }

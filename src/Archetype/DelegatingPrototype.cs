@@ -13,7 +13,6 @@
 
 using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
 using System.Linq.Expressions;
 
 #endregion
@@ -38,14 +37,11 @@ namespace Archetype
 
         public virtual object Prototype
         {
-            get { return _Prototypes.FirstOrDefault(); }
+            get { return _Prototypes[0]; }
             set { _Prototypes[0] = value; }
         }
 
-        public virtual IList<object> Prototypes
-        {
-            get { return _Prototypes; }
-        }
+        public virtual IList<object> Prototypes { get { return _Prototypes; } }
 
         public override DynamicMetaObject GetMetaObject(Expression parameter)
         {
@@ -53,7 +49,7 @@ namespace Archetype
             {
                 return GetBaseMetaObject(parameter);
             }
-            return new PrototypalMetaObject(parameter, this, _Prototypes);
+            return _Prototypes.Count == 1 ? new PrototypalMetaObject(parameter, this, Prototype) : new PrototypalMetaObject(parameter, this, _Prototypes);
         }
 
         public virtual DynamicMetaObject GetBaseMetaObject(Expression parameter)
