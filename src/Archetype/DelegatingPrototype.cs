@@ -23,14 +23,12 @@ namespace Archetype
     {
         private readonly List<object> _Prototypes = new List<object>();
 
-        public DelegatingPrototype()
-            : this(null)
+        public DelegatingPrototype(params object[] prototypes)
         {
-        }
-
-        public DelegatingPrototype(object prototype)
-        {
-            _Prototypes.Add(prototype);
+            foreach (var prototype in prototypes)
+            {
+                _Prototypes.Add(prototype);
+            }
         }
 
         #region IPrototypalMetaObjectProvider Members
