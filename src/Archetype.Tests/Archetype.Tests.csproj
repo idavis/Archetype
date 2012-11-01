@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="ModuleTestsForGetMember.cs" />
+    <Compile Include="NotifyPropertyChangesModuleTests.cs" />
     <Compile Include="PrototypalObjectTestsExpandoObjectPrototypes.cs" />
     <Compile Include="PrototypalObjectTestsInheritanceOrder.cs" />
     <Compile Include="StaticTests\StaticMethodTests.cs" />
