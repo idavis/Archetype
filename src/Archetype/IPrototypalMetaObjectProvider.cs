@@ -11,6 +11,7 @@
 
 #region Using Directives
 
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq.Expressions;
 
@@ -21,6 +22,7 @@ namespace Archetype
     public interface IPrototypalMetaObjectProvider : IDynamicMetaObjectProvider
     {
         object Prototype { get; }
+        IList<object> Prototypes { get; }
         DynamicMetaObject GetBaseMetaObject( Expression parameter );
     }
 }

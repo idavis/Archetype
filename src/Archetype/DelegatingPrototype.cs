@@ -11,6 +11,7 @@
 
 #region Using Directives
 
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq.Expressions;
 
@@ -20,6 +21,8 @@ namespace Archetype
 {
     public class DelegatingPrototype : DynamicObject, IPrototypalMetaObjectProvider
     {
+        private readonly List<object> _Prototypes = new List<object>();
+ 
         public DelegatingPrototype()
                 : this( null )
         {
@@ -27,20 +30,26 @@ namespace Archetype
 
         public DelegatingPrototype( object prototype )
         {
-            Prototype = prototype;
+            _Prototypes.Add(prototype);
         }
 
         #region IPrototypalMetaObjectProvider Members
 
-        public virtual object Prototype { get; set; }
+        public virtual object Prototype
+        {
+            get { return _Prototypes[0]; }
+            set { _Prototypes[0] = value; }
+        }
+
+        public virtual IList<object> Prototypes { get { return _Prototypes; } }
 
         public override DynamicMetaObject GetMetaObject( Expression parameter )
         {
-            if ( Prototype == null )
+            if (Prototypes.Count == 0 || Prototype == null)
             {
-                return GetBaseMetaObject( parameter );
+                return GetBaseMetaObject(parameter);
             }
-            return new PrototypalMetaObject( parameter, this, Prototype );
+            return _Prototypes.Count == 1 ? new PrototypalMetaObject( parameter, this, Prototype ) : new PrototypalMetaObject(parameter, this, _Prototypes);
         }
 
         public virtual DynamicMetaObject GetBaseMetaObject( Expression parameter )
