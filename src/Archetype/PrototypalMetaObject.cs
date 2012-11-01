@@ -55,11 +55,11 @@ namespace Archetype
             return metaObject;
         }
 
-        protected virtual DynamicMetaObject CreatePrototypeMetaObject()
+        protected virtual DynamicMetaObject CreatePrototypeMetaObject(object prototype)
         {
             Expression castExpression = GetLimitedSelf();
             MemberExpression memberExpression = Expression.Property(castExpression, "Prototype");
-            DynamicMetaObject prototypeMetaObject = Create(_prototype, memberExpression);
+            DynamicMetaObject prototypeMetaObject = Create(prototype, memberExpression);
             return prototypeMetaObject;
         }
 
@@ -194,7 +194,7 @@ namespace Archetype
             }
             else
             {
-                var meta = CreatePrototypeMetaObject();
+                var meta = CreatePrototypeMetaObject(_prototype);
                 errorSuggestion = AddTypeRestrictions(bindTarget(meta),meta.Value);
             }
             return bindFallback(_baseMetaObject, errorSuggestion);
