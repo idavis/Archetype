@@ -48,12 +48,4 @@ namespace Archetype
             return base.GetMetaObject( parameter );
         }
     }
-
-    public class DelegatingPrototype : DelegatingObject
-    {
-        public DelegatingPrototype( params object[] modules )
-                : base( modules )
-        {
-        }
-    }
 }

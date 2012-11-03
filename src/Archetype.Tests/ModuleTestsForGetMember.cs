@@ -19,7 +19,7 @@ namespace Archetype.Tests
         }
     }
 
-    public class CheshireCat : DelegatingPrototype
+    public class CheshireCat : DelegatingObject
     {
         public CheshireCat(Cat cat = null) : base(cat)
         {
@@ -73,7 +73,7 @@ namespace Archetype.Tests
         [Test]
         public void TestingChainOfModules()
         {
-            dynamic value = new DelegatingPrototype(5, "cat", 10, new Uri("http://www.foo.com"));
+            dynamic value = new DelegatingObject(5, "cat", 10, new Uri("http://www.foo.com"));
             Assert.AreEqual(3, value.Length);
         }
 

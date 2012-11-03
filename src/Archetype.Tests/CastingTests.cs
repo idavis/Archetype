@@ -17,7 +17,7 @@ namespace Archetype.Tests
         #endregion
     }
 
-    public class DisposableDelegatingObject : DelegatingPrototype, IDisposable
+    public class DisposableDelegatingObject : DelegatingObject, IDisposable
     {
         public DisposableDelegatingObject(params object[] prototypes) : base(prototypes)
         {
@@ -50,7 +50,7 @@ namespace Archetype.Tests
         [Test]
         public void CanCastToModuleWhenOnlyASingleModuleIsSupplied()
         {
-            dynamic value = new DelegatingPrototype(new DisposableObject());
+            dynamic value = new DelegatingObject(new DisposableObject());
             IDisposable instance = value;
             Assert.IsNotNull(instance);
         }
@@ -60,7 +60,7 @@ namespace Archetype.Tests
         {
             var first = new DisposableObject();
             var second = new DisposableObject();
-            dynamic value = new DelegatingPrototype(first, second);
+            dynamic value = new DelegatingObject(first, second);
             IDisposable instance = value;
             Assert.AreSame(second, instance);
         }
@@ -77,7 +77,7 @@ namespace Archetype.Tests
         public void CastingWillSkipPrototypesWhichAreNotValidTargetsForTheCast()
         {
             var inner = new DisposableObject();
-            dynamic value = new DelegatingPrototype(inner, new DelegatingPrototype());
+            dynamic value = new DelegatingObject(inner, new DelegatingObject());
             IDisposable instance = value;
             Assert.AreSame(instance, inner);
         }

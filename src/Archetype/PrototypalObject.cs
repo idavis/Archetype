@@ -46,7 +46,7 @@ namespace Archetype
 
     public delegate bool TryUnaryOperationMissing( UnaryOperationBinder binder, out object result );
 
-    public class PrototypalObject : DelegatingPrototype
+    public class PrototypalObject : DelegatingObject
     {
         private const BindingFlags DefaultBindingFlags =
                 BindingFlags.FlattenHierarchy | BindingFlags.Static | BindingFlags.Public;

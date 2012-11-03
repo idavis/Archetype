@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace Archetype.Tests
 {
-    public class SampleModel : DelegatingPrototype
+    public class SampleModel : DelegatingObject
     {
         private string _Name;
 
