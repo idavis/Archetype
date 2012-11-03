@@ -20,18 +20,18 @@ using System.Linq.Expressions;
 
 namespace Archetype
 {
-    public class PrototypalMetaObject : DynamicMetaObject
+    public class DynamicModuleMetaObject : DynamicMetaObject
     {
         private readonly DynamicMetaObject _baseMetaObject;
-        private readonly IList<object> _prototypes;
+        private readonly IList<object> _modules;
 
-        public PrototypalMetaObject(Expression expression,
-                                    object value,
-                                    DynamicMetaObject baseMetaObject,
-                                    IList<object> prototypes)
+        public DynamicModuleMetaObject(Expression expression,
+                                       object value,
+                                       DynamicMetaObject baseMetaObject,
+                                       IList<object> modules)
             : base(expression, BindingRestrictions.Empty, value)
         {
-            _prototypes = prototypes;
+            _modules = modules;
             _baseMetaObject = baseMetaObject;
         }
 
@@ -43,9 +43,9 @@ namespace Archetype
             return metaObject;
         }
 
-        protected virtual DynamicMetaObject CreatePrototypeMetaObject(object prototype)
+        protected virtual DynamicMetaObject CreatePrototypeMetaObject(object module)
         {
-            DynamicMetaObject prototypeMetaObject = Create(prototype, Expression.Constant(prototype));
+            DynamicMetaObject prototypeMetaObject = Create(module, Expression.Constant(module));
             return prototypeMetaObject;
         }
 
@@ -161,7 +161,7 @@ namespace Archetype
                                                          bindFallback)
         {
             DynamicMetaObject errorSuggestion = null;
-            for (int i = _prototypes.Count - 1; i >= 0; i--)
+            for (int i = _modules.Count - 1; i >= 0; i--)
             {
                 DynamicMetaObject newValue = GetDynamicMetaObjectFromModule(bindTarget, i);
 
@@ -178,7 +178,7 @@ namespace Archetype
         private DynamicMetaObject GetDynamicMetaObjectFromModule(Func<DynamicMetaObject, DynamicMetaObject> bindTarget,
                                                                  int index)
         {
-            object prototype = _prototypes[index];
+            object prototype = _modules[index];
 
             DynamicMetaObject prototypeMetaObject = CreatePrototypeMetaObject(prototype);
             DynamicMetaObject bound = bindTarget(prototypeMetaObject);

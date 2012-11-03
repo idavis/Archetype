@@ -37,7 +37,7 @@
   <ItemGroup>
     <Compile Include="DelegatingPrototype.cs" />
     <Compile Include="NotifyPropertyChangedModule.cs" />
-    <Compile Include="PrototypalMetaObject.cs" />
+    <Compile Include="DynamicModuleMetaObject.cs" />
     <Compile Include="PrototypalObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
