@@ -27,12 +27,12 @@ namespace Archetype
 
         public PrototypalMetaObject(Expression expression,
                                     object value,
-                                    Func<Expression,DynamicMetaObject> baseMetaObjectFactory,
-            IList<object> prototypes)
+                                    DynamicMetaObject baseMetaObject,
+                                    IList<object> prototypes)
             : base(expression, BindingRestrictions.Empty, value)
         {
             _prototypes = prototypes;
-            _baseMetaObject = baseMetaObjectFactory(Expression);
+            _baseMetaObject = baseMetaObject;
         }
 
         protected virtual DynamicMetaObject AddTypeRestrictions(DynamicMetaObject result, object value)

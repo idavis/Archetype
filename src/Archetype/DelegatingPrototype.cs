@@ -53,7 +53,8 @@ namespace Archetype
             {
                 return GetBaseMetaObject(parameter);
             }
-            return new PrototypalMetaObject(parameter, this, GetBaseMetaObject, Prototypes);
+            var baseMetaObject = GetBaseMetaObject(parameter);
+            return new PrototypalMetaObject(parameter, this, baseMetaObject, Prototypes);
         }
 
         public virtual DynamicMetaObject GetBaseMetaObject(Expression parameter)
