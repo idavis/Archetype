@@ -77,7 +77,7 @@ namespace Archetype.Tests
         public void CastingWillSkipPrototypesWhichAreNotValidTargetsForTheCast()
         {
             var inner = new DisposableObject();
-            dynamic value = new DelegatingPrototype(inner, DateTime.Now);
+            dynamic value = new DelegatingPrototype(inner, new DelegatingPrototype());
             IDisposable instance = value;
             Assert.AreSame(instance, inner);
         }
