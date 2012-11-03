@@ -21,43 +21,39 @@ namespace Archetype
 {
     public class DelegatingObject : DynamicObject
     {
-        public DelegatingObject(params object[] modules)
+        public DelegatingObject( params object[] modules )
         {
-            Modules = new List<object>(modules.Length);
-            foreach (object module in modules)
+            Modules = new List<object>( modules.Length );
+            foreach ( object module in modules )
             {
-                Modules.Add(module);
+                Modules.Add( module );
             }
         }
 
         public IList<object> Modules { get; protected set; }
 
-        public override DynamicMetaObject GetMetaObject(Expression parameter)
+        public override DynamicMetaObject GetMetaObject( Expression parameter )
         {
-            if (Modules == null || Modules.Count == 0)
+            if ( Modules == null ||
+                 Modules.Count == 0 )
             {
-                return GetBaseMetaObject(parameter);
+                return GetBaseMetaObject( parameter );
             }
-            DynamicMetaObject baseMetaObject = GetBaseMetaObject(parameter);
-            return new DynamicModuleMetaObject(parameter, this, baseMetaObject, Modules);
+            DynamicMetaObject baseMetaObject = GetBaseMetaObject( parameter );
+            return new DynamicModuleMetaObject( parameter, this, baseMetaObject, Modules );
         }
 
-        public virtual DynamicMetaObject GetBaseMetaObject(Expression parameter)
+        public virtual DynamicMetaObject GetBaseMetaObject( Expression parameter )
         {
-            return base.GetMetaObject(parameter);
+            return base.GetMetaObject( parameter );
         }
     }
 
     public class DelegatingPrototype : DelegatingObject
     {
-        public DelegatingPrototype(params object[] modules) : base(modules)
+        public DelegatingPrototype( params object[] modules )
+                : base( modules )
         {
-        }
-
-        public virtual object Prototype
-        {
-            get { return Modules[0]; }
-            set { Modules[0] = value; }
         }
     }
 }

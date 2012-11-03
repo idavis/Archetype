@@ -208,14 +208,14 @@ namespace Archetype
                 result = method.Invoke( null, args );
                 return true;
             }
-            var prototype = Prototype as DynamicObject;
-            if ( prototype != null )
+            foreach ( DynamicObject prototype in Modules.OfType<DynamicObject>() )
             {
                 if ( prototype.TryInvokeMember( binder, args, out result ) )
                 {
                     return true;
                 }
             }
+
             result = null;
             return false;
         }
@@ -234,8 +234,7 @@ namespace Archetype
                 result = field.GetValue( null );
                 return true;
             }
-            var prototype = Prototype as DynamicObject;
-            if ( prototype != null )
+            foreach ( DynamicObject prototype in Modules.OfType<DynamicObject>() )
             {
                 if ( prototype.TryGetMember( binder, out result ) )
                 {
@@ -260,15 +259,7 @@ namespace Archetype
                 field.SetValue( null, value );
                 return true;
             }
-            var prototype = Prototype as DynamicObject;
-            if ( prototype != null )
-            {
-                if ( prototype.TrySetMember( binder, value ) )
-                {
-                    return true;
-                }
-            }
-            return false;
+            return Modules.OfType<DynamicObject>().Any( prototype => prototype.TrySetMember( binder, value ) );
         }
 
         public static PrototypalObject AsPrototypalObject( IDynamicMetaObjectProvider prototype )
@@ -306,9 +297,9 @@ namespace Archetype
             }
             var prototypalObject = target as PrototypalObject;
             if ( prototypalObject != null &&
-                 prototypalObject.Prototype != null )
+                 prototypalObject.Modules != null )
             {
-                return RespondsTo( name, prototypalObject.Prototype );
+                return prototypalObject.Modules.Any( module => RespondsTo( name, module ) );
             }
             return false;
         }
