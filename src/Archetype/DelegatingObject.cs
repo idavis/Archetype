@@ -34,12 +34,14 @@ namespace Archetype
 
         public override DynamicMetaObject GetMetaObject( Expression parameter )
         {
+            DynamicMetaObject baseMetaObject = GetBaseMetaObject( parameter );
+
             if ( Modules == null ||
                  Modules.Count == 0 )
             {
-                return GetBaseMetaObject( parameter );
+                return baseMetaObject;
             }
-            DynamicMetaObject baseMetaObject = GetBaseMetaObject( parameter );
+
             return new DynamicModuleMetaObject( parameter, this, baseMetaObject, Modules );
         }
 
