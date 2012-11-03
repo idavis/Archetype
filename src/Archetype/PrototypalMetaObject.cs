@@ -166,8 +166,6 @@ namespace Archetype
         private DynamicMetaObject ResolveModuleChain( Func<DynamicMetaObject, DynamicMetaObject> bindTarget,
                                                       Func<DynamicMetaObject, DynamicMetaObject, DynamicMetaObject> bindFallback )
         {
-            // binding on an object which will fail, sets to throw expression
-            // binding on the right object throws an exception WTF
             DynamicMetaObject errorSuggestion = null;
             for ( int i = _prototypes.Count - 1; i >= 0; i-- )
             {
