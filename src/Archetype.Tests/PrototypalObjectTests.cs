@@ -19,16 +19,16 @@ namespace Archetype.Tests
 
         #endregion
 
-        public virtual PrototypalObject Value { get; set; }
+        public virtual DelegatingObject Value { get; set; }
 
         public virtual dynamic DynamicValue
         {
             get { return Value; }
         }
 
-        protected virtual PrototypalObject Create()
+        protected virtual DelegatingObject Create()
         {
-            return new PrototypalObject();
+            return new DelegatingObject();
         }
     }
 }

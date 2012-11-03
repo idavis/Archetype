@@ -2,7 +2,7 @@ using System.Dynamic;
 
 namespace Archetype.Tests.TestObjects
 {
-    public class Person : PrototypalObject
+    public class Person : DelegatingObject
     {
         public Person()
         {
@@ -12,7 +12,7 @@ namespace Archetype.Tests.TestObjects
         public string Name { get; set; }
     }
 
-    public class TheDude : PrototypalObject
+    public class TheDude : DelegatingObject
     {
         public TheDude( IDynamicMetaObjectProvider prototype )
                 : base( prototype )

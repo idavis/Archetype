@@ -1,6 +1,7 @@
 #region Using Directives
 
 using Archetype.Tests.TestObjects;
+using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
 #endregion
@@ -22,10 +23,9 @@ namespace Archetype.Tests.StaticTests
         #endregion
 
         [Test]
-        public void Calling_a_static_void_function_with_no_params_defined_in_prototype_is_called()
+        public void Calling_a_static_void_function_with_no_params_defined_in_prototype_is_called_throws()
         {
-            DynamicValue.StaticMethodWithNoReturnValueOrParameters();
-            Assert.True( DynamicValue.StaticMethodWithNoReturnValueOrParametersWasCalled );
+            Assert.Throws<RuntimeBinderException>( ()=> DynamicValue.StaticMethodWithNoReturnValueOrParameters() );
         }
     }
 }

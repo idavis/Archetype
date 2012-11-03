@@ -17,7 +17,7 @@ namespace Archetype.Tests.StaticTests
         [SetUp]
         public override void Setup()
         {
-            Value = new PrototypalObject( new DynamicObjectWithMethods() );
+            Value = new DelegatingObject( new DynamicObjectWithMethods() );
         }
 
         #endregion

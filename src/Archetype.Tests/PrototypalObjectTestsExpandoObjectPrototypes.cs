@@ -13,10 +13,10 @@ namespace Archetype.Tests
     {
         private dynamic _expandoObject;
 
-        protected override PrototypalObject Create()
+        protected override DelegatingObject Create()
         {
             _expandoObject = new ExpandoObject();
-            return new PrototypalObject( _expandoObject );
+            return new DelegatingObject( _expandoObject );
         }
 
         [Test]

@@ -16,7 +16,7 @@ namespace Archetype.Tests.MethodTests
         [SetUp]
         public override void Setup()
         {
-            Value = new PrototypalObject( new DynamicObjectWithMethods() );
+            Value = new DelegatingObject( new DynamicObjectWithMethods() );
         }
 
         #endregion
@@ -31,7 +31,7 @@ namespace Archetype.Tests.MethodTests
         [SetUp]
         public override void Setup()
         {
-            Value = new PrototypalObject( new ProtoTypalObjectWithMethods() );
+            Value = new DelegatingObject( new ProtoTypalObjectWithMethods() );
         }
 
         #endregion
@@ -46,7 +46,7 @@ namespace Archetype.Tests.MethodTests
         [SetUp]
         public override void Setup()
         {
-            Value = new PrototypalObject( new ProtoTypalObjectWithMethods( new PrototypalObject() ) );
+            Value = new DelegatingObject( new ProtoTypalObjectWithMethods( new DelegatingObject() ) );
         }
 
         #endregion
@@ -61,7 +61,7 @@ namespace Archetype.Tests.MethodTests
         [SetUp]
         public override void Setup()
         {
-            Value = new PrototypalObject( new PrototypalObject( new ProtoTypalObjectWithMethods() ) );
+            Value = new DelegatingObject( new DelegatingObject( new ProtoTypalObjectWithMethods() ) );
         }
 
         #endregion
@@ -76,7 +76,7 @@ namespace Archetype.Tests.MethodTests
         [SetUp]
         public override void Setup()
         {
-            Value = new PrototypalObject( new PrototypalObject( new DynamicObjectWithMethods() ) );
+            Value = new DelegatingObject( new DelegatingObject( new DynamicObjectWithMethods() ) );
         }
 
         #endregion
@@ -91,7 +91,7 @@ namespace Archetype.Tests.MethodTests
         [SetUp]
         public override void Setup()
         {
-            Value = new PrototypalObject( new ObjectWithMethods() );
+            Value = new DelegatingObject( new ObjectWithMethods() );
         }
 
         #endregion
@@ -106,7 +106,7 @@ namespace Archetype.Tests.MethodTests
         [SetUp]
         public override void Setup()
         {
-            Value = new PrototypalObject( new PrototypalObject( new ObjectWithMethods() ) );
+            Value = new DelegatingObject( new DelegatingObject( new ObjectWithMethods() ) );
         }
 
         #endregion

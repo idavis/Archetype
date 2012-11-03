@@ -20,33 +20,33 @@ using System.Reflection;
 
 #endregion
 
-namespace Archetype
+namespace Archetype.Sandbox
 {
-    public delegate bool TryBinaryOperationMissing( BinaryOperationBinder binder, object arg, out object result );
+    internal delegate bool TryBinaryOperationMissing( BinaryOperationBinder binder, object arg, out object result );
 
-    public delegate bool TryConvertMissing( ConvertBinder binder, out object result );
+    internal delegate bool TryConvertMissing( ConvertBinder binder, out object result );
 
-    public delegate bool TryCreateInstanceMissing( CreateInstanceBinder binder, object[] args, out object result );
+    internal delegate bool TryCreateInstanceMissing( CreateInstanceBinder binder, object[] args, out object result );
 
-    public delegate bool TryDeleteIndexMissing( DeleteIndexBinder binder, object[] indexes );
+    internal delegate bool TryDeleteIndexMissing( DeleteIndexBinder binder, object[] indexes );
 
-    public delegate bool TryDeleteMemberMissing( DeleteMemberBinder binder );
+    internal delegate bool TryDeleteMemberMissing( DeleteMemberBinder binder );
 
-    public delegate bool TryGetIndexMissing( GetIndexBinder binder, object[] indexes, out object result );
+    internal delegate bool TryGetIndexMissing( GetIndexBinder binder, object[] indexes, out object result );
 
-    public delegate bool TryGetMemberMissing( GetMemberBinder binder, out object result );
+    internal delegate bool TryGetMemberMissing( GetMemberBinder binder, out object result );
 
-    public delegate bool TryInvokeMemberMissing( InvokeMemberBinder binder, object[] args, out object result );
+    internal delegate bool TryInvokeMemberMissing( InvokeMemberBinder binder, object[] args, out object result );
 
-    public delegate bool TryInvokeMissing( InvokeBinder binder, object[] args, out object result );
+    internal delegate bool TryInvokeMissing( InvokeBinder binder, object[] args, out object result );
 
-    public delegate bool TrySetIndexMissing( SetIndexBinder binder, object[] indexes, object value );
+    internal delegate bool TrySetIndexMissing( SetIndexBinder binder, object[] indexes, object value );
 
-    public delegate bool TrySetMemberMissing( SetMemberBinder binder, object value );
+    internal delegate bool TrySetMemberMissing( SetMemberBinder binder, object value );
 
-    public delegate bool TryUnaryOperationMissing( UnaryOperationBinder binder, out object result );
+    internal delegate bool TryUnaryOperationMissing( UnaryOperationBinder binder, out object result );
 
-    public class PrototypalObject : DelegatingObject
+    internal class PrototypalObject : DelegatingObject
     {
         private const BindingFlags DefaultBindingFlags =
                 BindingFlags.FlattenHierarchy | BindingFlags.Static | BindingFlags.Public;
