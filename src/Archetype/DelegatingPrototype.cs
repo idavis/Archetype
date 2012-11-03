@@ -23,23 +23,23 @@ namespace Archetype
     {
         public DelegatingObject(params object[] modules)
         {
-            Prototypes = new List<object>(modules.Length);
+            Modules = new List<object>(modules.Length);
             foreach (object module in modules)
             {
-                Prototypes.Add(module);
+                Modules.Add(module);
             }
         }
 
-        public IList<object> Prototypes { get; protected set; }
+        public IList<object> Modules { get; protected set; }
 
         public override DynamicMetaObject GetMetaObject(Expression parameter)
         {
-            if (Prototypes == null || Prototypes.Count == 0)
+            if (Modules == null || Modules.Count == 0)
             {
                 return GetBaseMetaObject(parameter);
             }
             DynamicMetaObject baseMetaObject = GetBaseMetaObject(parameter);
-            return new DynamicModuleMetaObject(parameter, this, baseMetaObject, Prototypes);
+            return new DynamicModuleMetaObject(parameter, this, baseMetaObject, Modules);
         }
 
         public virtual DynamicMetaObject GetBaseMetaObject(Expression parameter)
@@ -56,8 +56,8 @@ namespace Archetype
 
         public virtual object Prototype
         {
-            get { return Prototypes[0]; }
-            set { Prototypes[0] = value; }
+            get { return Modules[0]; }
+            set { Modules[0] = value; }
         }
     }
 }

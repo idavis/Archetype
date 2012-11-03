@@ -52,7 +52,7 @@ namespace Archetype.Tests
         public void GettingAPropertyThatIsNotDefinedInTheRootObjectReturnsItsValueAndIsReturnedBottomUp()
         {
             dynamic value = new CheshireCat(new Cat());
-            value.Prototypes.Add(new Animal());
+            value.Modules.Add(new Animal());
             Assert.AreEqual("Animal", value.Name);
         }
 

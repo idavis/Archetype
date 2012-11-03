@@ -16,7 +16,7 @@ namespace Archetype.Tests
             : base(prototypes)
         {
             // Or you can add it to the prototypes list after the fact
-            //Prototypes.Add(new NotifyPropertyChangedModule());
+            //Modules.Add(new NotifyPropertyChangedModule());
         }
 
         public string Name
