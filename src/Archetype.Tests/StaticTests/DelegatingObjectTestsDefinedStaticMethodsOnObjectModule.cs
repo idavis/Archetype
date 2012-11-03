@@ -10,7 +10,7 @@ namespace Archetype.Tests.StaticTests
 {
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class PrototypalObjectTestsDefinedStaticMethodsOnObjectPrototype : PrototypalObjectTests
+    public class DelegatingObjectTestsDefinedStaticMethodsOnObjectModule : DelegatingObjectTests
     {
         #region Setup/Teardown
 

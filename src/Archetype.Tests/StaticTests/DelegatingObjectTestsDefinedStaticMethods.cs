@@ -10,22 +10,22 @@ namespace Archetype.Tests.StaticTests
 {
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class PrototypalObjectTestsDefinedStaticMethodsOnDynamicObjectPrototype : PrototypalObjectTests
+    public class DelegatingObjectTestsDefinedStaticMethods : DelegatingObjectTests
     {
         #region Setup/Teardown
 
         [SetUp]
         public override void Setup()
         {
-            Value = new DelegatingObject( new DynamicObjectWithMethods() );
+            Value = new ProtoTypalObjectWithMethods();
         }
 
         #endregion
 
         [Test]
-        public void Calling_a_static_void_function_when_a_prototypal_object_is_not_the_last_prototype_throws()
+        public void Calling_a_static_void_function_with_no_params_defined_in_prototype_is_called_throws()
         {
-            Assert.Throws<RuntimeBinderException>( () => DynamicValue.StaticMethodWithNoReturnValueOrParameters() );
+            Assert.Throws<RuntimeBinderException>( ()=> DynamicValue.StaticMethodWithNoReturnValueOrParameters() );
         }
     }
 }

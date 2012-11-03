@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Archetype.Tests
 {
     [TestFixture]
-    public abstract class PrototypalObjectTests
+    public abstract class DelegatingObjectTests
     {
         #region Setup/Teardown
 

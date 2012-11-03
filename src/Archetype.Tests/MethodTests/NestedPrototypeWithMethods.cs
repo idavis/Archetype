@@ -9,7 +9,7 @@ namespace Archetype.Tests.MethodTests
 {
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class PrototypalObjectTestsNestedDynamicObjectWithMethods : PrototypalObjectTestsDefinedMethods
+    public class DelegatingObjectTestsNestedDynamicObjectWithMethods : DelegatingObjectTestsDefinedMethods
     {
         #region Setup/Teardown
 
@@ -24,7 +24,7 @@ namespace Archetype.Tests.MethodTests
 
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class PrototypalObjectTestsNestedPrototypeWithMethods : PrototypalObjectTestsDefinedMethods
+    public class DelegatingObjectTestsNestedPrototypeWithMethods : DelegatingObjectTestsDefinedMethods
     {
         #region Setup/Teardown
 
@@ -39,7 +39,7 @@ namespace Archetype.Tests.MethodTests
 
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class PrototypalObjectTestsNestedPrototypeWithMethodsWithEmptyPrototype : PrototypalObjectTestsDefinedMethods
+    public class DelegatingObjectTestsNestedPrototypeWithMethodsWithEmptyPrototype : DelegatingObjectTestsDefinedMethods
     {
         #region Setup/Teardown
 
@@ -54,7 +54,7 @@ namespace Archetype.Tests.MethodTests
 
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class PrototypalObjectTestsDoubleNestedPrototypeWithMethods : PrototypalObjectTestsDefinedMethods
+    public class DelegatingObjectTestsDoubleNestedPrototypeWithMethods : DelegatingObjectTestsDefinedMethods
     {
         #region Setup/Teardown
 
@@ -69,7 +69,7 @@ namespace Archetype.Tests.MethodTests
 
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class PrototypalObjectTestsDoubleNestedDynamicObjectWithMethods : PrototypalObjectTestsDefinedMethods
+    public class DelegatingObjectTestsDoubleNestedDynamicObjectWithMethods : DelegatingObjectTestsDefinedMethods
     {
         #region Setup/Teardown
 
@@ -84,7 +84,7 @@ namespace Archetype.Tests.MethodTests
 
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class PrototypalObjectTestsNestedObjectWithMethods : PrototypalObjectTestsDefinedMethods
+    public class DelegatingObjectTestsNestedObjectWithMethods : DelegatingObjectTestsDefinedMethods
     {
         #region Setup/Teardown
 
@@ -99,7 +99,7 @@ namespace Archetype.Tests.MethodTests
 
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class PrototypalObjectTestsDoubleNestedObjectWithMethods : PrototypalObjectTestsDefinedMethods
+    public class DelegatingObjectTestsDoubleNestedObjectWithMethods : DelegatingObjectTestsDefinedMethods
     {
         #region Setup/Teardown
 

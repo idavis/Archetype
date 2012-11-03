@@ -9,7 +9,7 @@ namespace Archetype.Tests
 {
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public abstract class PrototypalObjectTestsNotImplementedCalls : PrototypalObjectTests
+    public abstract class DelegatingObjectTestsNotImplementedCalls : DelegatingObjectTests
     {
         [Test]
         public void Calling_a_function_when_there_is_no_function_defined_throws()

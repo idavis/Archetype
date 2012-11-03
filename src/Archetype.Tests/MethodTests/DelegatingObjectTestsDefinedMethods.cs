@@ -9,7 +9,7 @@ namespace Archetype.Tests.MethodTests
 {
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class PrototypalObjectTestsDefinedMethods : PrototypalObjectTests
+    public class DelegatingObjectTestsDefinedMethods : DelegatingObjectTests
     {
         #region Setup/Teardown
 

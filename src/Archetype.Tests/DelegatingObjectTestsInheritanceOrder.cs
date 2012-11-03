@@ -9,7 +9,7 @@ namespace Archetype.Tests
 {
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class PrototypalObjectTestsInheritanceOrder
+    public class DelegatingObjectTestsInheritanceOrder
     {
         [Test]
         public void The_parent_target_should_be_executed()

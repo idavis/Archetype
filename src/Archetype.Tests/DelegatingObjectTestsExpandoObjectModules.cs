@@ -9,7 +9,7 @@ namespace Archetype.Tests
 {
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class PrototypalObjectTestsExpandoObjectPrototypes : PrototypalObjectTests
+    public class DelegatingObjectTestsExpandoObjectModules : DelegatingObjectTests
     {
         private dynamic _expandoObject;
 
