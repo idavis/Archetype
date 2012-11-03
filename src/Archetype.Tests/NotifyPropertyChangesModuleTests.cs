@@ -4,21 +4,6 @@ using NUnit.Framework;
 
 namespace Archetype.Tests
 {
-    public class NotifyPropertyChangedModule : INotifyPropertyChanged
-    {
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        public virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
     public class SampleModel : DelegatingPrototype
     {
         private string _Name;
