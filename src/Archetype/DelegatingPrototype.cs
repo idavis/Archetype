@@ -21,16 +21,31 @@ namespace Archetype
 {
     public class DelegatingObject : DynamicObject
     {
-        public IList<object> Prototypes { get; protected set; }
-
         public DelegatingObject(params object[] modules)
         {
             Prototypes = new List<object>(modules.Length);
-            foreach (var module in modules)
+            foreach (object module in modules)
             {
                 Prototypes.Add(module);
             }
-        }  
+        }
+
+        public IList<object> Prototypes { get; protected set; }
+
+        public override DynamicMetaObject GetMetaObject(Expression parameter)
+        {
+            if (Prototypes == null || Prototypes.Count == 0)
+            {
+                return GetBaseMetaObject(parameter);
+            }
+            DynamicMetaObject baseMetaObject = GetBaseMetaObject(parameter);
+            return new DynamicModuleMetaObject(parameter, this, baseMetaObject, Prototypes);
+        }
+
+        public virtual DynamicMetaObject GetBaseMetaObject(Expression parameter)
+        {
+            return base.GetMetaObject(parameter);
+        }
     }
 
     public class DelegatingPrototype : DelegatingObject
@@ -39,29 +54,10 @@ namespace Archetype
         {
         }
 
-        #region IPrototypalMetaObjectProvider Members
-
         public virtual object Prototype
         {
             get { return Prototypes[0]; }
             set { Prototypes[0] = value; }
         }
-
-        public override DynamicMetaObject GetMetaObject(Expression parameter)
-        {
-            if (Prototypes.Count == 0 || Prototype == null)
-            {
-                return GetBaseMetaObject(parameter);
-            }
-            var baseMetaObject = GetBaseMetaObject(parameter);
-            return new DynamicModuleMetaObject(parameter, this, baseMetaObject, Prototypes);
-        }
-
-        public virtual DynamicMetaObject GetBaseMetaObject(Expression parameter)
-        {
-            return base.GetMetaObject(parameter);
-        }
-
-        #endregion
     }
 }
