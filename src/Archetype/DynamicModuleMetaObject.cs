@@ -204,6 +204,12 @@ namespace Archetype
                 result = result.BindConvert( binder );
                 return true;
             }
+            else if (typeof(IDynamicMetaObjectProvider).IsAssignableFrom(instance.RuntimeType))
+            {
+                result = instance.BindConvert( binder );
+                return true;
+            }
+
 
             result = null;
             return false;

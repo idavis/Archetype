@@ -57,6 +57,24 @@ namespace Archetype.Tests
         }
 
         [Test]
+        public void CastingToABaseClassWithADelegatingObjectInTheModuleChainCastsSuccessfully()
+        {
+            var outer = new Cat();
+            dynamic value = new DelegatingObject( outer, new DelegatingObject() );
+            Animal animal = value;
+            Assert.AreSame( outer, animal );
+        }
+
+        [Test]
+        public void CastingToAModulesBaseClassWillResolveAndCastThatModule()
+        {
+            var outer = new Cat();
+            dynamic value = new DelegatingObject( DateTime.Now, outer, 10 );
+            Animal animal = value;
+            Assert.AreSame( outer, animal );
+        }
+
+        [Test]
         public void CastingToAnInterfaceWhenThereIsAConflictBetweenModulesPrefersTheModuleThatWasLoadedLast()
         {
             var first = new DisposableObject();
