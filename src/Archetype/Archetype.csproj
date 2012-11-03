@@ -36,7 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DelegatingPrototype.cs" />
-    <Compile Include="IPrototypalMetaObjectProvider.cs" />
     <Compile Include="NotifyPropertyChangedModule.cs" />
     <Compile Include="PrototypalMetaObject.cs" />
     <Compile Include="PrototypalObject.cs" />

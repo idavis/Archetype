@@ -19,27 +19,33 @@ using System.Linq.Expressions;
 
 namespace Archetype
 {
-    public class DelegatingPrototype : DynamicObject, IPrototypalMetaObjectProvider
+    public class DelegatingObject : DynamicObject
     {
-        private readonly List<object> _Prototypes = new List<object>();
+        public IList<object> Prototypes { get; protected set; }
 
-        public DelegatingPrototype(params object[] prototypes)
+        public DelegatingObject(params object[] modules)
         {
-            foreach (var prototype in prototypes)
+            Prototypes = new List<object>(modules.Length);
+            foreach (var module in modules)
             {
-                _Prototypes.Add(prototype);
+                Prototypes.Add(module);
             }
+        }  
+    }
+
+    public class DelegatingPrototype : DelegatingObject
+    {
+        public DelegatingPrototype(params object[] modules) : base(modules)
+        {
         }
 
         #region IPrototypalMetaObjectProvider Members
 
         public virtual object Prototype
         {
-            get { return _Prototypes[0]; }
-            set { _Prototypes[0] = value; }
+            get { return Prototypes[0]; }
+            set { Prototypes[0] = value; }
         }
-
-        public virtual IList<object> Prototypes { get { return _Prototypes; } }
 
         public override DynamicMetaObject GetMetaObject(Expression parameter)
         {
@@ -47,7 +53,7 @@ namespace Archetype
             {
                 return GetBaseMetaObject(parameter);
             }
-            return new PrototypalMetaObject(parameter, this, _Prototypes);
+            return new PrototypalMetaObject(parameter, this, GetBaseMetaObject, Prototypes);
         }
 
         public virtual DynamicMetaObject GetBaseMetaObject(Expression parameter)

@@ -23,17 +23,16 @@ namespace Archetype
     public class PrototypalMetaObject : DynamicMetaObject
     {
         private readonly DynamicMetaObject _baseMetaObject;
-        private readonly IPrototypalMetaObjectProvider _prototypalObject;
         private readonly IList<object> _prototypes;
 
         public PrototypalMetaObject(Expression expression,
-                                    IPrototypalMetaObjectProvider value,
-                                    IList<object> prototypes)
+                                    object value,
+                                    Func<Expression,DynamicMetaObject> baseMetaObjectFactory,
+            IList<object> prototypes)
             : base(expression, BindingRestrictions.Empty, value)
         {
-            _prototypalObject = value;
             _prototypes = prototypes;
-            _baseMetaObject = CreateBaseMetaObject();
+            _baseMetaObject = baseMetaObjectFactory(Expression);
         }
 
         protected virtual DynamicMetaObject AddTypeRestrictions(DynamicMetaObject result, object value)
@@ -57,12 +56,6 @@ namespace Archetype
                 return BindingRestrictions.GetInstanceRestriction(Expression, null);
             }
             return BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-        }
-
-        protected virtual DynamicMetaObject CreateBaseMetaObject()
-        {
-            DynamicMetaObject baseMetaObject = _prototypalObject.GetBaseMetaObject(Expression);
-            return baseMetaObject;
         }
 
         protected Expression GetLimitedSelf()
