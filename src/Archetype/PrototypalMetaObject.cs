@@ -84,9 +84,9 @@ namespace Archetype
                                  binder.FallbackBinaryOperation( target, arg, errorSuggestion ) );
         }
 
-        public override DynamicMetaObject BindConvert( ConvertBinder binder )
+        public override DynamicMetaObject BindConvert( ConvertBinder binder)
         {
-            return ApplyBinding( meta => meta/*meta.BindConvert( binder )*/, binder.FallbackConvert );
+            return ApplyBinding( meta => meta.BindConvert( binder ), binder.FallbackConvert );
         }
 
         public override DynamicMetaObject BindCreateInstance( CreateInstanceBinder binder, DynamicMetaObject[] args )
@@ -159,27 +159,47 @@ namespace Archetype
                                                                   bindFallback )
         {
             DynamicMetaObject errorSuggestion = ResolveModuleChain( bindTarget, bindFallback );
+            if (errorSuggestion == null) return bindTarget(_baseMetaObject);
             return bindFallback( _baseMetaObject, errorSuggestion );
         }
 
         private DynamicMetaObject ResolveModuleChain( Func<DynamicMetaObject, DynamicMetaObject> bindTarget,
                                                       Func<DynamicMetaObject, DynamicMetaObject, DynamicMetaObject> bindFallback )
         {
+            // binding on an object which will fail, sets to throw expression
+            // binding on the right object throws an exception WTF
             DynamicMetaObject errorSuggestion = null;
             for ( int i = _prototypes.Count - 1; i >= 0; i-- )
             {
-                object prototype = _prototypes[i];
+                var newValue = GetDynamicMetaObjectFromModule(bindTarget, i);
 
-                DynamicMetaObject prototypeMetaObject = CreatePrototypeMetaObject( prototype );
-                DynamicMetaObject newValue = AddTypeRestrictions( bindTarget( prototypeMetaObject ), prototype );
                 if (newValue == null || newValue.Expression.NodeType == ExpressionType.Throw)
                 {
                     continue;
                 }
 
-                errorSuggestion = errorSuggestion == null ? newValue : bindFallback(newValue, errorSuggestion);
+                return newValue;
             }
             return errorSuggestion;
+        }
+
+        private DynamicMetaObject GetDynamicMetaObjectFromModule(Func<DynamicMetaObject, DynamicMetaObject> bindTarget, int index)
+        {
+            object prototype = _prototypes[index];
+
+            DynamicMetaObject prototypeMetaObject = CreatePrototypeMetaObject(prototype);
+            DynamicMetaObject bound = prototypeMetaObject;
+            try
+            {
+                bound = bindTarget(prototypeMetaObject);
+            }
+            catch
+            {
+                //throw;
+                //HACK: This is only for the moment while I figure out why this happens. 
+            }
+            DynamicMetaObject newValue = AddTypeRestrictions(bound, bound.Value);
+            return newValue;
         }
     }
 }
