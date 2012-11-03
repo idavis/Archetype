@@ -22,8 +22,8 @@ namespace Archetype
 {
     public class DynamicModuleMetaObject : DynamicMetaObject
     {
-        private readonly DynamicMetaObject _baseMetaObject;
-        private readonly IList<object> _modules;
+        private readonly DynamicMetaObject _BaseMetaObject;
+        private readonly IList<object> _Modules;
 
         public DynamicModuleMetaObject( Expression expression,
                                         object value,
@@ -31,8 +31,18 @@ namespace Archetype
                                         IList<object> modules )
                 : base( expression, BindingRestrictions.Empty, value )
         {
-            _modules = modules;
-            _baseMetaObject = baseMetaObject;
+            _Modules = modules;
+            _BaseMetaObject = baseMetaObject;
+        }
+
+        protected DynamicMetaObject BaseMetaObject
+        {
+            get { return _BaseMetaObject; }
+        }
+
+        protected IList<object> Modules
+        {
+            get { return _Modules; }
         }
 
         protected virtual DynamicMetaObject AddTypeRestrictions( DynamicMetaObject result, object value )
@@ -154,14 +164,14 @@ namespace Archetype
             DynamicMetaObject errorSuggestion = ResolveModuleChain( bindTarget );
             if ( errorSuggestion == null )
             {
-                return bindTarget( _baseMetaObject );
+                return bindTarget( BaseMetaObject );
             }
-            return bindFallback( _baseMetaObject, errorSuggestion );
+            return bindFallback( BaseMetaObject, errorSuggestion );
         }
 
         private DynamicMetaObject ResolveModuleChain( Func<DynamicMetaObject, DynamicMetaObject> bindTarget )
         {
-            for ( int i = _modules.Count - 1; i >= 0; i-- )
+            for ( int i = Modules.Count - 1; i >= 0; i-- )
             {
                 DynamicMetaObject newValue = GetDynamicMetaObjectFromModule( bindTarget, i );
 
@@ -179,7 +189,7 @@ namespace Archetype
         private DynamicMetaObject GetDynamicMetaObjectFromModule( Func<DynamicMetaObject, DynamicMetaObject> bindTarget,
                                                                   int index )
         {
-            object prototype = _modules[index];
+            object prototype = Modules[index];
 
             DynamicMetaObject prototypeMetaObject = CreatePrototypeMetaObject( prototype );
             DynamicMetaObject bound = bindTarget( prototypeMetaObject );
@@ -204,12 +214,12 @@ namespace Archetype
                 result = result.BindConvert( binder );
                 return true;
             }
-            else if (typeof(IDynamicMetaObjectProvider).IsAssignableFrom(instance.RuntimeType))
+            
+            if (typeof(IDynamicMetaObjectProvider).IsAssignableFrom(instance.RuntimeType))
             {
                 result = instance.BindConvert( binder );
                 return true;
             }
-
 
             result = null;
             return false;
