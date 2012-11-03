@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Archetype.Modules;
 using NUnit.Framework;
 
 namespace Archetype.Tests

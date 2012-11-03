@@ -15,7 +15,7 @@ using System.ComponentModel;
 
 #endregion
 
-namespace Archetype
+namespace Archetype.Modules
 {
     public class NotifyPropertyChangedModule : INotifyPropertyChanged
     {
