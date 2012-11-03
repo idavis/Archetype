@@ -151,7 +151,7 @@ namespace Archetype
                                                           Func<DynamicMetaObject, DynamicMetaObject, DynamicMetaObject>
                                                                   bindFallback )
         {
-            DynamicMetaObject errorSuggestion = ResolveModuleChain( bindTarget, bindFallback );
+            DynamicMetaObject errorSuggestion = ResolveModuleChain( bindTarget );
             if ( errorSuggestion == null )
             {
                 return bindTarget( _baseMetaObject );
@@ -159,11 +159,8 @@ namespace Archetype
             return bindFallback( _baseMetaObject, errorSuggestion );
         }
 
-        private DynamicMetaObject ResolveModuleChain( Func<DynamicMetaObject, DynamicMetaObject> bindTarget,
-                                                      Func<DynamicMetaObject, DynamicMetaObject, DynamicMetaObject>
-                                                              bindFallback )
+        private DynamicMetaObject ResolveModuleChain( Func<DynamicMetaObject, DynamicMetaObject> bindTarget )
         {
-            DynamicMetaObject errorSuggestion = null;
             for ( int i = _modules.Count - 1; i >= 0; i-- )
             {
                 DynamicMetaObject newValue = GetDynamicMetaObjectFromModule( bindTarget, i );
@@ -176,7 +173,7 @@ namespace Archetype
 
                 return newValue;
             }
-            return errorSuggestion;
+            return null;
         }
 
         private DynamicMetaObject GetDynamicMetaObjectFromModule( Func<DynamicMetaObject, DynamicMetaObject> bindTarget,
