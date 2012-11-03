@@ -25,10 +25,13 @@ namespace Archetype
 
         #endregion
 
-        public virtual void OnPropertyChanged(string propertyName)
+        public virtual void OnPropertyChanged( string propertyName )
         {
             PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            if ( handler != null )
+            {
+                handler( this, new PropertyChangedEventArgs( propertyName ) );
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.Linq;
 using NUnit.Framework;
 
 namespace Archetype.Tests
@@ -8,12 +7,13 @@ namespace Archetype.Tests
     {
         private string _Name;
 
-        public SampleModel() : this(new NotifyPropertyChangedModule())
+        public SampleModel()
+                : this( new NotifyPropertyChangedModule() )
         {
         }
 
-        public SampleModel(params object[] prototypes)
-            : base(prototypes)
+        public SampleModel( params object[] prototypes )
+                : base( prototypes )
         {
             // Or you can add it to the prototypes list after the fact
             //Modules.Add(new NotifyPropertyChangedModule());
@@ -24,9 +24,12 @@ namespace Archetype.Tests
             get { return _Name; }
             set
             {
-                if (_Name == value) return;
+                if ( _Name == value )
+                {
+                    return;
+                }
                 _Name = value;
-                This.OnPropertyChanged("Name");
+                This.OnPropertyChanged( "Name" );
             }
         }
 
@@ -44,27 +47,27 @@ namespace Archetype.Tests
         private dynamic instance;
         private INotifyPropertyChanged module;
 
-        public void Initialize(params object[] prototypes)
+        public void Initialize( params object[] prototypes )
         {
-            instance = prototypes.Length == 0 ? new SampleModel() : new SampleModel(prototypes);
+            instance = prototypes.Length == 0 ? new SampleModel() : new SampleModel( prototypes );
             module = instance;
             called = false;
             propertyName = null;
-            module.PropertyChanged += (sender, args) =>
-                                          {
-                                              called = true;
-                                              propertyName = args.PropertyName;
-                                          };
+            module.PropertyChanged += ( sender, args ) =>
+                                      {
+                                          called = true;
+                                          propertyName = args.PropertyName;
+                                      };
         }
 
         private void AssertBehavior()
         {
             instance.Name = null;
-            Assert.IsFalse(called);
+            Assert.IsFalse( called );
             instance.Name = "Ian";
-            Assert.IsTrue(called);
-            Assert.AreEqual("Ian", instance.Name);
-            Assert.AreEqual("Name", propertyName);
+            Assert.IsTrue( called );
+            Assert.AreEqual( "Ian", instance.Name );
+            Assert.AreEqual( "Name", propertyName );
         }
 
         [Test]
@@ -77,21 +80,21 @@ namespace Archetype.Tests
         [Test]
         public void OnPropertyChangedCanBeCalledFromTheImportingClassWhenThereIsAModuleChainEndingInTheTarget()
         {
-            Initialize(5, new NotifyPropertyChangedModule());
+            Initialize( 5, new NotifyPropertyChangedModule() );
             AssertBehavior();
         }
 
         [Test]
         public void OnPropertyChangedCanBeCalledFromTheImportingClassWhenThereIsAModuleChainWithTheTargetInTheBeginning()
         {
-            Initialize(new NotifyPropertyChangedModule(), 5);
+            Initialize( new NotifyPropertyChangedModule(), 5 );
             AssertBehavior();
         }
 
         [Test]
         public void OnPropertyChangedCanBeCalledFromTheImportingClassWhenThereIsAModuleChainWithTheTargetInTheMiddle()
         {
-            Initialize(10, new NotifyPropertyChangedModule(), 5);
+            Initialize( 10, new NotifyPropertyChangedModule(), 5 );
             AssertBehavior();
         }
     }

@@ -19,7 +19,8 @@ namespace Archetype.Tests
 
     public class DisposableDelegatingObject : DelegatingObject, IDisposable
     {
-        public DisposableDelegatingObject(params object[] prototypes) : base(prototypes)
+        public DisposableDelegatingObject( params object[] prototypes )
+                : base( prototypes )
         {
         }
 
@@ -44,15 +45,15 @@ namespace Archetype.Tests
         {
             dynamic value = new DisposableDelegatingObject();
             IDisposable instance = value;
-            Assert.IsNotNull(instance);
+            Assert.IsNotNull( instance );
         }
 
         [Test]
         public void CanCastToModuleWhenOnlyASingleModuleIsSupplied()
         {
-            dynamic value = new DelegatingObject(new DisposableObject());
+            dynamic value = new DelegatingObject( new DisposableObject() );
             IDisposable instance = value;
-            Assert.IsNotNull(instance);
+            Assert.IsNotNull( instance );
         }
 
         [Test]
@@ -60,26 +61,26 @@ namespace Archetype.Tests
         {
             var first = new DisposableObject();
             var second = new DisposableObject();
-            dynamic value = new DelegatingObject(first, second);
+            dynamic value = new DelegatingObject( first, second );
             IDisposable instance = value;
-            Assert.AreSame(second, instance);
+            Assert.AreSame( second, instance );
         }
 
         [Test]
         public void CastingToAnInterfaceWhenThereIsAConflictPrefersTheRootObjectOverModules()
         {
-            dynamic value = new DisposableDelegatingObject(new DisposableObject());
+            dynamic value = new DisposableDelegatingObject( new DisposableObject() );
             IDisposable instance = value;
-            Assert.AreSame(value, instance);
+            Assert.AreSame( value, instance );
         }
 
         [Test]
         public void CastingWillSkipPrototypesWhichAreNotValidTargetsForTheCast()
         {
             var inner = new DisposableObject();
-            dynamic value = new DelegatingObject(inner, new DelegatingObject());
+            dynamic value = new DelegatingObject( inner, new DelegatingObject() );
             IDisposable instance = value;
-            Assert.AreSame(instance, inner);
+            Assert.AreSame( instance, inner );
         }
     }
 }

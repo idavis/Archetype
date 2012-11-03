@@ -12,10 +12,11 @@ namespace Archetype.Tests
     public class PrototypalObjectTestsExpandoObjectPrototypes : PrototypalObjectTests
     {
         private dynamic _expandoObject;
+
         protected override PrototypalObject Create()
         {
             _expandoObject = new ExpandoObject();
-            return new PrototypalObject(_expandoObject);
+            return new PrototypalObject( _expandoObject );
         }
 
         [Test]
@@ -29,7 +30,7 @@ namespace Archetype.Tests
         public void Indexing_should_get_the_member()
         {
             _expandoObject.foo = 5;
-            Assert.AreEqual(5, DynamicValue.foo);
+            Assert.AreEqual( 5, DynamicValue.foo );
         }
     }
 }

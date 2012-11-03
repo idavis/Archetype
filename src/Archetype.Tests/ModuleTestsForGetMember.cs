@@ -21,7 +21,8 @@ namespace Archetype.Tests
 
     public class CheshireCat : DelegatingObject
     {
-        public CheshireCat(Cat cat = null) : base(cat)
+        public CheshireCat( Cat cat = null )
+                : base( cat )
         {
         }
 
@@ -37,45 +38,44 @@ namespace Archetype.Tests
         [Test]
         public void GettingAPropertyThatIsDefinedInTheRootObjectReturnsItsValue()
         {
-            dynamic value = new CheshireCat(new Cat());
-            Assert.AreEqual("Grin", value.Action);
+            dynamic value = new CheshireCat( new Cat() );
+            Assert.AreEqual( "Grin", value.Action );
         }
 
         [Test]
         public void GettingAPropertyThatIsDefinedInTheRootObjectReturnsItsValueWhenThereIsNoPrototype()
         {
             dynamic value = new CheshireCat();
-            Assert.AreEqual("Grin", value.Action);
+            Assert.AreEqual( "Grin", value.Action );
         }
 
         [Test]
         public void GettingAPropertyThatIsNotDefinedInTheRootObjectReturnsItsValueAndIsReturnedBottomUp()
         {
-            dynamic value = new CheshireCat(new Cat());
-            value.Modules.Add(new Animal());
-            Assert.AreEqual("Animal", value.Name);
+            dynamic value = new CheshireCat( new Cat() );
+            value.Modules.Add( new Animal() );
+            Assert.AreEqual( "Animal", value.Name );
         }
 
         [Test]
         public void GettingAPropertyThatIsNotDefinedInTheRootObjectReturnsItsValueIfItIsNotOnTheLastModule()
         {
-            dynamic value = new CheshireCat(new Cat());
-            Assert.AreEqual("Meow", value.Noise);
+            dynamic value = new CheshireCat( new Cat() );
+            Assert.AreEqual( "Meow", value.Noise );
         }
 
         [Test]
         public void GettingAPropertyThatIsNotDefinedInTheRootObjectReturnsItsValueIfItIsOnTheLastModule()
         {
-            dynamic value = new CheshireCat(new Cat());
-            Assert.AreEqual("Cat", value.Name);
+            dynamic value = new CheshireCat( new Cat() );
+            Assert.AreEqual( "Cat", value.Name );
         }
 
         [Test]
         public void TestingChainOfModules()
         {
-            dynamic value = new DelegatingObject(5, "cat", 10, new Uri("http://www.foo.com"));
-            Assert.AreEqual(3, value.Length);
+            dynamic value = new DelegatingObject( 5, "cat", 10, new Uri( "http://www.foo.com" ) );
+            Assert.AreEqual( 3, value.Length );
         }
-
     }
 }

@@ -1,8 +1,8 @@
 #region Using Directives
 
+using Archetype.Tests.TestObjects;
 using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
-using Archetype.Tests.TestObjects;
 
 #endregion
 

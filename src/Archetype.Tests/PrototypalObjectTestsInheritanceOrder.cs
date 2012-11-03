@@ -1,7 +1,7 @@
 #region Using Directives
 
-using NUnit.Framework;
 using Archetype.Tests.TestObjects;
+using NUnit.Framework;
 
 #endregion
 
