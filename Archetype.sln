@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archetype", "src\Archetype\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archetype.Tests", "src\Archetype.Tests\Archetype.Tests.csproj", "{ECC39D5A-879B-45CF-85DF-3BDD60C58EEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archetype.Examples", "src\Archetype.Examples\Archetype.Examples.csproj", "{759220DD-3017-4331-8F37-7C0B7F2ACDC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{ECC39D5A-879B-45CF-85DF-3BDD60C58EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECC39D5A-879B-45CF-85DF-3BDD60C58EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECC39D5A-879B-45CF-85DF-3BDD60C58EEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{759220DD-3017-4331-8F37-7C0B7F2ACDC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{759220DD-3017-4331-8F37-7C0B7F2ACDC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{759220DD-3017-4331-8F37-7C0B7F2ACDC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{759220DD-3017-4331-8F37-7C0B7F2ACDC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
