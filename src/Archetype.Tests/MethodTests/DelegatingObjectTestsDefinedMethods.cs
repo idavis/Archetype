@@ -16,20 +16,20 @@ namespace Archetype.Tests.MethodTests
         [SetUp]
         public override void Setup()
         {
-            Value = new ProtoTypalObjectWithMethods();
+            Value = new ModuleWithMethods();
         }
 
         #endregion
 
         [Test]
-        public void Calling_a_function_with_a_retval_with_a_param_defined_in_prototype_is_called()
+        public void Calling_a_function_with_a_retval_with_a_param_defined_in_module_is_called()
         {
             dynamic result = DynamicValue.MethodWithReturnValueSingleParameter( 42 );
             Assert.True( DynamicValue.MethodWithReturnValueSingleParameterWasCalled );
         }
 
         [Test]
-        public void Calling_a_function_with_a_retval_with_a_param_defined_in_prototype_passes_the_parameter()
+        public void Calling_a_function_with_a_retval_with_a_param_defined_in_module_passes_the_parameter()
         {
             dynamic actual = DynamicValue.MethodWithReturnValueSingleParameter( 42 );
             Assert.AreEqual( 42, actual );
@@ -50,21 +50,21 @@ namespace Archetype.Tests.MethodTests
         }
 
         [Test]
-        public void Calling_a_void_function_with_a_param_defined_in_prototype_is_called()
+        public void Calling_a_void_function_with_a_param_defined_in_module_is_called()
         {
             DynamicValue.MethodWithNoReturnValueSingleParameter( 42 );
             Assert.True( DynamicValue.MethodWithNoReturnValueSingleParameterWasCalled );
         }
 
         [Test]
-        public void Calling_a_void_function_with_a_param_defined_in_prototype_passes_the_parameter()
+        public void Calling_a_void_function_with_a_param_defined_in_module_passes_the_parameter()
         {
             DynamicValue.MethodWithNoReturnValueSingleParameter( 42 );
             Assert.AreEqual( 42, DynamicValue.MethodWithNoReturnValueSingleParameterValue );
         }
 
         [Test]
-        public void Calling_a_void_function_with_no_params_defined_in_prototype_is_called()
+        public void Calling_a_void_function_with_no_params_defined_in_module_is_called()
         {
             DynamicValue.MethodWithNoReturnValueOrParameters();
             Assert.True( DynamicValue.MethodWithNoReturnValueOrParametersWasCalled );

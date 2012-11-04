@@ -53,10 +53,10 @@ namespace Archetype
             return metaObject;
         }
 
-        protected virtual DynamicMetaObject CreatePrototypeMetaObject( object module )
+        protected virtual DynamicMetaObject CreateModuleMetaObject( object module )
         {
-            DynamicMetaObject prototypeMetaObject = Create( module, Expression.Constant( module ) );
-            return prototypeMetaObject;
+            DynamicMetaObject moduleMetaObject = Create( module, Expression.Constant( module ) );
+            return moduleMetaObject;
         }
 
         protected virtual BindingRestrictions GetTypeRestriction()
@@ -171,30 +171,29 @@ namespace Archetype
 
         private DynamicMetaObject ResolveModuleChain( Func<DynamicMetaObject, DynamicMetaObject> bindTarget )
         {
-            for ( int i = Modules.Count - 1; i >= 0; i-- )
+            for ( int index = Modules.Count - 1; index >= 0; index-- )
             {
-                DynamicMetaObject newValue = GetDynamicMetaObjectFromModule( bindTarget, i );
+                object module = Modules[index];
+                DynamicMetaObject metaObject = GetDynamicMetaObjectFromModule( bindTarget, module );
 
-                if ( newValue == null ||
-                     newValue.Expression.NodeType == ExpressionType.Throw )
+                if ( metaObject == null ||
+                     metaObject.Expression.NodeType == ExpressionType.Throw )
                 {
                     continue;
                 }
 
-                return newValue;
+                return metaObject;
             }
             return null;
         }
 
         private DynamicMetaObject GetDynamicMetaObjectFromModule( Func<DynamicMetaObject, DynamicMetaObject> bindTarget,
-                                                                  int index )
+                                                                  object module )
         {
-            object prototype = Modules[index];
-
-            DynamicMetaObject prototypeMetaObject = CreatePrototypeMetaObject( prototype );
-            DynamicMetaObject bound = bindTarget( prototypeMetaObject );
-            DynamicMetaObject newValue = AddTypeRestrictions( bound, bound.Value );
-            return newValue;
+            DynamicMetaObject moduleMetaObject = CreateModuleMetaObject( module );
+            DynamicMetaObject boundMetaObject = bindTarget( moduleMetaObject );
+            DynamicMetaObject result = AddTypeRestrictions( boundMetaObject, boundMetaObject.Value );
+            return result;
         }
 
         private static bool TryConvert( ConvertBinder binder, DynamicMetaObject instance, out DynamicMetaObject result )
@@ -214,8 +213,8 @@ namespace Archetype
                 result = result.BindConvert( binder );
                 return true;
             }
-            
-            if (typeof(IDynamicMetaObjectProvider).IsAssignableFrom(instance.RuntimeType))
+
+            if ( typeof (IDynamicMetaObjectProvider).IsAssignableFrom( instance.RuntimeType ) )
             {
                 result = instance.BindConvert( binder );
                 return true;

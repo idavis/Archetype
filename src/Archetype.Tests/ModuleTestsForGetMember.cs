@@ -43,7 +43,7 @@ namespace Archetype.Tests
         }
 
         [Test]
-        public void GettingAPropertyThatIsDefinedInTheRootObjectReturnsItsValueWhenThereIsNoPrototype()
+        public void GettingAPropertyThatIsDefinedInTheRootObjectReturnsItsValueWhenThereIsNoBaseModule()
         {
             dynamic value = new CheshireCat();
             Assert.AreEqual( "Grin", value.Action );

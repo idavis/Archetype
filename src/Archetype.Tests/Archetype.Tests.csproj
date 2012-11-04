@@ -50,7 +50,7 @@
     <Compile Include="StaticTests\DelegatingObjectTestsDefinedStaticMethodsOnObjectModule.cs" />
     <Compile Include="TestObjects\DynamicObjectWithMethods.cs" />
     <Compile Include="TestObjects\Person.cs" />
-    <Compile Include="TestObjects\ProtoTypalObjectWithMethods.cs" />
+    <Compile Include="TestObjects\ModuleWithMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DelegatingObjectTests.cs" />
     <Compile Include="MethodTests\DelegatingObjectTestsDefinedMethods.cs" />

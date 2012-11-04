@@ -14,8 +14,8 @@ namespace Archetype.Tests.TestObjects
 
     public class TheDude : DelegatingObject
     {
-        public TheDude( IDynamicMetaObjectProvider prototype )
-                : base( prototype )
+        public TheDude( IDynamicMetaObjectProvider module )
+                : base( module )
         {
         }
 

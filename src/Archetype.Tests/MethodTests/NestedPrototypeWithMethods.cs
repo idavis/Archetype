@@ -24,14 +24,14 @@ namespace Archetype.Tests.MethodTests
 
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class DelegatingObjectTestsNestedPrototypeWithMethods : DelegatingObjectTestsDefinedMethods
+    public class DelegatingObjectTestsNestedModuleWithMethods : DelegatingObjectTestsDefinedMethods
     {
         #region Setup/Teardown
 
         [SetUp]
         public override void Setup()
         {
-            Value = new DelegatingObject( new ProtoTypalObjectWithMethods() );
+            Value = new DelegatingObject( new ModuleWithMethods() );
         }
 
         #endregion
@@ -39,14 +39,14 @@ namespace Archetype.Tests.MethodTests
 
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class DelegatingObjectTestsNestedPrototypeWithMethodsWithEmptyPrototype : DelegatingObjectTestsDefinedMethods
+    public class DelegatingObjectTestsNestedModuleWithMethodsWithEmptyModule : DelegatingObjectTestsDefinedMethods
     {
         #region Setup/Teardown
 
         [SetUp]
         public override void Setup()
         {
-            Value = new DelegatingObject( new ProtoTypalObjectWithMethods( new DelegatingObject() ) );
+            Value = new DelegatingObject( new ModuleWithMethods( new DelegatingObject() ) );
         }
 
         #endregion
@@ -54,14 +54,14 @@ namespace Archetype.Tests.MethodTests
 
     [TestFixture]
     [Timeout( Constants.TestTimeOutInMs )]
-    public class DelegatingObjectTestsDoubleNestedPrototypeWithMethods : DelegatingObjectTestsDefinedMethods
+    public class DelegatingObjectTestsDoubleNestedModuleWithMethods : DelegatingObjectTestsDefinedMethods
     {
         #region Setup/Teardown
 
         [SetUp]
         public override void Setup()
         {
-            Value = new DelegatingObject( new DelegatingObject( new ProtoTypalObjectWithMethods() ) );
+            Value = new DelegatingObject( new DelegatingObject( new ModuleWithMethods() ) );
         }
 
         #endregion

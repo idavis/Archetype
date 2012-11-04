@@ -19,8 +19,8 @@ namespace Archetype.Tests
 
     public class DisposableDelegatingObject : DelegatingObject, IDisposable
     {
-        public DisposableDelegatingObject( params object[] prototypes )
-                : base( prototypes )
+        public DisposableDelegatingObject( params object[] modules )
+                : base( modules )
         {
         }
 
@@ -93,7 +93,7 @@ namespace Archetype.Tests
         }
 
         [Test]
-        public void CastingWillSkipPrototypesWhichAreNotValidTargetsForTheCast()
+        public void CastingWillSkipModulesWhichAreNotValidTargetsForTheCast()
         {
             var inner = new DisposableObject();
             dynamic value = new DelegatingObject( inner, new DelegatingObject() );

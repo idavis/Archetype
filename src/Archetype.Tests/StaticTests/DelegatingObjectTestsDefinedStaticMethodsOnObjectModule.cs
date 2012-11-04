@@ -23,13 +23,13 @@ namespace Archetype.Tests.StaticTests
         #endregion
 
         [Test]
-        public void Calling_a_static_void_function_with_no_params_defined_in_non_dynamic_prototype_throws()
+        public void Calling_a_static_void_function_with_no_params_defined_in_non_dynamic_module_throws()
         {
             Assert.Throws<RuntimeBinderException>( () => DynamicValue.StaticMethodWithNoReturnValueOrParameters() );
         }
 
         [Test]
-        public void Getting_a_static_property_defined_in_non_dynamic_prototype_throws()
+        public void Getting_a_static_property_defined_in_non_dynamic_module_throws()
         {
             TestDelegate action =
                     () => { dynamic value = DynamicValue.StaticMethodWithNoReturnValueOrParametersWasCalled; };
@@ -37,7 +37,7 @@ namespace Archetype.Tests.StaticTests
         }
 
         [Test]
-        public void Setting_a_static_property_defined_in_non_dynamic_prototype_throws()
+        public void Setting_a_static_property_defined_in_non_dynamic_module_throws()
         {
             TestDelegate action =
                     () => { DynamicValue.StaticMethodWithNoReturnValueOrParametersWasCalled = false; };

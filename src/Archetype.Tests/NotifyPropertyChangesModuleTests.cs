@@ -13,10 +13,10 @@ namespace Archetype.Tests
         {
         }
 
-        public SampleModel( params object[] prototypes )
-                : base( prototypes )
+        public SampleModel( params object[] modules )
+                : base( modules )
         {
-            // Or you can add it to the prototypes list after the fact
+            // Or you can add it to the modules list after the fact
             //Modules.Add(new NotifyPropertyChangedModule());
         }
 
@@ -48,9 +48,9 @@ namespace Archetype.Tests
         private dynamic instance;
         private INotifyPropertyChanged module;
 
-        public void Initialize( params object[] prototypes )
+        public void Initialize( params object[] modules )
         {
-            instance = prototypes.Length == 0 ? new SampleModel() : new SampleModel( prototypes );
+            instance = modules.Length == 0 ? new SampleModel() : new SampleModel( modules );
             module = instance;
             called = false;
             propertyName = null;

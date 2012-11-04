@@ -17,15 +17,15 @@ namespace Archetype.Tests.StaticTests
         [SetUp]
         public override void Setup()
         {
-            Value = new ProtoTypalObjectWithMethods();
+            Value = new ModuleWithMethods();
         }
 
         #endregion
 
         [Test]
-        public void Calling_a_static_void_function_with_no_params_defined_in_prototype_is_called_throws()
+        public void Calling_a_static_void_function_with_no_params_defined_in_module_is_called_throws()
         {
-            Assert.Throws<RuntimeBinderException>( ()=> DynamicValue.StaticMethodWithNoReturnValueOrParameters() );
+            Assert.Throws<RuntimeBinderException>( () => DynamicValue.StaticMethodWithNoReturnValueOrParameters() );
         }
     }
 }

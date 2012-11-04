@@ -6,7 +6,7 @@ using System.Dynamic;
 
 namespace Archetype.Tests.TestObjects
 {
-    public class ProtoTypalObjectWithMethods : DelegatingObject
+    public class ModuleWithMethods : DelegatingObject
     {
         public static bool StaticMethodWithNoReturnValueOrParametersWasCalled;
         public bool MethodWithNoReturnValueOrParametersWasCalled;
@@ -15,13 +15,13 @@ namespace Archetype.Tests.TestObjects
         public bool MethodWithReturnValueNoParametersWasCalled;
         public bool MethodWithReturnValueSingleParameterWasCalled;
 
-        public ProtoTypalObjectWithMethods()
+        public ModuleWithMethods()
                 : this( null )
         {
         }
 
-        public ProtoTypalObjectWithMethods( IDynamicMetaObjectProvider prototype )
-                : base( prototype )
+        public ModuleWithMethods( IDynamicMetaObjectProvider module )
+                : base( module )
         {
             StaticMethodWithNoReturnValueOrParametersWasCalled = false;
         }
