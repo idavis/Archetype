@@ -23,11 +23,7 @@ namespace Archetype
     {
         public DelegatingObject( params object[] modules )
         {
-            Modules = new List<object>( modules.Length );
-            foreach ( object module in modules )
-            {
-                Modules.Add( module );
-            }
+            Modules = new List<object>( modules ?? new object[]{} );
         }
 
         public IList<object> Modules { get; protected set; }
