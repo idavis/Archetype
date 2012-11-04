@@ -38,7 +38,7 @@ namespace Archetype
                 return baseMetaObject;
             }
 
-            return new DynamicModuleMetaObject( parameter, this, baseMetaObject, Modules );
+            return new ModuleMetaObject( parameter, this, baseMetaObject, Modules );
         }
 
         public virtual DynamicMetaObject GetBaseMetaObject( Expression parameter )

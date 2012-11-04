@@ -20,12 +20,12 @@ using System.Linq.Expressions;
 
 namespace Archetype
 {
-    public class DynamicModuleMetaObject : DynamicMetaObject
+    public class ModuleMetaObject : DynamicMetaObject
     {
         private readonly DynamicMetaObject _BaseMetaObject;
         private readonly IList<object> _Modules;
 
-        public DynamicModuleMetaObject( Expression expression,
+        public ModuleMetaObject( Expression expression,
                                         object value,
                                         DynamicMetaObject baseMetaObject,
                                         IList<object> modules )
