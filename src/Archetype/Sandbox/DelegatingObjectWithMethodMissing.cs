@@ -46,17 +46,17 @@ namespace Archetype.Sandbox
 
     internal delegate bool TryUnaryOperationMissing( UnaryOperationBinder binder, out object result );
 
-    internal class PrototypalObject : DelegatingObject
+    internal class DelegatingObjectWithMethodMissing : DelegatingObject
     {
         private const BindingFlags DefaultBindingFlags =
                 BindingFlags.FlattenHierarchy | BindingFlags.Static | BindingFlags.Public;
 
-        public PrototypalObject()
+        public DelegatingObjectWithMethodMissing()
                 : this( null )
         {
         }
 
-        public PrototypalObject( object prototype )
+        public DelegatingObjectWithMethodMissing( object prototype )
                 : base( prototype )
         {
         }
@@ -262,13 +262,13 @@ namespace Archetype.Sandbox
             return Modules.OfType<DynamicObject>().Any( prototype => prototype.TrySetMember( binder, value ) );
         }
 
-        public static PrototypalObject AsPrototypalObject( IDynamicMetaObjectProvider prototype )
+        public static DelegatingObjectWithMethodMissing AsPrototypalObject( IDynamicMetaObjectProvider prototype )
         {
             if ( prototype == null )
             {
-                return new PrototypalObject();
+                return new DelegatingObjectWithMethodMissing();
             }
-            return prototype as PrototypalObject ?? new PrototypalObject( prototype );
+            return prototype as DelegatingObjectWithMethodMissing ?? new DelegatingObjectWithMethodMissing( prototype );
         }
 
         public virtual bool RespondsTo( string name )
@@ -295,7 +295,7 @@ namespace Archetype.Sandbox
             {
                 return true;
             }
-            var prototypalObject = target as PrototypalObject;
+            var prototypalObject = target as DelegatingObjectWithMethodMissing;
             if ( prototypalObject != null &&
                  prototypalObject.Modules != null )
             {

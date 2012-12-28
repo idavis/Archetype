@@ -36,10 +36,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DelegatingObject.cs" />
+    <Compile Include="DynamicMetaObjectProviderBase.cs" />
     <Compile Include="Modules\NotifyPropertyChangedModule.cs" />
     <Compile Include="ModuleMetaObject.cs" />
     <Compile Include="Modules\NotifyPropertyChangingModule.cs" />
-    <Compile Include="Sandbox\PrototypalObject.cs" />
+    <Compile Include="PrototypalObject.cs" />
+    <Compile Include="PrototypalObject{T}.cs" />
+    <Compile Include="Sandbox\DelegatingObjectWithMethodMissing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

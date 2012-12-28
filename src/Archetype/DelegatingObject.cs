@@ -19,18 +19,18 @@ using System.Linq.Expressions;
 
 namespace Archetype
 {
-    public class DelegatingObject : DynamicObject
+    public class DelegatingObject : DynamicMetaObjectProviderBase
     {
         public DelegatingObject( params object[] modules )
         {
-            Modules = new List<object>( modules ?? new object[]{} );
+            Modules = new List<object>( modules ?? new object[] { } );
         }
 
         public IList<object> Modules { get; protected set; }
 
         public override DynamicMetaObject GetMetaObject( Expression parameter )
         {
-            DynamicMetaObject baseMetaObject = GetBaseMetaObject( parameter );
+            DynamicMetaObject baseMetaObject = base.GetMetaObject( parameter );
 
             if ( Modules == null ||
                  Modules.Count == 0 )
@@ -39,11 +39,6 @@ namespace Archetype
             }
 
             return new ModuleMetaObject( parameter, this, baseMetaObject, Modules );
-        }
-
-        public virtual DynamicMetaObject GetBaseMetaObject( Expression parameter )
-        {
-            return base.GetMetaObject( parameter );
         }
     }
 }

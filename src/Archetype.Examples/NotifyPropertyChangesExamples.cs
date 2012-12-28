@@ -29,26 +29,18 @@ namespace Archetype.Examples
     {
         #region INotifyPropertyChanges Members
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
-        public event PropertyChangingEventHandler PropertyChanging;
+        public event PropertyChangingEventHandler PropertyChanging = delegate { };
 
         public virtual void OnPropertyChanged( string propertyName = "" )
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if ( handler != null )
-            {
-                handler( this, new PropertyChangedEventArgs( propertyName ) );
-            }
+            PropertyChanged( this, new PropertyChangedEventArgs( propertyName ) );
         }
 
         public virtual void OnPropertyChanging( string propertyName = "" )
         {
-            PropertyChangingEventHandler handler = PropertyChanging;
-            if ( handler != null )
-            {
-                handler( this, new PropertyChangingEventArgs( propertyName ) );
-            }
+            PropertyChanging( this, new PropertyChangingEventArgs( propertyName ) );
         }
 
         #endregion
@@ -74,11 +66,11 @@ namespace Archetype.Examples
             get { return _Name; }
             set
             {
-                This.OnPropertyChanging( "Name" );
+                _this.OnPropertyChanging( "Name" );
                 if ( _Name != value )
                 {
                     _Name = value;
-                    This.OnPropertyChanged( "Name" );
+                    _this.OnPropertyChanged( "Name" );
                 }
             }
         }
@@ -97,14 +89,9 @@ namespace Archetype.Examples
             }
         }
 
-        private dynamic This
-        {
-            get { return this; }
-        }
-
         internal INotifyPropertyChanges Inpc
         {
-            get { return This; }
+            get { return _this; }
         }
     }
 

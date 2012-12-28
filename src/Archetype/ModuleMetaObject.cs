@@ -26,23 +26,13 @@ namespace Archetype
         private readonly IList<object> _Modules;
 
         public ModuleMetaObject( Expression expression,
-                                        object value,
-                                        DynamicMetaObject baseMetaObject,
-                                        IList<object> modules )
+                                 object value,
+                                 DynamicMetaObject baseMetaObject,
+                                 IList<object> modules )
                 : base( expression, BindingRestrictions.Empty, value )
         {
             _Modules = modules;
             _BaseMetaObject = baseMetaObject;
-        }
-
-        protected DynamicMetaObject BaseMetaObject
-        {
-            get { return _BaseMetaObject; }
-        }
-
-        protected IList<object> Modules
-        {
-            get { return _Modules; }
         }
 
         protected virtual DynamicMetaObject AddTypeRestrictions( DynamicMetaObject result, object value )
@@ -164,16 +154,16 @@ namespace Archetype
             DynamicMetaObject errorSuggestion = ResolveModuleChain( bindTarget );
             if ( errorSuggestion == null )
             {
-                return bindTarget( BaseMetaObject );
+                return bindTarget( _BaseMetaObject );
             }
-            return bindFallback( BaseMetaObject, errorSuggestion );
+            return bindFallback( _BaseMetaObject, errorSuggestion );
         }
 
         private DynamicMetaObject ResolveModuleChain( Func<DynamicMetaObject, DynamicMetaObject> bindTarget )
         {
-            for ( int index = Modules.Count - 1; index >= 0; index-- )
+            for ( int index = _Modules.Count - 1; index >= 0; index-- )
             {
-                object module = Modules[index];
+                object module = _Modules[index];
                 DynamicMetaObject metaObject = GetDynamicMetaObjectFromModule( bindTarget, module );
 
                 if ( metaObject == null ||

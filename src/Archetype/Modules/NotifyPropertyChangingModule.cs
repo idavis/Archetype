@@ -21,17 +21,13 @@ namespace Archetype.Modules
     {
         #region INotifyPropertyChanging Members
 
-        public event PropertyChangingEventHandler PropertyChanging;
+        public event PropertyChangingEventHandler PropertyChanging = delegate { };
 
         #endregion
 
         public virtual void OnPropertyChanging( string propertyName )
         {
-            PropertyChangingEventHandler handler = PropertyChanging;
-            if ( handler != null )
-            {
-                handler( this, new PropertyChangingEventArgs( propertyName ) );
-            }
+            PropertyChanging( this, new PropertyChangingEventArgs( propertyName ) );
         }
     }
 }
