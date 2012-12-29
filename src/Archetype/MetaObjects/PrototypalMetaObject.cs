@@ -17,7 +17,7 @@ using System.Linq.Expressions;
 
 #endregion
 
-namespace Archetype
+namespace Archetype.MetaObjects
 {
     public class PrototypalMetaObject : DelegatingMetaObject
     {

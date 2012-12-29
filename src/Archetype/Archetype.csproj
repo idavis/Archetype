@@ -35,13 +35,13 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DelegatingMetaObject.cs" />
+    <Compile Include="MetaObjects\DelegatingMetaObject.cs" />
     <Compile Include="DelegatingObject.cs" />
     <Compile Include="DynamicMetaObjectProviderBase.cs" />
     <Compile Include="Modules\NotifyPropertyChangedModule.cs" />
-    <Compile Include="ModuleMetaObject.cs" />
+    <Compile Include="MetaObjects\ModuleMetaObject.cs" />
     <Compile Include="Modules\NotifyPropertyChangingModule.cs" />
-    <Compile Include="PrototypalMetaObject.cs" />
+    <Compile Include="MetaObjects\PrototypalMetaObject.cs" />
     <Compile Include="PrototypalObject.cs" />
     <Compile Include="PrototypalObject{T}.cs" />
     <Compile Include="Sandbox\DelegatingObjectWithMethodMissing.cs" />
