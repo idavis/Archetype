@@ -51,7 +51,7 @@ namespace Archetype
                 return base.GetDynamicMemberNames();
             }
             return base.GetDynamicMemberNames()
-                       .Union( Modules.SelectMany( GetDynamicMemberNames ), StringComparer.OrdinalIgnoreCase );
+                       .Union( Modules.SelectMany( GetAllMemberNames ), StringComparer.OrdinalIgnoreCase );
         }
     }
 }

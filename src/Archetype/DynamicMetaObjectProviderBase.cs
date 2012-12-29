@@ -49,31 +49,33 @@ namespace Archetype
             return respondsTo;
         }
 
-        public virtual IEnumerable<string> GetDynamicMemberNames( object target )
+        public virtual IEnumerable<string> GetAllMemberNames( object target )
         {
             if ( target == null )
             {
                 return Enumerable.Empty<string>();
             }
-            var results = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
+            return GetDeclaredMemberNames( target )
+                    .Union( GetDynamicMemberNames( target ), StringComparer.OrdinalIgnoreCase );
+        }
+
+        public virtual IEnumerable<string> GetDeclaredMemberNames( object target )
+        {
             Type type = target.GetType();
             const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
             IEnumerable<string> names = type.GetMembers( flags ).Select( member => member.Name );
-            foreach ( string name in names )
-            {
-                results.Add( name );
-            }
+            return names;
+        }
 
+        public virtual IEnumerable<string> GetDynamicMemberNames( object target )
+        {
             var provider = target as IDynamicMetaObjectProvider;
-            if ( provider != null )
+            if ( provider == null )
             {
-                DynamicMetaObject meta = provider.GetMetaObject( Expression.Constant( target ) );
-                foreach ( string name in meta.GetDynamicMemberNames() )
-                {
-                    results.Add( name );
-                }
+                return Enumerable.Empty<string>();
             }
-            return results.ToList();
+            DynamicMetaObject meta = provider.GetMetaObject( Expression.Constant( target ) );
+            return meta.GetDynamicMemberNames();
         }
     }
 }

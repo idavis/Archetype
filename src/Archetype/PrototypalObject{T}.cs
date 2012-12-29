@@ -46,7 +46,7 @@ namespace Archetype
         public override IEnumerable<string> GetDynamicMemberNames()
         {
             return base.GetDynamicMemberNames()
-                       .Union( GetDynamicMemberNames( Prototype ), StringComparer.OrdinalIgnoreCase );
+                       .Union( GetAllMemberNames( Prototype ), StringComparer.OrdinalIgnoreCase );
         }
     }
 }
