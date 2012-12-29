@@ -12,15 +12,11 @@ namespace Archetype.Tests.StaticTests
     [Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsDefinedStaticMethods : DelegatingObjectTests
     {
-        #region Setup/Teardown
-
         [SetUp]
         public override void Setup()
         {
             Value = new ModuleWithMethods();
         }
-
-        #endregion
 
         [Test]
         public void Calling_a_static_void_function_with_no_params_defined_in_module_is_called_throws()

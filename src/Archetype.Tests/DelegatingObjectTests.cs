@@ -9,15 +9,11 @@ namespace Archetype.Tests
     [TestFixture]
     public abstract class DelegatingObjectTests
     {
-        #region Setup/Teardown
-
         [SetUp]
         public virtual void Setup()
         {
             Value = Create();
         }
-
-        #endregion
 
         public virtual DelegatingObject Value { get; set; }
 

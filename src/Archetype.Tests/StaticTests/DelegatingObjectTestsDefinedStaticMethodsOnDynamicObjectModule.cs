@@ -12,15 +12,11 @@ namespace Archetype.Tests.StaticTests
     [Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsDefinedStaticMethodsOnDynamicObjectModule : DelegatingObjectTests
     {
-        #region Setup/Teardown
-
         [SetUp]
         public override void Setup()
         {
             Value = new DelegatingObject( new DynamicObjectWithMethods() );
         }
-
-        #endregion
 
         [Test]
         public void Calling_a_static_void_function_when_a_prototypal_object_is_not_the_last_module_throws()

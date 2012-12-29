@@ -11,15 +11,11 @@ namespace Archetype.Tests.MethodTests
     [Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsDefinedMethods : DelegatingObjectTests
     {
-        #region Setup/Teardown
-
         [SetUp]
         public override void Setup()
         {
             Value = new ModuleWithMethods();
         }
-
-        #endregion
 
         [Test]
         public void Calling_a_function_with_a_retval_with_a_param_defined_in_module_is_called()
