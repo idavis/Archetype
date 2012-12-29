@@ -11,7 +11,10 @@
 
 #region Using Directives
 
+using System;
+using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Linq.Expressions;
 using Archetype.MetaObjects;
 
@@ -38,6 +41,12 @@ namespace Archetype
             }
 
             return new PrototypalMetaObject( parameter, this, baseMetaObject, Prototype );
+        }
+
+        public override IEnumerable<string> GetDynamicMemberNames()
+        {
+            return base.GetDynamicMemberNames()
+                       .Union( GetDynamicMemberNames( Prototype ), StringComparer.OrdinalIgnoreCase );
         }
     }
 }

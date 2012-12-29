@@ -11,11 +11,8 @@
 
 #region Using Directives
 
-using System;
-using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 
 #endregion
@@ -260,48 +257,6 @@ namespace Archetype.Sandbox
                 return true;
             }
             return Modules.OfType<DynamicObject>().Any( prototype => prototype.TrySetMember( binder, value ) );
-        }
-
-        public static DelegatingObjectWithMethodMissing AsPrototypalObject( IDynamicMetaObjectProvider prototype )
-        {
-            if ( prototype == null )
-            {
-                return new DelegatingObjectWithMethodMissing();
-            }
-            return prototype as DelegatingObjectWithMethodMissing ?? new DelegatingObjectWithMethodMissing( prototype );
-        }
-
-        public virtual bool RespondsTo( string name )
-        {
-            return RespondsTo( name, this );
-        }
-
-        public virtual bool RespondsTo( string name, object target )
-        {
-            var provider = target as IDynamicMetaObjectProvider;
-            IEnumerable<string> dynamicMembers = new string[0];
-            if ( provider != null )
-            {
-                DynamicMetaObject meta = provider.GetMetaObject( Expression.Constant( target ) );
-                dynamicMembers = meta.GetDynamicMemberNames();
-            }
-
-            Type type = target.GetType();
-            IEnumerable<string> members = type.GetMembers().Select( member => member.Name );
-            members = members.Union( dynamicMembers );
-
-            bool respondsTo = members.Any( item => String.Equals( item, name, StringComparison.OrdinalIgnoreCase ) );
-            if ( respondsTo )
-            {
-                return true;
-            }
-            var prototypalObject = target as DelegatingObjectWithMethodMissing;
-            if ( prototypalObject != null &&
-                 prototypalObject.Modules != null )
-            {
-                return prototypalObject.Modules.Any( module => RespondsTo( name, module ) );
-            }
-            return false;
         }
     }
 }
