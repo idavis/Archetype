@@ -65,9 +65,9 @@ namespace Archetype
                            : Expression.Convert( Expression, LimitType );
         }
 
-        protected bool AreEquivalent( Type t1, Type t2 )
+        protected bool AreEquivalent( Type lhs, Type rhs )
         {
-            return t1 == t2 || t1.IsEquivalentTo( t2 );
+            return lhs == rhs || lhs.IsEquivalentTo( rhs );
         }
 
         public override DynamicMetaObject BindBinaryOperation( BinaryOperationBinder binder, DynamicMetaObject arg )
