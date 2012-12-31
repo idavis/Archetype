@@ -30,45 +30,40 @@ namespace Archetype.Tests
                     return;
                 }
                 _Name = value;
-                This.OnPropertyChanged( "Name" );
+                _this.OnPropertyChanged( "Name" );
             }
-        }
-
-        protected dynamic This
-        {
-            get { return this; }
         }
     }
 
     [TestFixture]
     public class NotifyPropertyChangesModuleTests
     {
-        private bool called;
-        private string propertyName = string.Empty;
-        private dynamic instance;
-        private INotifyPropertyChanged module;
+        private bool _Called;
+        private string _PropertyName = string.Empty;
+        private dynamic _Instance;
+        private INotifyPropertyChanged _Module;
 
         public void Initialize( params object[] modules )
         {
-            instance = modules.Length == 0 ? new SampleModel() : new SampleModel( modules );
-            module = instance;
-            called = false;
-            propertyName = null;
-            module.PropertyChanged += ( sender, args ) =>
+            _Instance = modules.Length == 0 ? new SampleModel() : new SampleModel( modules );
+            _Module = _Instance;
+            _Called = false;
+            _PropertyName = null;
+            _Module.PropertyChanged += ( sender, args ) =>
                                       {
-                                          called = true;
-                                          propertyName = args.PropertyName;
+                                          _Called = true;
+                                          _PropertyName = args.PropertyName;
                                       };
         }
 
         private void AssertBehavior()
         {
-            instance.Name = null;
-            Assert.IsFalse( called );
-            instance.Name = "Ian";
-            Assert.IsTrue( called );
-            Assert.AreEqual( "Ian", instance.Name );
-            Assert.AreEqual( "Name", propertyName );
+            _Instance.Name = null;
+            Assert.IsFalse( _Called );
+            _Instance.Name = "Ian";
+            Assert.IsTrue( _Called );
+            Assert.AreEqual( "Ian", _Instance.Name );
+            Assert.AreEqual( "Name", _PropertyName );
         }
 
         [Test]

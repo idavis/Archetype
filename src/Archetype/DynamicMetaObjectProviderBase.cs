@@ -30,6 +30,19 @@ namespace Archetype
             get { return this; }
         }
 
+        /// <summary>
+        ///     Provides a <see cref="T:System.Dynamic.DynamicMetaObject" /> that dispatches to the dynamic virtual methods.
+        ///     The object can be encapsulated inside another <see cref="T:System.Dynamic.DynamicMetaObject" /> to provide
+        ///     custom behavior for individual actions. This method supports the Dynamic Language Runtime infrastructure for
+        ///     language implementers and it is not intended to be used directly from your code.
+        /// </summary>
+        /// <param name="parameter">
+        ///     The expression that represents <see cref="T:System.Dynamic.DynamicMetaObject" /> to
+        ///     dispatch to the dynamic virtual methods.
+        /// </param>
+        /// <returns>
+        ///     An object of the <see cref="T:System.Dynamic.DynamicMetaObject" /> type.
+        /// </returns>
         public override DynamicMetaObject GetMetaObject( Expression parameter )
         {
             DynamicMetaObject baseMetaObject = GetBaseMetaObject( parameter );
