@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Dynamic;
+using System.Linq.Expressions;
+using Archetype.MetaObjects;
 using NUnit.Framework;
 
 namespace Archetype.Tests
@@ -24,6 +27,19 @@ namespace Archetype.Tests
         {
         }
 
+        public override DynamicMetaObject GetMetaObject(Expression parameter)
+        {
+            DynamicMetaObject baseMetaObject = GetBaseMetaObject(parameter);
+
+            if (Modules == null ||
+                 Modules.Count == 0)
+            {
+                return baseMetaObject;
+            }
+
+            return new NestedCastingMetaObject(parameter, this, baseMetaObject, Modules);
+        }
+
         public bool IsDisposed { get; private set; }
 
         #region IDisposable Members
@@ -38,6 +54,7 @@ namespace Archetype.Tests
 
 
     [TestFixture]
+    [Ignore]
     public class CastingTests
     {
         [Test]

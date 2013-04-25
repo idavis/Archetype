@@ -73,7 +73,7 @@ namespace Archetype.MetaObjects
         /// </returns>
         public override DynamicMetaObject BindConvert( ConvertBinder binder )
         {
-            return ApplyBinding( meta => Convert( binder, meta ), binder.FallbackConvert );
+            return ApplyBinding( meta => meta.BindConvert( binder ), binder.FallbackConvert );
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Archetype.MetaObjects
         }
 
         /// <summary>
-        ///     Gets the type restrictions for the current target <see cref="Value" /> and <see cref="Expression" />.
+        ///     Gets the type restrictions for the current target <see cref="DynamicMetaObject.Value" /> and <see cref="Expression" />.
         /// </summary>
         /// <returns></returns>
         protected virtual BindingRestrictions GetTypeRestriction()
@@ -372,44 +372,6 @@ namespace Archetype.MetaObjects
         protected bool AreEquivalent( Type lhs, Type rhs )
         {
             return lhs == rhs || lhs.IsEquivalentTo( rhs );
-        }
-
-        protected static bool TryConvert( ConvertBinder binder, DynamicMetaObject instance, out DynamicMetaObject result )
-        {
-            if ( instance.HasValue &&
-                 instance.RuntimeType.IsValueType )
-            {
-                result = instance.BindConvert( binder );
-                return true;
-            }
-
-            if ( binder.Type.IsInterface )
-            {
-                Expression expression = Convert( instance.Expression, binder.Type );
-                result = new DynamicMetaObject( expression, BindingRestrictions.Empty, instance.Value );
-                result = result.BindConvert( binder );
-                return true;
-            }
-
-            if ( typeof (IDynamicMetaObjectProvider).IsAssignableFrom( instance.RuntimeType ) )
-            {
-                result = instance.BindConvert( binder );
-                return true;
-            }
-
-            result = null;
-            return false;
-        }
-
-        protected static DynamicMetaObject Convert( ConvertBinder binder, DynamicMetaObject instance )
-        {
-            DynamicMetaObject result;
-            return TryConvert( binder, instance, out result ) ? result : instance;
-        }
-
-        protected static Expression Convert( Expression expression, Type type )
-        {
-            return expression.Type == type ? expression : Expression.Convert( expression, type );
         }
 
         protected static bool BindingHasFailed( DynamicMetaObject metaObject )

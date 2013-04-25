@@ -38,6 +38,7 @@
     <Compile Include="MetaObjects\DelegatingMetaObject.cs" />
     <Compile Include="DelegatingObject.cs" />
     <Compile Include="DynamicMetaObjectProviderBase.cs" />
+    <Compile Include="MetaObjects\NestedCastingMetaObject.cs" />
     <Compile Include="Modules\NotifyPropertyChangedModule.cs" />
     <Compile Include="MetaObjects\ModuleMetaObject.cs" />
     <Compile Include="Modules\NotifyPropertyChangingModule.cs" />

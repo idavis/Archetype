@@ -36,6 +36,7 @@ namespace Archetype.Tests
     }
 
     [TestFixture]
+    [Ignore]
     public class NotifyPropertyChangesModuleTests
     {
         private bool _Called;
