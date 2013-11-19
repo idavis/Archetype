@@ -49,7 +49,7 @@ namespace Archetype
         {
             DynamicMetaObject baseMetaObject = base.GetMetaObject( parameter );
 
-            if ( ReferenceEquals( Prototype, null ) )
+            if ( ReferenceEquals( Prototype, default(T) ) )
             {
                 return baseMetaObject;
             }
