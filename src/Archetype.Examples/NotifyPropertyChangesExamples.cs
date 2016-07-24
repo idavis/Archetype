@@ -95,7 +95,7 @@ namespace Archetype.Examples
         }
     }
 
-    [Ignore]
+    [Ignore("I don't remember")]
     [TestFixture]
     public class PersonExamples
     {
