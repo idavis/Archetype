@@ -14,6 +14,7 @@ release
 *.cache
 MSBuildOutput.txt
 Packages/
+build/
 .fake/
 TestResult*
 .paket/paket.exe

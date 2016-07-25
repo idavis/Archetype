@@ -39,10 +39,23 @@ Target "Test" (fun _ ->
                 WorkingDir = "./build"
                 ToolPath = nunit3 })
 )
- 
+
+Target "CreatePackage" (fun _ ->
+    NuGet (fun p ->
+        {p with
+            Files = [
+                    (@"src/Archetype/bin/Release/Archetype.dll", Some "lib/net452", None)
+            ]
+            OutputPath = "./build"
+            WorkingDir = "."
+            ToolPath = "packages/NuGet.CommandLine/tools/NuGet.exe"
+            Version = "1.0.0"}) "Archetype.nuspec"
+)
+
 "Clean"
    ==> "Compile"
    ==> "Test"
+   ==> "CreatePackage"
 
  
-RunTargetOrDefault "Test"
+RunTargetOrDefault "CreatePackage"
