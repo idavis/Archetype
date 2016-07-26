@@ -63,6 +63,10 @@
     <Compile Include="TestObjects\ObjectWithMethods.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Archetype.Examples\Archetype.Examples.csproj">
+      <Project>{759220DD-3017-4331-8F37-7C0B7F2ACDC7}</Project>
+      <Name>Archetype.Examples</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Archetype\Archetype.csproj">
       <Project>{74aaf77c-a943-489a-a78c-3612fa2cc938}</Project>
       <Name>Archetype</Name>

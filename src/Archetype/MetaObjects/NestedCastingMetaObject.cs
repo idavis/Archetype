@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq.Expressions;
+using System.Reflection;
 
 #endregion
 
@@ -22,6 +23,8 @@ namespace Archetype.MetaObjects
 {
     public class NestedCastingMetaObject : ModuleMetaObject
     {
+        private static readonly TypeInfo _DynamicMetaObjectProviderTypeInfo = typeof(IDynamicMetaObjectProvider).GetTypeInfo();
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="NestedCastingMetaObject" /> class.
         /// </summary>
@@ -61,14 +64,17 @@ namespace Archetype.MetaObjects
 
         protected static bool TryConvert( ConvertBinder binder, DynamicMetaObject instance, out DynamicMetaObject result )
         {
+            var runtimeTypeInfo = instance.RuntimeType.GetTypeInfo();
             if ( instance.HasValue &&
-                 instance.RuntimeType.IsValueType )
+                 runtimeTypeInfo != null &&
+                 runtimeTypeInfo.IsValueType )
             {
                 result = instance.BindConvert( binder );
                 return true;
             }
 
-            if ( binder.Type.IsInterface )
+            var binderTypeInfo = binder.Type.GetTypeInfo();
+            if ( binderTypeInfo != null && binderTypeInfo.IsInterface )
             {
                 Expression expression = Convert( instance.Expression, binder.Type );
                 result = new DynamicMetaObject( expression, BindingRestrictions.Empty, instance.Value );
@@ -76,7 +82,7 @@ namespace Archetype.MetaObjects
                 return true;
             }
 
-            if ( typeof (IDynamicMetaObjectProvider).IsAssignableFrom( instance.RuntimeType ) )
+            if ( _DynamicMetaObjectProviderTypeInfo.IsAssignableFrom( runtimeTypeInfo ) )
             {
                 result = instance.BindConvert( binder );
                 return true;

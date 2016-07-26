@@ -74,10 +74,10 @@ namespace Archetype
 
         public virtual IEnumerable<string> GetDeclaredMemberNames( object target )
         {
-            Type type = target.GetType();
-            const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
-            IEnumerable<string> names = type.GetMembers( flags ).Select( member => member.Name );
-            return names;
+            Type targetType = target.GetType();
+            var properties = targetType.GetRuntimeProperties().Select(type => type.Name);
+            var fields = targetType.GetRuntimeFields().Where(type => !type.IsStatic).Select(t => t.Name);
+            return fields.Union(properties);
         }
 
         public virtual IEnumerable<string> GetDynamicMemberNames( object target )

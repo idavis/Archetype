@@ -16,5 +16,6 @@ MSBuildOutput.txt
 Packages/
 build/
 .fake/
+.vs/
 TestResult*
 .paket/paket.exe

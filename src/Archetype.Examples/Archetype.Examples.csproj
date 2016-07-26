@@ -42,8 +42,11 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\NotifyPropertyChangedModule.cs" />
+    <Compile Include="Modules\NotifyPropertyChangingModule.cs" />
     <Compile Include="NotifyPropertyChangesExamples.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sandbox\DelegatingObjectWithMethodMissing.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Archetype\Archetype.csproj">
