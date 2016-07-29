@@ -1,14 +1,13 @@
 #region Using Directives
 
 using System.Dynamic;
-using NUnit.Framework;
+using Xunit;
 
 #endregion
 
 namespace Archetype.Tests
 {
-    [TestFixture]
-    [Timeout( Constants.TestTimeOutInMs )]
+    //[Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsExpandoObjectModules : DelegatingObjectTests
     {
         private dynamic _expandoObject;
@@ -19,18 +18,18 @@ namespace Archetype.Tests
             return new DelegatingObject( _expandoObject );
         }
 
-        [Test]
+        [Fact]
         public void Indexing_should_create_the_member()
         {
             DynamicValue.foo = 5;
-            Assert.AreEqual( 5, _expandoObject.foo );
+            Assert.Equal( 5, _expandoObject.foo );
         }
 
-        [Test]
+        [Fact]
         public void Indexing_should_get_the_member()
         {
             _expandoObject.foo = 5;
-            Assert.AreEqual( 5, DynamicValue.foo );
+            Assert.Equal( 5, DynamicValue.foo );
         }
     }
 }

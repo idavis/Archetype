@@ -1,4 +1,5 @@
-﻿#region License
+﻿
+#region License
 
 // 
 // Copyright (c) 2012, Ian Davis
@@ -13,13 +14,13 @@
 
 using System;
 using System.ComponentModel;
-using NUnit.Framework;
+using Xunit;
 
 #endregion
 
 namespace Archetype.Examples
 {
-    public interface INotifyPropertyChanges : INotifyPropertyChanged, INotifyPropertyChanging
+    public interface INotifyPropertyChanges : INotifyPropertyChanged//, INotifyPropertyChanging
     {
         void OnPropertyChanged( string propertyName = "" );
         void OnPropertyChanging( string propertyName = "" );
@@ -31,7 +32,7 @@ namespace Archetype.Examples
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
-        public event PropertyChangingEventHandler PropertyChanging = delegate { };
+        //public event PropertyChangingEventHandler PropertyChanging = delegate { };
 
         public virtual void OnPropertyChanged( string propertyName = "" )
         {
@@ -40,7 +41,7 @@ namespace Archetype.Examples
 
         public virtual void OnPropertyChanging( string propertyName = "" )
         {
-            PropertyChanging( this, new PropertyChangingEventArgs( propertyName ) );
+            //PropertyChanging( this, new PropertyChangingEventArgs( propertyName ) );
         }
 
         #endregion
@@ -95,11 +96,10 @@ namespace Archetype.Examples
         }
     }
 
-    [Ignore("I don't remember")]
-    [TestFixture]
+    /*
     public class PersonExamples
     {
-        [Test]
+        [Fact]
         public void SharedModulesToShareBehavior()
         {
             var module = new NotifyPropertyChangesModule();
@@ -114,7 +114,7 @@ namespace Archetype.Examples
             ian.Age = 30;
         }
 
-        [Test]
+        [Fact]
         public void UsingModelObjectAsDynamic()
         {
             dynamic person = new Person();
@@ -129,7 +129,7 @@ namespace Archetype.Examples
             person.Name = "Inigo Montoya";
         }
 
-        [Test]
+        [Fact]
         public void UsingModelObjectAsStronglyTyped()
         {
             var person = new Person();
@@ -144,7 +144,7 @@ namespace Archetype.Examples
             person.Name = "Inigo Montoya";
         }
 
-        [Test]
+        [Fact]
         public void UsingModelWithProxyCastingProperty()
         {
             var person = new Person();
@@ -158,4 +158,5 @@ namespace Archetype.Examples
             person.Name = "Inigo Montoya";
         }
     }
+    */
 }

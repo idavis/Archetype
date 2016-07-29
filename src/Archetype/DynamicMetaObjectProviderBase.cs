@@ -74,10 +74,10 @@ namespace Archetype
 
         public virtual IEnumerable<string> GetDeclaredMemberNames( object target )
         {
-            Type type = target.GetType();
-            const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
-            IEnumerable<string> names = type.GetMembers( flags ).Select( member => member.Name );
-            return names;
+            Type targetType = target.GetType();
+            var properties = targetType.GetTypeInfo().GetAllProperties().Select(type => type.Name);
+            var fields = targetType.GetTypeInfo().GetAllFields().Where(type => !type.IsStatic).Select(t => t.Name);
+            return fields.Union(properties, StringComparer.OrdinalIgnoreCase);
         }
 
         public virtual IEnumerable<string> GetDynamicMemberNames( object target )
@@ -89,6 +89,43 @@ namespace Archetype
             }
             DynamicMetaObject meta = provider.GetMetaObject( Expression.Constant( target ) );
             return meta.GetDynamicMemberNames();
+        }
+    }
+
+    public static class TypeInfoAllMemberExtensions
+    {
+        public static IEnumerable<ConstructorInfo> GetAllConstructors(this TypeInfo typeInfo)
+            => GetAll(typeInfo, ti => ti.DeclaredConstructors);
+
+        public static IEnumerable<EventInfo> GetAllEvents(this TypeInfo typeInfo)
+            => GetAll(typeInfo, ti => ti.DeclaredEvents);
+
+        public static IEnumerable<FieldInfo> GetAllFields(this TypeInfo typeInfo)
+            => GetAll(typeInfo, ti => ti.DeclaredFields);
+
+        public static IEnumerable<MemberInfo> GetAllMembers(this TypeInfo typeInfo)
+            => GetAll(typeInfo, ti => ti.DeclaredMembers);
+
+        public static IEnumerable<MethodInfo> GetAllMethods(this TypeInfo typeInfo)
+            => GetAll(typeInfo, ti => ti.DeclaredMethods);
+
+        public static IEnumerable<TypeInfo> GetAllNestedTypes(this TypeInfo typeInfo)
+            => GetAll(typeInfo, ti => ti.DeclaredNestedTypes);
+
+        public static IEnumerable<PropertyInfo> GetAllProperties(this TypeInfo typeInfo)
+            => GetAll(typeInfo, ti => ti.DeclaredProperties);
+
+        private static IEnumerable<T> GetAll<T>(TypeInfo typeInfo, Func<TypeInfo, IEnumerable<T>> accessor)
+        {
+            while (typeInfo != null)
+            {
+                foreach (var t in accessor(typeInfo))
+                {
+                    yield return t;
+                }
+
+                typeInfo = typeInfo.BaseType?.GetTypeInfo();
+            }
         }
     }
 }

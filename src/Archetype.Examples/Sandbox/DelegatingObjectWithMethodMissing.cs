@@ -45,9 +45,6 @@ namespace Archetype.Sandbox
 
     internal class DelegatingObjectWithMethodMissing : DelegatingObject
     {
-        private const BindingFlags DefaultBindingFlags =
-                BindingFlags.FlattenHierarchy | BindingFlags.Static | BindingFlags.Public;
-
         public DelegatingObjectWithMethodMissing()
                 : this( null )
         {
@@ -199,7 +196,7 @@ namespace Archetype.Sandbox
 
         protected virtual bool TryInvokeStaticMember( InvokeMemberBinder binder, object[] args, out object result )
         {
-            MethodInfo method = GetType().GetMethod( binder.Name, DefaultBindingFlags );
+            MethodInfo method = GetType().GetTypeInfo().GetDeclaredMethod( binder.Name );
             if ( method != null )
             {
                 result = method.Invoke( null, args );
@@ -219,13 +216,13 @@ namespace Archetype.Sandbox
 
         protected virtual bool TryGetStaticMember( GetMemberBinder binder, out object result )
         {
-            PropertyInfo property = GetType().GetProperty( binder.Name, DefaultBindingFlags );
+            PropertyInfo property = GetType().GetTypeInfo().GetDeclaredProperty( binder.Name );
             if ( property != null )
             {
                 result = property.GetValue( null, null );
                 return true;
             }
-            FieldInfo field = GetType().GetField( binder.Name, DefaultBindingFlags );
+            FieldInfo field = GetType().GetTypeInfo().GetDeclaredField( binder.Name );
             if ( field != null )
             {
                 result = field.GetValue( null );
@@ -244,13 +241,13 @@ namespace Archetype.Sandbox
 
         protected virtual bool TrySetStaticMember( SetMemberBinder binder, object value )
         {
-            PropertyInfo property = GetType().GetProperty( binder.Name, DefaultBindingFlags );
+            PropertyInfo property = GetType().GetTypeInfo().GetDeclaredProperty( binder.Name );
             if ( property != null )
             {
                 property.SetValue( null, value, null );
                 return true;
             }
-            FieldInfo field = GetType().GetField( binder.Name, DefaultBindingFlags );
+            FieldInfo field = GetType().GetTypeInfo().GetDeclaredField( binder.Name );
             if ( field != null )
             {
                 field.SetValue( null, value );

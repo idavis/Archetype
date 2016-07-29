@@ -1,85 +1,87 @@
 #region Using Directives
 
 using Archetype.Tests.TestObjects;
-using NUnit.Framework;
+using Xunit;
 
 #endregion
 
 namespace Archetype.Tests.MethodTests
 {
-    [TestFixture]
-    [Timeout( Constants.TestTimeOutInMs )]
+    //[Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsDefinedMethods : DelegatingObjectTests
     {
-        [SetUp]
-        public override void Setup()
-        {
-            Value = new ModuleWithMethods();
-        }
-
-        [Test]
+        [Fact]
         public void Calling_a_function_with_a_retval_with_a_param_defined_in_module_is_called()
         {
+            Value = new ModuleWithMethods();
             dynamic result = DynamicValue.MethodWithReturnValueSingleParameter( 42 );
             Assert.True( DynamicValue.MethodWithReturnValueSingleParameterWasCalled );
         }
 
-        [Test]
+        [Fact]
         public void Calling_a_function_with_a_retval_with_a_param_defined_in_module_passes_the_parameter()
         {
+            Value = new ModuleWithMethods();
             dynamic actual = DynamicValue.MethodWithReturnValueSingleParameter( 42 );
-            Assert.AreEqual( 42, actual );
+            Assert.Equal( 42, actual );
         }
 
-        [Test]
+        [Fact]
         public void Calling_a_function_with_a_retval_with_no_param_defined_is_called()
         {
+            Value = new ModuleWithMethods();
             DynamicValue.MethodWithReturnValueNoParameters();
             Assert.True( DynamicValue.MethodWithReturnValueNoParametersWasCalled );
         }
 
-        [Test]
+        [Fact]
         public void Calling_a_function_with_a_retval_with_no_param_defined_returns_value()
         {
+            Value = new ModuleWithMethods();
             dynamic actual = DynamicValue.MethodWithReturnValueNoParameters();
-            Assert.AreEqual( 42, actual );
+            Assert.Equal( 42, actual );
         }
 
-        [Test]
+        [Fact]
         public void Calling_a_void_function_with_a_param_defined_in_module_is_called()
         {
+            Value = new ModuleWithMethods();
             DynamicValue.MethodWithNoReturnValueSingleParameter( 42 );
             Assert.True( DynamicValue.MethodWithNoReturnValueSingleParameterWasCalled );
         }
 
-        [Test]
+        [Fact]
         public void Calling_a_void_function_with_a_param_defined_in_module_passes_the_parameter()
         {
+            Value = new ModuleWithMethods();
             DynamicValue.MethodWithNoReturnValueSingleParameter( 42 );
-            Assert.AreEqual( 42, DynamicValue.MethodWithNoReturnValueSingleParameterValue );
+            Assert.Equal( 42, DynamicValue.MethodWithNoReturnValueSingleParameterValue );
         }
 
-        [Test]
+        [Fact]
         public void Calling_a_void_function_with_no_params_defined_in_module_is_called()
         {
+            Value = new ModuleWithMethods();
             DynamicValue.MethodWithNoReturnValueOrParameters();
             Assert.True( DynamicValue.MethodWithNoReturnValueOrParametersWasCalled );
         }
 
-        [Test]
+        [Fact]
         public void Invoking_a_function_with_an_out_param_sets_the_value()
         {
+            Value = new ModuleWithMethods();
             int actual;
             DynamicValue.MethodWithOutParameter( out actual );
-            Assert.AreEqual( 42, actual );
+            Assert.Equal( 42, actual );
         }
 
-        [Test]
+        [Fact]
         public void Invoking_a_function_with_an_ref_param_sets_the_value()
         {
+            Value = new ModuleWithMethods();
             int actual = -1;
             DynamicValue.MethodWithRefParameter( ref actual );
-            Assert.AreEqual( 42, actual );
+            Assert.Equal( 42, actual );
         }
     }
 }

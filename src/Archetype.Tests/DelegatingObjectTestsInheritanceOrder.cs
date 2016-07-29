@@ -1,21 +1,24 @@
 #region Using Directives
 
 using Archetype.Tests.TestObjects;
-using NUnit.Framework;
+using Xunit;
 
 #endregion
 
 namespace Archetype.Tests
 {
-    [TestFixture]
+
+
+
+
     [Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsInheritanceOrder
     {
-        [Test]
+        [Fact]
         public void The_parent_target_should_be_executed()
         {
             dynamic dude = new TheDude( new Person() );
-            Assert.AreEqual( "The Dude", dude.Name );
+            Assert.Equal( "The Dude", dude.Name );
         }
     }
 }

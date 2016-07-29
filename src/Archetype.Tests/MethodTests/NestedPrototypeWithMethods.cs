@@ -1,84 +1,70 @@
 #region Using Directives
 
 using Archetype.Tests.TestObjects;
-using NUnit.Framework;
+using Xunit;
 
 #endregion
 
 namespace Archetype.Tests.MethodTests
 {
-    [TestFixture]
-    [Timeout( Constants.TestTimeOutInMs )]
+    //[Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsNestedDynamicObjectWithMethods : DelegatingObjectTestsDefinedMethods
     {
-        [SetUp]
-        public override void Setup()
+        public DelegatingObjectTestsNestedDynamicObjectWithMethods()
         {
             Value = new DelegatingObject( new DynamicObjectWithMethods() );
         }
     }
 
-    [TestFixture]
-    [Timeout( Constants.TestTimeOutInMs )]
+    //[Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsNestedModuleWithMethods : DelegatingObjectTestsDefinedMethods
     {
-        [SetUp]
-        public override void Setup()
+        public DelegatingObjectTestsNestedModuleWithMethods()
         {
             Value = new DelegatingObject( new ModuleWithMethods() );
         }
     }
 
-    [TestFixture]
-    [Timeout( Constants.TestTimeOutInMs )]
+    //[Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsNestedModuleWithMethodsWithEmptyModule : DelegatingObjectTestsDefinedMethods
     {
-        [SetUp]
-        public override void Setup()
+        public DelegatingObjectTestsNestedModuleWithMethodsWithEmptyModule()
         {
             Value = new DelegatingObject( new ModuleWithMethods( new DelegatingObject() ) );
         }
     }
 
-    [TestFixture]
-    [Timeout( Constants.TestTimeOutInMs )]
+    //[Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsDoubleNestedModuleWithMethods : DelegatingObjectTestsDefinedMethods
     {
-        [SetUp]
-        public override void Setup()
+        public DelegatingObjectTestsDoubleNestedModuleWithMethods()
         {
             Value = new DelegatingObject( new DelegatingObject( new ModuleWithMethods() ) );
         }
     }
 
-    [TestFixture]
-    [Timeout( Constants.TestTimeOutInMs )]
+    //[Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsDoubleNestedDynamicObjectWithMethods : DelegatingObjectTestsDefinedMethods
     {
-        [SetUp]
-        public override void Setup()
+        public DelegatingObjectTestsDoubleNestedDynamicObjectWithMethods()
         {
             Value = new DelegatingObject( new DelegatingObject( new DynamicObjectWithMethods() ) );
         }
     }
 
-    [TestFixture]
-    [Timeout( Constants.TestTimeOutInMs )]
+    //[Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsNestedObjectWithMethods : DelegatingObjectTestsDefinedMethods
     {
-        [SetUp]
-        public override void Setup()
+        public DelegatingObjectTestsNestedObjectWithMethods()
         {
             Value = new DelegatingObject( new ObjectWithMethods() );
         }
     }
 
-    [TestFixture]
-    [Timeout( Constants.TestTimeOutInMs )]
+    //[Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsDoubleNestedObjectWithMethods : DelegatingObjectTestsDefinedMethods
     {
-        [SetUp]
-        public override void Setup()
+        public DelegatingObjectTestsDoubleNestedObjectWithMethods()
         {
             Value = new DelegatingObject( new DelegatingObject( new ObjectWithMethods() ) );
         }

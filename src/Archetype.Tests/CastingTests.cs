@@ -2,7 +2,7 @@
 using System.Dynamic;
 using System.Linq.Expressions;
 using Archetype.MetaObjects;
-using NUnit.Framework;
+using Xunit;
 
 namespace Archetype.Tests
 {
@@ -53,69 +53,69 @@ namespace Archetype.Tests
     }
 
 
-    [TestFixture]
-    [Ignore("I don't remember")]
+    /*
     public class CastingTests
     {
-        [Test]
+        [Fact]
         public void CanCastToImplementedInterface()
         {
             dynamic value = new DisposableDelegatingObject();
             IDisposable instance = value;
-            Assert.IsNotNull( instance );
+            Assert.NotNull( instance );
         }
 
-        [Test]
+        [Fact]
         public void CanCastToModuleWhenOnlyASingleModuleIsSupplied()
         {
             dynamic value = new DelegatingObject( new DisposableObject() );
             IDisposable instance = value;
-            Assert.IsNotNull( instance );
+            Assert.NotNull( instance );
         }
 
-        [Test]
+        [Fact]
         public void CastingToABaseClassWithADelegatingObjectInTheModuleChainCastsSuccessfully()
         {
             var outer = new Cat();
             dynamic value = new DelegatingObject( outer, new DelegatingObject() );
             Animal animal = value;
-            Assert.AreSame( outer, animal );
+            Assert.Same( outer, animal );
         }
 
-        [Test]
+        [Fact]
         public void CastingToAModulesBaseClassWillResolveAndCastThatModule()
         {
             var outer = new Cat();
             dynamic value = new DelegatingObject( DateTime.Now, outer, 10 );
             Animal animal = value;
-            Assert.AreSame( outer, animal );
+            Assert.Same( outer, animal );
         }
 
-        [Test]
+        [Fact]
         public void CastingToAnInterfaceWhenThereIsAConflictBetweenModulesPrefersTheModuleThatWasLoadedLast()
         {
             var first = new DisposableObject();
             var second = new DisposableObject();
             dynamic value = new DelegatingObject( first, second );
             IDisposable instance = value;
-            Assert.AreSame( second, instance );
+            Assert.Same( second, instance );
         }
 
-        [Test]
+        [Fact]
         public void CastingToAnInterfaceWhenThereIsAConflictPrefersTheRootObjectOverModules()
         {
             dynamic value = new DisposableDelegatingObject( new DisposableObject() );
             IDisposable instance = value;
-            Assert.AreSame( value, instance );
+            Assert.Same( value, instance );
         }
 
-        [Test]
+        [Fact]
         public void CastingWillSkipModulesWhichAreNotValidTargetsForTheCast()
         {
             var inner = new DisposableObject();
             dynamic value = new DelegatingObject( inner, new DelegatingObject() );
             IDisposable instance = value;
-            Assert.AreSame( instance, inner );
+            Assert.Same( instance, inner );
         }
     }
+    */
 }

@@ -8,6 +8,7 @@ obj
 debug
 release
 *.suo
+*.orig
 *resharper*
 *ncrunch*
 *.user
@@ -16,5 +17,6 @@ MSBuildOutput.txt
 Packages/
 build/
 .fake/
+.vs/
 TestResult*
 .paket/paket.exe

@@ -17,17 +17,17 @@ using System.ComponentModel;
 
 namespace Archetype.Modules
 {
-    public class NotifyPropertyChangingModule : INotifyPropertyChanging
+    public class NotifyPropertyChangingModule //: INotifyPropertyChanging
     {
         #region INotifyPropertyChanging Members
 
-        public event PropertyChangingEventHandler PropertyChanging = delegate { };
+        //public event PropertyChangingEventHandler PropertyChanging = delegate { };
 
         #endregion
 
         public virtual void OnPropertyChanging( string propertyName )
         {
-            PropertyChanging( this, new PropertyChangingEventArgs( propertyName ) );
+          //  PropertyChanging( this, new PropertyChangingEventArgs( propertyName ) );
         }
     }
 }

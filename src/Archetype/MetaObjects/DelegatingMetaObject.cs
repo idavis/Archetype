@@ -364,14 +364,9 @@ namespace Archetype.MetaObjects
 
         protected virtual Expression GetLimitedSelf()
         {
-            return AreEquivalent( Expression.Type, LimitType )
+            return Expression.Type == LimitType
                            ? Expression
                            : Expression.Convert( Expression, LimitType );
-        }
-
-        protected bool AreEquivalent( Type lhs, Type rhs )
-        {
-            return lhs == rhs || lhs.IsEquivalentTo( rhs );
         }
 
         protected static bool BindingHasFailed( DynamicMetaObject metaObject )

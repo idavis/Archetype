@@ -1,16 +1,14 @@
 ﻿#region Using Directives
 
-using NUnit.Framework;
+using Xunit;
 
 #endregion
 
 namespace Archetype.Tests
 {
-    [TestFixture]
     public abstract class DelegatingObjectTests
     {
-        [SetUp]
-        public virtual void Setup()
+        public DelegatingObjectTests()
         {
             Value = Create();
         }

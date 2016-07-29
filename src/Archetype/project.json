@@ -1,0 +1,23 @@
+﻿{
+  "name": "Archetype",
+  "supports": { },
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable"
+  },
+  "dependencies": { },
+  "frameworks": {
+    "netstandard1.1": {
+      "dependencies": {
+        "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
+        "NETStandard.Library": "1.6.0",
+        "System.Dynamic.Runtime": "4.0.11"
+      }
+    },
+    "net451": {
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1"
+      }
+    }
+  }
+}

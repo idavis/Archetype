@@ -2,23 +2,21 @@
 
 using Archetype.Tests.TestObjects;
 using Microsoft.CSharp.RuntimeBinder;
-using NUnit.Framework;
+using Xunit;
 
 #endregion
 
 namespace Archetype.Tests.StaticTests
 {
-    [TestFixture]
-    [Timeout( Constants.TestTimeOutInMs )]
+    //[Timeout( Constants.TestTimeOutInMs )]
     public class DelegatingObjectTestsDefinedStaticMethods : DelegatingObjectTests
     {
-        [SetUp]
-        public override void Setup()
+        public DelegatingObjectTestsDefinedStaticMethods()
         {
             Value = new ModuleWithMethods();
         }
 
-        [Test]
+        [Fact]
         public void Calling_a_static_void_function_with_no_params_defined_in_module_is_called_throws()
         {
             Assert.Throws<RuntimeBinderException>( () => DynamicValue.StaticMethodWithNoReturnValueOrParameters() );

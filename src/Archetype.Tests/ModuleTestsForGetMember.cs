@@ -1,5 +1,5 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace Archetype.Tests
 {
@@ -32,50 +32,49 @@ namespace Archetype.Tests
         }
     }
 
-    [TestFixture]
     public class ModuleTestsForGetMember
     {
-        [Test]
+        [Fact]
         public void GettingAPropertyThatIsDefinedInTheRootObjectReturnsItsValue()
         {
             dynamic value = new CheshireCat( new Cat() );
-            Assert.AreEqual( "Grin", value.Action );
+            Assert.Equal( "Grin", value.Action );
         }
 
-        [Test]
+        [Fact]
         public void GettingAPropertyThatIsDefinedInTheRootObjectReturnsItsValueWhenThereIsNoBaseModule()
         {
             dynamic value = new CheshireCat();
-            Assert.AreEqual( "Grin", value.Action );
+            Assert.Equal( "Grin", value.Action );
         }
 
-        [Test]
+        [Fact]
         public void GettingAPropertyThatIsNotDefinedInTheRootObjectReturnsItsValueAndIsReturnedBottomUp()
         {
             dynamic value = new CheshireCat( new Cat() );
             value.Modules.Add( new Animal() );
-            Assert.AreEqual( "Animal", value.Name );
+            Assert.Equal( "Animal", value.Name );
         }
 
-        [Test]
+        [Fact]
         public void GettingAPropertyThatIsNotDefinedInTheRootObjectReturnsItsValueIfItIsNotOnTheLastModule()
         {
             dynamic value = new CheshireCat( new Cat() );
-            Assert.AreEqual( "Meow", value.Noise );
+            Assert.Equal( "Meow", value.Noise );
         }
 
-        [Test]
+        [Fact]
         public void GettingAPropertyThatIsNotDefinedInTheRootObjectReturnsItsValueIfItIsOnTheLastModule()
         {
             dynamic value = new CheshireCat( new Cat() );
-            Assert.AreEqual( "Cat", value.Name );
+            Assert.Equal( "Cat", value.Name );
         }
 
-        [Test]
+        [Fact]
         public void TestingChainOfModules()
         {
             dynamic value = new DelegatingObject( 5, "cat", 10, new Uri( "http://www.foo.com" ) );
-            Assert.AreEqual( 3, value.Length );
+            Assert.Equal( 3, value.Length );
         }
     }
 }

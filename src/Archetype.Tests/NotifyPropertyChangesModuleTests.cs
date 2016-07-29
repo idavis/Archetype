@@ -1,6 +1,6 @@
 using System.ComponentModel;
 using Archetype.Modules;
-using NUnit.Framework;
+using Xunit;
 
 namespace Archetype.Tests
 {
@@ -34,9 +34,7 @@ namespace Archetype.Tests
             }
         }
     }
-
-    [TestFixture]
-    [Ignore("I don't remember")]
+    /*
     public class NotifyPropertyChangesModuleTests
     {
         private bool _Called;
@@ -60,39 +58,40 @@ namespace Archetype.Tests
         private void AssertBehavior()
         {
             _Instance.Name = null;
-            Assert.IsFalse( _Called );
+            Assert.False( _Called );
             _Instance.Name = "Ian";
-            Assert.IsTrue( _Called );
-            Assert.AreEqual( "Ian", _Instance.Name );
-            Assert.AreEqual( "Name", _PropertyName );
+            Assert.True( _Called );
+            Assert.Equal( "Ian", _Instance.Name );
+            Assert.Equal( "Name", _PropertyName );
         }
 
-        [Test]
+        [Fact]
         public void OnPropertyChangedCanBeCalledFromTheImportingClass()
         {
             Initialize();
             AssertBehavior();
         }
 
-        [Test]
+        [Fact]
         public void OnPropertyChangedCanBeCalledFromTheImportingClassWhenThereIsAModuleChainEndingInTheTarget()
         {
             Initialize( 5, new NotifyPropertyChangedModule() );
             AssertBehavior();
         }
 
-        [Test]
+        [Fact]
         public void OnPropertyChangedCanBeCalledFromTheImportingClassWhenThereIsAModuleChainWithTheTargetInTheBeginning()
         {
             Initialize( new NotifyPropertyChangedModule(), 5 );
             AssertBehavior();
         }
 
-        [Test]
+        [Fact]
         public void OnPropertyChangedCanBeCalledFromTheImportingClassWhenThereIsAModuleChainWithTheTargetInTheMiddle()
         {
             Initialize( 10, new NotifyPropertyChangedModule(), 5 );
             AssertBehavior();
         }
     }
+    */
 }

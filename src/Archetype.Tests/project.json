@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable"
+  },
+  "supports": { },
+  "dependencies": {
+
+  },
+    "testRunner": "xunit",
+  "frameworks": {
+   /* "netstandard1.3": {
+      "dependencies": {
+        "System.Dynamic.Runtime": "4.0.11",
+        "System.Runtime": "4.1.0",
+        "System.Threading.Tasks": "4.0.11",
+        "NETStandard.Library": "1.6.0",
+        "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
+        "xunit": "2.1.0",
+      }
+    },
+    "net451": {
+      "dependencies": {
+        "xunit": "2.2.0-beta2-build3300",
+        "dotnet-test-xunit": "2.2.0-preview2-build1029",
+        "Microsoft.NETCore.Platforms": "1.0.1"
+      }
+    },*/
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+        },
+        "Archetype": {
+          "version": "1.0.0-*",
+          "target": "project"
+        },
+        "Archetype.Examples": {
+          "version": "1.0.0-*",
+          "target": "project"
+        },
+        "System.Dynamic.Runtime": "4.0.11",
+        "System.Runtime": "4.1.0",
+        "System.Threading.Tasks": "4.0.11",
+        "NETStandard.Library": "1.6.0",
+        "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
+        "xunit": "2.2.0-beta2-build3300",
+        "dotnet-test-xunit": "2.2.0-preview2-build1029"
+      }
+    }
+  }
+}

@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{ECC39D5A-879B-45CF-85DF-3BDD60C58EEF}</ProjectGuid>
@@ -9,9 +10,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Archetype.Tests</RootNamespace>
     <AssemblyName>Archetype.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,8 +25,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,24 +33,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.6.1.12217, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\NUnit\lib\net45\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CastingTests.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ModuleTestsForGetMember.cs" />
-    <Compile Include="NotifyPropertyChangesModuleTests.cs" />
     <Compile Include="DelegatingObjectTestsExpandoObjectModules.cs" />
     <Compile Include="DelegatingObjectTestsInheritanceOrder.cs" />
+    <Compile Include="NotifyPropertyChangesModuleTests.cs" />
     <Compile Include="StaticTests\DelegatingObjectTestsDefinedStaticMethods.cs" />
     <Compile Include="StaticTests\DelegatingObjectTestsDefinedStaticMethodsOnDynamicObjectModule.cs" />
     <Compile Include="StaticTests\DelegatingObjectTestsDefinedStaticMethodsOnObjectModule.cs" />
@@ -61,19 +57,24 @@
     <Compile Include="MethodTests\NestedPrototypeWithMethods.cs" />
     <Compile Include="DelegatingObjectTestsNotImplementedCalls.cs" />
     <Compile Include="TestObjects\ObjectWithMethods.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Archetype\Archetype.csproj">
-      <Project>{74aaf77c-a943-489a-a78c-3612fa2cc938}</Project>
-      <Name>Archetype</Name>
-    </ProjectReference>
+    <Compile Include="TimeoutAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="OverrideTests\" />
     <Folder Include="PropertyTests\" />
     <Folder Include="Sandbox\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Archetype.Examples\Archetype.Examples.csproj">
+      <Project>{759220dd-3017-4331-8f37-7c0b7f2acdc7}</Project>
+      <Name>Archetype.Examples</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Archetype\Archetype.csproj">
+      <Project>{74aaf77c-a943-489a-a78c-3612fa2cc938}</Project>
+      <Name>Archetype</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
