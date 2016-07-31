@@ -19,6 +19,22 @@
             ],
             "isTestCommand": true,
             "problemMatcher": "$msCompile"
+        },
+        {
+            "taskName": "restore",
+            "args": [
+                "${workspaceRoot}/src/Archetype",
+                "${workspaceRoot}/src/Archetype.Examples",
+                "${workspaceRoot}/src/Archetype.Tests"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "taskName": "pack",
+            "args": [
+                "${workspaceRoot}/src/Archetype"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }
