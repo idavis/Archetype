@@ -7,9 +7,17 @@
         {
             "taskName": "build",
             "args": [
-                ""
+                "${workspaceRoot}/src/Archetype.Tests"
             ],
             "isBuildCommand": true,
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "taskName": "test",
+            "args": [
+                "${workspaceRoot}/src/Archetype.Tests"
+            ],
+            "isTestCommand": true,
             "problemMatcher": "$msCompile"
         }
     ]
